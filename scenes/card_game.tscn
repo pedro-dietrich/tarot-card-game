@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm0skdphydi0d"]
+
+[ext_resource type="PackedScene" uid="uid://dpat4yk12d3gj" path="res://scenes/card.tscn" id="2_cqj4n"]
+[ext_resource type="PackedScene" uid="uid://bs3ar44yi25fc" path="res://scenes/table.tscn" id="2_mejnq"]
+
+[node name="CardGame" type="Node3D"]
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 1.45, 0)
+fov = 60.0
+
+[node name="Card" parent="." node_paths=PackedStringArray("table") instance=ExtResource("2_cqj4n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004, 0.001, -0.017)
+table = NodePath("../Table")
+
+[node name="Light1" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 1.5)
+light_color = Color(1, 0.705882, 0.235294, 1)
+shadow_enabled = true
+
+[node name="Light2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -1.5)
+light_color = Color(1, 0.705882, 0.235294, 1)
+shadow_enabled = true
+
+[node name="Table" parent="." instance=ExtResource("2_mejnq")]
