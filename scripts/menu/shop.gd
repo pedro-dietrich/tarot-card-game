@@ -1,6 +1,6 @@
 extends Control
 
-@onready var startGame = preload("res://scenes/menu/shop.tscn")
+@onready var startGame = preload("res://scenes/card_game.tscn")
 
 func _process(_delta: float) -> void:
 	$Label.text = str(g.money)
@@ -57,4 +57,5 @@ func _on_discard_card_button_down() -> void:
 
 
 func _on_start_button_down() -> void:
+	print("Change to the game")
 	get_tree().change_scene_to_packed(startGame)
