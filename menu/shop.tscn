@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://017itoxakhcb"]
+
+[ext_resource type="Script" uid="uid://cf1akgmkvuoy" path="res://menu/shop.gd" id="1_ix2x0"]
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ix2x0")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1046.0
+offset_top = 72.0
+offset_right = 1092.0
+offset_bottom = 112.0
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="ButtonShop" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NumCard" type="Button" parent="ButtonShop"]
+layout_mode = 0
+offset_left = 329.0
+offset_top = 262.0
+offset_right = 420.0
+offset_bottom = 305.0
+
+[node name="HighFire" type="Button" parent="ButtonShop"]
+offset_left = 130.0
+offset_top = 356.0
+offset_right = 211.0
+offset_bottom = 401.0
+
+[node name="HighWater" type="Button" parent="ButtonShop"]
+offset_left = 706.0
+offset_top = 217.0
+offset_right = 767.0
+offset_bottom = 256.0
+
+[node name="HighWind" type="Button" parent="ButtonShop"]
+offset_left = 767.0
+offset_top = 419.0
+offset_right = 857.0
+offset_bottom = 490.0
+
+[node name="HighEarth" type="Button" parent="ButtonShop"]
+offset_left = 343.0
+offset_top = 428.0
+offset_right = 407.0
+offset_bottom = 480.0
+
+[node name="RandomMajor" type="Button" parent="ButtonShop"]
+offset_left = 571.0
+offset_top = 351.0
+offset_right = 619.0
+offset_bottom = 394.0
+
+[node name="DiscardCard" type="Button" parent="ButtonShop"]
+offset_left = 972.0
+offset_top = 278.0
+offset_right = 1039.0
+offset_bottom = 345.0
+
+[connection signal="button_down" from="Start" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="ButtonShop/NumCard" to="." method="_on_num_card_button_"]
+[connection signal="button_down" from="ButtonShop/HighFire" to="." method="_on_high_fire_button_down"]
+[connection signal="button_down" from="ButtonShop/HighWater" to="." method="_on_high_water_button_down"]
+[connection signal="button_down" from="ButtonShop/HighWind" to="." method="_on_high_wind_button_down"]
+[connection signal="button_down" from="ButtonShop/HighEarth" to="." method="_on_high_earth_button_down"]
+[connection signal="button_down" from="ButtonShop/RandomMajor" to="." method="_on_random_major_button_down"]
+[connection signal="button_down" from="ButtonShop/DiscardCard" to="." method="_on_discard_card_button_down"]
