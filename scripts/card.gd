@@ -33,9 +33,6 @@ func _on_area_3d_mouse_entered() -> void:
 
 func _on_area_3d_mouse_exited() -> void:
 	$Card/Outline.hide()
-	if dragging:
-		$Card.position.y -= DRAG_HEIGHT
-		dragging = false
 
 func get_mouse_hit_on_table() -> Dictionary:
 	var camera: Camera3D = get_viewport().get_camera_3d()
@@ -52,5 +49,4 @@ func get_mouse_hit_on_table() -> Dictionary:
 	
 func _on_card_played() -> void:
 	#Create the emission of the signal
-	print("Signal double click emited")
 	Events.emit_signal("_on_card_played", id)
