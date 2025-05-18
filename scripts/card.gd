@@ -1,6 +1,5 @@
 extends Node3D
 
-@export var table: Node3D
 @export var id: int
 
 const DRAG_HEIGHT: float = 0.1
@@ -24,7 +23,7 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 		else:
 			dragging = false
 			$Card.position.y -= DRAG_HEIGHT
-	# When you doible_click on a card it emit a signal, which will enable teh "play a card" move on the game
+	# When you double_click on a card it emits a signal, which will enable the "play a card" move on the game
 	if event is InputEventMouseButton && event.is_double_click():
 		_on_card_played()
 

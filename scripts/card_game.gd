@@ -3,11 +3,12 @@ extends Node3D
 @onready var cardPath = preload("res://scenes/card.tscn")
 
 #Additionnal card in your hand, depending on the level
-var additionnalCard = [0,0, 0, 1, 1, 1, 2, 2]
+const additionnalCard = [0,0, 0, 1, 1, 1, 2, 2]
 #Card you will be able to play depending on the level
-var numCardToPlay = [4, 4, 5, 5, 6, 6, 7, 9]
+const numCardToPlay = [4, 4, 5, 5, 6, 6, 7, 9]
 #Score needed to win depending on the level
-var scoreNeeded = [40, 50, 65, 75, 90, 100, 115, 150]
+const scoreNeeded = [40, 50, 65, 75, 90, 100, 115, 150]
+
 #Path to the differents cards to be able to randomly draw them
 var cardsPath = []
 #Path to the major Arcana to be able to randomly fight them
@@ -22,6 +23,9 @@ var cardPlayed = []
 #Node of the card in hand and his id
 var cardId = []
 var cardNode = []
+
+# TODO: IMPLEMENT CARD ID LOGIC
+var next_card_id = 0
 
 func _ready() -> void:
 	Events.connect("_on_card_played", _on_card_played)
@@ -51,17 +55,9 @@ func drawHand() -> void:
 	cardNode = []
 	#Create a Card node for every card you whould have in hand
 	for x in (g.baseNumCard + additionnalCard[level]):
-		var newCard = cardPath.instantiate()
-		#Variate the z position to have the cards in different places
-		var zpos = (x-g.baseNumCard/2.0)*0.25
-		newCard.set_position(Vector3(-0.6, 0, zpos))
-		newCard.id = x
+		drawOneCard()
 		
-		#Keep in memory which card you have to be able to move/delete them later
-		cardNode.append(newCard)
-		cardId.append(newCard.id)
-		
-		add_child(newCard)
+
 
 func CountPoints() -> int:
 	#Will calculate the score obtain on this round
@@ -69,7 +65,7 @@ func CountPoints() -> int:
 	
 func _on_card_played(card_id) -> void:
 	#A card is played
-	print("I'm here")
+	print("card with id '" + var_to_str(card_id) + "' played")
 	#Need to find the node of the card to be able to move it
 	var index = cardId.find(card_id, 0)
 	var cardToMove = cardNode[index]
@@ -77,9 +73,7 @@ func _on_card_played(card_id) -> void:
 	var position_z = cardToMove.position.z
 	
 	#Place the card on the table
-	cardToMove.position.y = 0
-	cardToMove.position.x = 0
-	cardToMove.position.z = -1.2 + (numCardPlayed*0.25)
+	put_card_in_played_pos(cardToMove)
 	
 	#Save the card you played for the decount later
 	numCardPlayed += 1
@@ -87,14 +81,27 @@ func _on_card_played(card_id) -> void:
 	#Draw a new card
 	#drawOneCard(card_id*10, position_z)
 	
-func drawOneCard(card_id:int , position_z:float) -> void:
+func drawOneCard() -> void:
 	#Draw a new card
 	var newCard = cardPath.instantiate()
 	#place the card on the empty position in the hand
-	newCard.set_position(Vector3(-0.6, 0, position_z))
-	newCard.id = card_id
-		
-	cardNode.append(newCard)
-	cardId.append(newCard.id)
-		
-	add_child(newCard)
+	newCard.id = next_card_id
+	next_card_id += 1
+	#Keep in memory which card you have to be able to move/delete them later
+	put_card_in_hand(newCard)
+
+func put_card_in_hand(new_card) -> void:
+	var hand_size = cardId.size()
+	#Variate the z position to have the cards in different places
+	var zpos = (hand_size-g.baseNumCard/2.0)*0.25
+	new_card.set_position(Vector3(-0.6, 0, zpos))
+
+	cardNode.append(new_card)
+	cardId.append(new_card.id)
+
+	add_child(new_card)
+
+func put_card_in_played_pos(card_to_move) -> void:
+	card_to_move.position.y = 0
+	card_to_move.position.x = 0
+	card_to_move.position.z = -1.2 + (numCardPlayed*0.25)
