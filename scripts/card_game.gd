@@ -18,13 +18,12 @@ var majorPath = []
 var level = 0
 #Card yoou already played this level
 var numCardPlayed = 0
-var cardPlayed = []
 
-#Node of the card in hand and his id
-var cardId = []
-var cardNode = []
+# Arrays for cards in the hand, or in the round
+var hand_cards = []
+var played_cards = []
 
-# TODO: IMPLEMENT CARD ID LOGIC
+# TODO: implement card id generation, sequential at the moment
 var next_card_id = 0
 
 func _ready() -> void:
@@ -39,47 +38,49 @@ func _process(_delta: float) -> void:
 		if (victory >= 0 ):
 			level += 1
 			g.money += victory
-		
+		# TODO: Fix function, card nodes both on hand_cards and played_cards
 		#Remove all the instances of the card on the scene
-		for card in cardNode:
-			remove_child(card)
-		
+		#for card in hand_cards:
+			#remove_child(card)
 		drawHand()
-		cardPlayed = []
+		played_cards = []
 		numCardPlayed = 0
-		
 
 func drawHand() -> void:
 	#Generate the player hand
-	cardId = []
-	cardNode = []
+	hand_cards = []
+
 	#Create a Card node for every card you whould have in hand
 	for x in (g.baseNumCard + additionnalCard[level]):
 		drawOneCard()
-		
-
 
 func CountPoints() -> int:
 	#Will calculate the score obtain on this round
 	return 0
-	
+
 func _on_card_played(card_id) -> void:
 	#A card is played
 	print("card with id '" + var_to_str(card_id) + "' played")
-	#Need to find the node of the card to be able to move it
-	var index = cardId.find(card_id, 0)
-	var cardToMove = cardNode[index]
-	#Keep the position in the hand of the card for the next card
-	var position_z = cardToMove.position.z
+
+	# TODO: fix this horrible lambda
+	var lamb = func (card): return card["cardId"] == card_id
+	var index = hand_cards.find_custom(lamb)
+
+	if index == -1:
+		print("card with id '" + var_to_str(card_id) + "' not found in hand")
+		return
+
+	var cardToMove = hand_cards[index]
 	
-	#Place the card on the table
+	#Remove card from hand, and place the on the table
+	hand_cards.remove_at(index)
 	put_card_in_played_pos(cardToMove)
 	
 	#Save the card you played for the decount later
 	numCardPlayed += 1
-	cardPlayed.append(card_id)
+	played_cards.append(cardToMove)
 	#Draw a new card
-	#drawOneCard(card_id*10, position_z)
+	drawOneCard()
 	
 func drawOneCard() -> void:
 	#Draw a new card
@@ -91,17 +92,17 @@ func drawOneCard() -> void:
 	put_card_in_hand(newCard)
 
 func put_card_in_hand(new_card) -> void:
-	var hand_size = cardId.size()
-	#Variate the z position to have the cards in different places
+	var hand_size = hand_cards.size()
+	# TODO: validate if zpos logic is enough, how to deal with new drawn card later on
 	var zpos = (hand_size-g.baseNumCard/2.0)*0.25
 	new_card.set_position(Vector3(-0.6, 0, zpos))
 
-	cardNode.append(new_card)
-	cardId.append(new_card.id)
-
+	var hand_card =  {"cardNode": new_card, "cardId": new_card.id}
+	hand_cards.append(hand_card)
 	add_child(new_card)
 
 func put_card_in_played_pos(card_to_move) -> void:
-	card_to_move.position.y = 0
-	card_to_move.position.x = 0
-	card_to_move.position.z = -1.2 + (numCardPlayed*0.25)
+	var card_to_move_node = card_to_move["cardNode"]
+	card_to_move_node.position.y = 0
+	card_to_move_node.position.x = 0
+	card_to_move_node.position.z = -1.2 + (numCardPlayed*0.25)
