@@ -67,25 +67,31 @@ func _on_card_double_clicked(card_id) -> void:
 	var played_card = hand_cards[index]
 	print("card with id '" + var_to_str(card_id) + "' played")
 
+	var position_z = played_card.position.z
 	hand_cards.remove_at(index)
 	play_card(played_card)
-	draw_card()
+	draw_card(position_z)
 
-func draw_card() -> void:
+func draw_card(possition_z = null) -> void:
 	var card = basicCardPath.instantiate()
 	card.id = next_card_id
 	next_card_id+=1
-	add_card_to_hand(card)
+	add_card_to_hand(card, possition_z)
 
-func add_card_to_hand(card) -> void:
-	position_card_in_hand(card)
+func add_card_to_hand(card, possition_z = null) -> void:
+	position_card_in_hand(card, possition_z)
 	hand_cards.append(card)
 	#Keep in memory which card you have to be able to move/delete them later
 	add_child(card)
 
-func position_card_in_hand(card) -> void:
+func position_card_in_hand(card, possition_z) -> void:
 	# TODO: validate if zpos logic is enough to position hand cards on table
-	var zpos = (hand_cards.size() - g.baseNumCard/2.0)*0.25
+	var lvl_hand_size = g.baseNumCard + LVL_ADDITIONAL_CARDS[level]
+	var zpos = (hand_cards.size() - lvl_hand_size/2.0)*0.25
+	#You need to replace the card on the same spot as the played card
+	if (possition_z):
+		zpos = possition_z
+	
 	card.set_position(Vector3(-0.6, 0, zpos))
 
 func play_card(played_card) -> void:
