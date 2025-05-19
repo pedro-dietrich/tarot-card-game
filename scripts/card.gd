@@ -25,7 +25,7 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			$Card.position.y -= DRAG_HEIGHT
 	# When you double_click on a card it emits a signal, which will enable the "play a card" move on the game
 	if event is InputEventMouseButton && event.is_double_click():
-		_on_card_played()
+		_on_card_double_clicked()
 
 func _on_area_3d_mouse_entered() -> void:
 	$Card/Outline.show()
@@ -46,6 +46,6 @@ func get_mouse_hit_on_table() -> Dictionary:
 
 	return result
 	
-func _on_card_played() -> void:
+func _on_card_double_clicked() -> void:
 	#Create the emission of the signal
-	Events.emit_signal("_on_card_played", id)
+	Events.emit_signal("_on_card_double_clicked", id)
