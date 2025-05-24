@@ -40,6 +40,10 @@ func _ready() -> void:
 	major = randi_range(1,21)
 	#major = 1
 	print("Playing level with:", major)
+	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 1
+	major = randi_range(1,21)
+	#major = 1
+	print("Playing level with:", major)
 	draw_hand()
 
 func _process(_delta: float) -> void:
@@ -158,54 +162,9 @@ func position_card_in_hand(card, possition_z) -> void:
 func play_card(played_card) -> void:
 	var zpos: float = -1.2 + (played_cards.size()*0.25)
 	#print("position of the played card" + str(zpos))
+	var zpos: float = -1.2 + (played_cards.size()*0.25)
+	#print("position of the played card" + str(zpos))
 	played_card.set_position(Vector3(0, 0, zpos))
 	played_cards.append(played_card)
-	# Verify the element of the card and count point following the specific rule
-	if (fireCards.has(played_card.id)):
-		last_card_played_points = 5.0 + played_card.id
-	else :
-		if (waterCards.has(played_card.id)):
-			last_card_played_points = getWaterCardPoints(played_card.id)
-		else:
-			if (earthCards.has(played_card.id)):
-				last_card_played_points = getEarthCardPoints(played_card.id)
-			else:
-				if (windCards.has(played_card.id)):
-					last_card_played_points = getWindCardPoints(played_card.id)
-				else:
-					print("Error, id of the card not reconize")
-					get_tree().reload_current_scene()
-	
-	#Change the value of the card depending on the major arcana rule
-	last_card_played_points = MajorArcana.majorAppliedToPoint(major, last_card_played_points, played_card, played_cards.size(),  last_card_played, LVL_MAX_CARDS_PLAYED[level] )
-	points += last_card_played_points
-	#remember the last card played
-	last_card_played = played_card
-	print("points:", points)
-	#print("points obtain now:", last_card_played_points)
-
-
-func getWaterCardPoints(cardValue: float) -> float:
-	#print("bonus water card:", last_card_played_points * 0.5, "with:", last_card_played_points, "and", (cardValue - 14.0))
-	return (cardValue - 14.0) + last_card_played_points*0.5
-
-
-func getEarthCardPoints(cardValue: float) -> float:
-	print(cardValue)
-	return (cardValue - 28.0) + 2.0*played_cards.size() 
-
-
-func getWindCardPoints(cardValue: float) -> float:
-	nb_windCard += 1
-	print("the value of the card is ", cardValue - 42.0, "and the fibonacci add: ", 3.0*fibonacci(nb_windCard))
-	return (cardValue - 42.0) + 3.0*fibonacci(nb_windCard)
-
-
-func fibonacci(n: int) -> float:
-	if (n==0):
-		return 0.0
-	
-	if (n==1):
-		return 1.0
-	
-	return fibonacci(n-1) + fibonacci(n-2)
+	# TODO: implement card point system
+	points += played_card.id

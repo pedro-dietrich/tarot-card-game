@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://up6kmrhmp5ch"]
+[gd_scene load_steps=7 format=3 uid="uid://up6kmrhmp5ch"]
 
 [ext_resource type="Script" uid="uid://845gnvrf53lb" path="res://scripts/card_game.gd" id="1_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bs3ar44yi25fc" path="res://scenes/table.tscn" id="2_mejnq"]
+[ext_resource type="Script" uid="uid://c6fcyw8lpwwke" path="res://scripts/area_3d.gd" id="3_cqj4n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_thesi"]
+size = Vector3(0.273926, 0.500641, 0.945862)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqj4n"]
+albedo_color = Color(0, 0.34902, 0.996078, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_thesi"]
 
 [node name="CardGame" type="Node3D"]
 script = ExtResource("1_cqj4n")
@@ -21,3 +30,50 @@ light_color = Color(1, 0.705882, 0.235294, 1)
 shadow_enabled = true
 
 [node name="Table" parent="." instance=ExtResource("2_mejnq")]
+
+[node name="Area3DDrag" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0259368, 0, 0)
+input_ray_pickable = false
+script = ExtResource("3_cqj4n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DDrag"]
+physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0738471, 0.157776, 0.00863647)
+shape = SubResource("BoxShape3D_thesi")
+debug_color = Color(0.689711, 0.407193, 0.746194, 0.42)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3DDrag/CollisionShape3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.4, 0, 0, 0, 2, 0.02, 0, -0.009)
+rotation_edit_mode = 2
+material_override = SubResource("StandardMaterial3D_cqj4n")
+transparency = 1.0
+cast_shadow = 0
+mesh = SubResource("BoxMesh_thesi")
+
+[node name="Area3DPlay" type="Area3D" parent="Area3DDrag"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026, 0.00738252, 0)
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+script = ExtResource("3_cqj4n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DDrag/Area3DPlay"]
+physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0738471, -0.249679, 0.00863647)
+shape = SubResource("BoxShape3D_thesi")
+debug_color = Color(0.689711, 0.407193, 0.746194, 0.42)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3DDrag/Area3DPlay/CollisionShape3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.4, 0, 0, 0, 2, 0.02, 0, -0.009)
+rotation_edit_mode = 2
+material_override = SubResource("StandardMaterial3D_cqj4n")
+transparency = 1.0
+cast_shadow = 0
+mesh = SubResource("BoxMesh_thesi")
+
+[connection signal="area_entered" from="Area3DDrag" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3DDrag" to="." method="_on_area_3d_area_exited"]
+[connection signal="mouse_exited" from="Area3DDrag" to="." method="_on_area_3d_drag_mouse_exited"]
+[connection signal="area_entered" from="Area3DDrag/Area3DPlay" to="." method="_on_area_3d_play_area_entered"]
+[connection signal="area_exited" from="Area3DDrag/Area3DPlay" to="." method="_on_area_3d_play_area_exited"]
+[connection signal="mouse_exited" from="Area3DDrag/Area3DPlay" to="." method="_on_area_3d_play_mouse_exited"]
