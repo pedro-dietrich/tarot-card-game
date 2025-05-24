@@ -16,8 +16,8 @@ offset_bottom = 112.0
 
 [node name="Start" type="Button" parent="."]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_right = 94.0
+offset_bottom = 43.0
 
 [node name="ButtonShop" type="Control" parent="."]
 anchors_preset = 0

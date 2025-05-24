@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var table: Node3D
+@export var id: int
 
 const DRAG_HEIGHT: float = 0.1
 
@@ -16,22 +16,23 @@ func _process(_delta: float) -> void:
 			position = hit_info.position
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and !event.is_double_click():
 		if event.pressed:
 			dragging = true
-			$Card.position.y += DRAG_HEIGHT
+			#Comment this part because it does not dissable anything, but with it there is some bug that happen when drawing a new card
+			#$Card.position.y += DRAG_HEIGHT
 		else:
 			dragging = false
-			$Card.position.y -= DRAG_HEIGHT
+			#$Card.position.y -= DRAG_HEIGHT
+	# When you double_click on a card it emits a signal, which will enable the "play a card" move on the game
+	if event is InputEventMouseButton && event.is_double_click():
+		_on_card_double_clicked()
 
 func _on_area_3d_mouse_entered() -> void:
 	$Card/Outline.show()
 
 func _on_area_3d_mouse_exited() -> void:
 	$Card/Outline.hide()
-	if dragging:
-		$Card.position.y -= DRAG_HEIGHT
-		dragging = false
 
 func get_mouse_hit_on_table() -> Dictionary:
 	var camera: Camera3D = get_viewport().get_camera_3d()
@@ -45,3 +46,7 @@ func get_mouse_hit_on_table() -> Dictionary:
 	var result: Dictionary = space_state.intersect_ray(intersect_parameters)
 
 	return result
+	
+func _on_card_double_clicked() -> void:
+	#Create the emission of the signal
+	Events.emit_signal("_on_card_double_clicked", id)
