@@ -32,12 +32,13 @@ var waterCards: Array = range(15,29)
 var earthCards: Array = range(29,43)
 var windCards: Array = range(43,57)
 
-#Major you own
+#Major you own and gives you bonuses
 var majorOwned: Array[int] = []
 
 func _ready() -> void:
 	Events.connect("_on_card_double_clicked", _on_card_double_clicked)
-	major = randi_range(1,22)
+	major = randi_range(1,21)
+	#major = 1
 	print("Playing level with:", major)
 	draw_hand()
 
@@ -68,6 +69,9 @@ func _process(_delta: float) -> void:
 			remove_child(card)
 			card.queue_free()
 		# reset round
+		major = randi_range(1, 21)
+		while (majorOwned.has(major)): major = randi_range(1, 21)
+		print("Playing level with:", major)
 		hand_cards = []
 		played_cards = []
 		next_card_id = []
@@ -76,10 +80,6 @@ func _process(_delta: float) -> void:
 		last_card_played_points = 0
 		last_card_played = null
 		nb_windCard = 0
-		major = randi_range(1, 22)
-		while (majorOwned.has(major)):
-			major = randi_range(1, 22)
-		#print("Playing level with:", major)
 		
 		MajorArcana.newLevel()
 
@@ -109,8 +109,7 @@ func _on_card_double_clicked(card_id) -> void:
 	
 	#Verify of the rule of the major arcana authorize this play, if not do not add any point on the board and sacrifice the card
 	var canPlaycard: bool = MajorArcana.canPlayCard(major, played_card, last_card_played, played_cards.size())
-	if (canPlaycard):
-		play_card(played_card)
+	if (canPlaycard): play_card(played_card)
 	else:
 		played_cards.append(played_card)
 		played_card.position = Vector3(-70, -70, -70)
@@ -122,27 +121,20 @@ func draw_card(possition_z = null) -> void:
 	
 	#Generate a random id for the card and assure that this id was not already taken by a card this round
 	card.id = randi_range(1, 56)
-	while (next_card_id.has(card.id)):
+	while ((next_card_id.has(card.id)) and next_card_id.size() < 56):
 		card.id = randi_range(1, 56)
 	next_card_id.append(card.id)
 	
 	#Write on the card the number and element
 	var cardLabel: Node = card.find_child("CardLabel")
 	cardLabel.text = str(14 if (card.id % 14 == 0)  else card.id%14)
-	if (fireCards.has(card.id)):
-		cardLabel.text += " fire"
-	else :
-		if (waterCards.has(card.id)):
-			cardLabel.text += " water"
-		else:
-			if (earthCards.has(card.id)):
-				cardLabel.text += " earth"
-			else:
-				if (windCards.has(card.id)):
-					cardLabel.text += " wind"
-				else:
-					print("Error, id of the card not reconize")
-					get_tree().reload_current_scene()
+	if (fireCards.has(card.id)): cardLabel.text += " fire"
+	elif (waterCards.has(card.id)): cardLabel.text += " water"
+	elif (earthCards.has(card.id)): cardLabel.text += " earth"
+	elif (windCards.has(card.id)): cardLabel.text += " wind"
+	else:
+		print("Error, id of the card not reconize")
+		get_tree().reload_current_scene()
 	#Change the hand in function of the major Arcana (For now hide the number or element of a card
 	MajorArcana.majorAppliedEffectHand(major, card)
 	add_card_to_hand(card, possition_z)
@@ -192,23 +184,23 @@ func play_card(played_card) -> void:
 	print("points:", points)
 	#print("points obtain now:", last_card_played_points)
 
-#Caculate point for water cards
+
 func getWaterCardPoints(cardValue: float) -> float:
 	#print("bonus water card:", last_card_played_points * 0.5, "with:", last_card_played_points, "and", (cardValue - 14.0))
 	return (cardValue - 14.0) + last_card_played_points*0.5
 
-#Calculate points for earth cards
+
 func getEarthCardPoints(cardValue: float) -> float:
 	print(cardValue)
 	return (cardValue - 28.0) + 2.0*played_cards.size() 
 
-#Calculate points for wind cards
+
 func getWindCardPoints(cardValue: float) -> float:
 	nb_windCard += 1
 	print("the value of the card is ", cardValue - 42.0, "and the fibonacci add: ", 3.0*fibonacci(nb_windCard))
 	return (cardValue - 42.0) + 3.0*fibonacci(nb_windCard)
 
-#Calculate the fibonacci sequence
+
 func fibonacci(n: int) -> float:
 	if (n==0):
 		return 0.0
