@@ -1,4 +1,5 @@
 extends Node3D
+class_name Card
 
 @export var id: int
 
@@ -20,10 +21,10 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 		if event.pressed:
 			dragging = true
 			#Comment this part because it does not dissable anything, but with it there is some bug that happen when drawing a new card
-			#$Card.position.y += DRAG_HEIGHT
+			$Card.position.y += DRAG_HEIGHT
 		else:
 			dragging = false
-			#$Card.position.y -= DRAG_HEIGHT
+			$Card.position.y -= DRAG_HEIGHT
 	# When you double_click on a card it emits a signal, which will enable the "play a card" move on the game
 	if event is InputEventMouseButton && event.is_double_click():
 		_on_card_double_clicked()

@@ -25,31 +25,6 @@ const arcana_penalty_effect: Array[String] = [
 		"If the card played has a different element of the one before, the second one lose his elemental bonus",
 		"The player has 1 minute to play this round + 10 seconds per card "]
 
-#List of all bonuses you get by having the major arcana
-const arcana_bonus_effect: Array[String] = [
-		"No effects", 
-		"if 2 cards are played in sequence even/odd, the value of the odd card is doubled",
-		"the value of a earth card is doubled",
-		"The 2 cards played after this double the value",
-		"10% tolerance on the target (if the score to reach is 50, the round can be passed with 45)",
-		"if 2 cards are played in a increasing sequence, the points of the second card are doubled",
-		"if you never played two cards with the same element in a sequence, at the end is added the 35% of the points",
-		"odd cards are worth double",
-		"The score of a card is at a minimum of 10",
-		"Gain +50% points for each wind card",
-		"A random card double is value",
-		"All water cards are worth double",
-		"The 1 is worth 10 instead of 1",
-		"Cards 1-6 are worth +50%",
-		"All fire cards are worth double",
-		"The player can choose the value of 1 card",
-		"The player can play on more card in the round",
-		"Even cards are worth double",
-		"If the player correctly guess the element of the next card that will be drawn, that card triple is value",
-		"The player can replay the round 2 times in case of defeat",
-		"If a card is of the same element as the previous, it is worth +50%",
-		"The player"]
-
 var increasing: int = 0
 var randomEffectDone: bool = false
 
@@ -92,9 +67,10 @@ func majorAppliedToPoint(majorPenalty:int, cardPoint: float, card: Node, cardPla
 		6:
 			#If the element of the card is the same as the one played before
 			if (lastCardElem != 7 and cardElem == lastCardElem): return cardNum
+				
 		7:
 			#If the card is even
-			if !(int(cardNum) % 2): return cardPoint/2.0
+			if !(int(cardNum) % 2): return cardPoint*1.5
 		8:
 			#If the card make you gain more than 20 points
 			if (cardPoint > 20): return 20

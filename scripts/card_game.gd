@@ -81,6 +81,7 @@ func _process(_delta: float) -> void:
 		last_card_played = null
 		nb_windCard = 0
 		
+		
 		MajorArcana.newLevel()
 
 func draw_hand() -> void:
@@ -209,3 +210,23 @@ func fibonacci(n: int) -> float:
 		return 1.0
 	
 	return fibonacci(n-1) + fibonacci(n-2)
+
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 0.5
+
+
+func _on_area_3d_area_exited(area: Area3D) -> void:
+	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 1
+
+
+func _on_area_3d_play_area_entered(area: Area3D) -> void:
+	pass
+
+
+func _on_area_3d_play_body_entered(body: Node3D) -> void:
+	print("Enter")
+	if(body is Card):
+		_on_card_double_clicked(body.id)
+		var cardArea = body.find_child("CardArea3D")
+		body.remove_child(cardArea)
