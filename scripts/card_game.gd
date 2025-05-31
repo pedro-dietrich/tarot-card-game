@@ -12,7 +12,11 @@ var majorPath: Array = []
 
 #Level your currently playing
 var level: int = 0
-var points: int = 0
+var major: int
+var points: float = 0
+var last_card_played_points:float = 0
+var last_card_played: Node = null
+var nb_windCard: int = 0 
 
 # Arrays for cards (card node) in the hand, and the round
 # TODO: probably, create a class for this, instead of dict
@@ -20,20 +24,43 @@ var hand_cards: Array[Node] = []
 var played_cards: Array[Node] = []
 
 # TODO: implement card id generation, sequential at the moment
-var next_card_id: int = 0
+var next_card_id: Array[int] = []
+
+#Distribution of each elements
+var fireCards: Array = range(1,15)
+var waterCards: Array = range(15,29)
+var earthCards: Array = range(29,43)
+var windCards: Array = range(43,57)
+
+#Major you own and gives you bonuses
+var majorOwned: Array[int] = []
 
 func _ready() -> void:
 	Events.connect("_on_card_double_clicked", _on_card_double_clicked)
+	major = randi_range(1,21)
+	#major = 1
+	print("Playing level with:", major)
 	draw_hand()
 
 func _process(_delta: float) -> void:
 	#If you played all your card on this level you count your points, see if you win and restart everything
-	if (played_cards.size() >= LVL_MAX_CARDS_PLAYED[level]):
-		var victory = points - LVL_TARGET_SCORE[level]
+	var majorIs16: int = 1 if major == 16 else 0
+	if (level > 6):
+		print("last level not yet implemented")
+		get_tree().reload_current_scene()
+	if (played_cards.size() >= (LVL_MAX_CARDS_PLAYED[level] - majorIs16)):
+		#print("level is ", level)
+		var score: float = MajorArcana.ScoreToObtain(major, LVL_TARGET_SCORE[level])
+		var victory = points - score
 		print("Total points: '" + var_to_str(points) + "' ")
-		if (victory >= 0 ):
-			level += 1
-			g.money += victory
+		print("Score to obtain ", score, " Max score: ", score*1.2)
+		if (victory >= 0):
+			if !(major == 4 and points > score*1.2):
+				#print("You were in the interval")
+				level += 1
+				print("now you're on level", level)
+				g.money += victory
+				majorOwned.append(major)
 		#Remove all the instances of the card on the scene
 		for card in hand_cards:
 			remove_child(card)
@@ -42,10 +69,19 @@ func _process(_delta: float) -> void:
 			remove_child(card)
 			card.queue_free()
 		# reset round
+		major = randi_range(1, 21)
+		while (majorOwned.has(major)): major = randi_range(1, 21)
+		print("Playing level with:", major)
 		hand_cards = []
 		played_cards = []
+		next_card_id = []
 		draw_hand()
 		points = 0
+		last_card_played_points = 0
+		last_card_played = null
+		nb_windCard = 0
+		
+		MajorArcana.newLevel()
 
 func draw_hand() -> void:
 	#Generate the player hand
@@ -65,17 +101,42 @@ func _on_card_double_clicked(card_id) -> void:
 		return
 
 	var played_card: Node = hand_cards[index]
-	print("card with id '" + var_to_str(card_id) + "' played")
+	#print("card with id '" + var_to_str(card_id) + "' played")
 
-	var position_z: int = played_card.position.z
+	var position_z: float = played_card.position.z
 	hand_cards.remove_at(index)
-	play_card(played_card)
+	#print("The last played card is ", last_card_played)
+	
+	#Verify of the rule of the major arcana authorize this play, if not do not add any point on the board and sacrifice the card
+	var canPlaycard: bool = MajorArcana.canPlayCard(major, played_card, last_card_played, played_cards.size())
+	if (canPlaycard): play_card(played_card)
+	else:
+		played_cards.append(played_card)
+		played_card.position = Vector3(-70, -70, -70)
+	
 	draw_card(position_z)
 
 func draw_card(possition_z = null) -> void:
 	var card: Node = basicCardPath.instantiate()
-	card.id = next_card_id
-	next_card_id+=1
+	
+	#Generate a random id for the card and assure that this id was not already taken by a card this round
+	card.id = randi_range(1, 56)
+	while ((next_card_id.has(card.id)) and next_card_id.size() < 56):
+		card.id = randi_range(1, 56)
+	next_card_id.append(card.id)
+	
+	#Write on the card the number and element
+	var cardLabel: Node = card.find_child("CardLabel")
+	cardLabel.text = str(14 if (card.id % 14 == 0)  else card.id%14)
+	if (fireCards.has(card.id)): cardLabel.text += " fire"
+	elif (waterCards.has(card.id)): cardLabel.text += " water"
+	elif (earthCards.has(card.id)): cardLabel.text += " earth"
+	elif (windCards.has(card.id)): cardLabel.text += " wind"
+	else:
+		print("Error, id of the card not reconize")
+		get_tree().reload_current_scene()
+	#Change the hand in function of the major Arcana (For now hide the number or element of a card
+	MajorArcana.majorAppliedEffectHand(major, card)
 	add_card_to_hand(card, possition_z)
 
 func add_card_to_hand(card, possition_z = null) -> void:
@@ -87,7 +148,7 @@ func add_card_to_hand(card, possition_z = null) -> void:
 func position_card_in_hand(card, possition_z) -> void:
 	# TODO: validate if zpos logic is enough to position hand cards on table
 	var lvl_hand_size: int = g.baseNumCard + LVL_ADDITIONAL_CARDS[level]
-	var zpos: int = (hand_cards.size() - lvl_hand_size/2.0)*0.25
+	var zpos: float = (hand_cards.size() - lvl_hand_size/2.0)*0.25
 	#You need to replace the card on the same spot as the played card
 	if (possition_z):
 		zpos = possition_z
@@ -95,8 +156,56 @@ func position_card_in_hand(card, possition_z) -> void:
 	card.set_position(Vector3(-0.6, 0, zpos))
 
 func play_card(played_card) -> void:
-	var zpos: int = -1.2 + (played_cards.size()*0.25)
+	var zpos: float = -1.2 + (played_cards.size()*0.25)
+	#print("position of the played card" + str(zpos))
 	played_card.set_position(Vector3(0, 0, zpos))
 	played_cards.append(played_card)
-	# TODO: implement card point system
-	points += played_card.id
+	# Verify the element of the card and count point following the specific rule
+	if (fireCards.has(played_card.id)):
+		last_card_played_points = 5.0 + played_card.id
+	else :
+		if (waterCards.has(played_card.id)):
+			last_card_played_points = getWaterCardPoints(played_card.id)
+		else:
+			if (earthCards.has(played_card.id)):
+				last_card_played_points = getEarthCardPoints(played_card.id)
+			else:
+				if (windCards.has(played_card.id)):
+					last_card_played_points = getWindCardPoints(played_card.id)
+				else:
+					print("Error, id of the card not reconize")
+					get_tree().reload_current_scene()
+	
+	#Change the value of the card depending on the major arcana rule
+	last_card_played_points = MajorArcana.majorAppliedToPoint(major, last_card_played_points, played_card, played_cards.size(),  last_card_played, LVL_MAX_CARDS_PLAYED[level] )
+	points += last_card_played_points
+	#remember the last card played
+	last_card_played = played_card
+	print("points:", points)
+	#print("points obtain now:", last_card_played_points)
+
+
+func getWaterCardPoints(cardValue: float) -> float:
+	#print("bonus water card:", last_card_played_points * 0.5, "with:", last_card_played_points, "and", (cardValue - 14.0))
+	return (cardValue - 14.0) + last_card_played_points*0.5
+
+
+func getEarthCardPoints(cardValue: float) -> float:
+	print(cardValue)
+	return (cardValue - 28.0) + 2.0*played_cards.size() 
+
+
+func getWindCardPoints(cardValue: float) -> float:
+	nb_windCard += 1
+	print("the value of the card is ", cardValue - 42.0, "and the fibonacci add: ", 3.0*fibonacci(nb_windCard))
+	return (cardValue - 42.0) + 3.0*fibonacci(nb_windCard)
+
+
+func fibonacci(n: int) -> float:
+	if (n==0):
+		return 0.0
+	
+	if (n==1):
+		return 1.0
+	
+	return fibonacci(n-1) + fibonacci(n-2)
