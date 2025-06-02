@@ -1,5 +1,6 @@
 extends Node
 
+#TODO implements 15 and 18
 #List of all bonuses you get by having the major arcana
 const arcana_bonus_effect: Array[String] = [
 		"No effects", 
@@ -23,28 +24,12 @@ const arcana_bonus_effect: Array[String] = [
 		"The player can choose the element of 1 card ",
 		"The player can replay the round 2 times in case of defeat",
 		"if you two cards of a different element in sequence it gains X*20% in value, where X is the actual sequence of cards with a different element",
-		"The player can double the effect of an arcana"]
+		"The effect of a random passive arcana is double for the rest of the game"]
 
 var increasing: int = 0
 var randomEffectDone: bool = false
 var sequence: int = 0
 var sequenceSame: int = 0
-
-#Function call during the drawing of a card, take card of the penalties that are applied on the hand
-func majorAppliedEffectHandBonus(majorBonus: int, card: Node)-> void :
-	var cardLabel: Node = card.find_child("CardLabel")
-	var cardNum: String = cardLabel.text[0] + cardLabel.text[1]
-	var cardElem: String = cardLabel.text.erase(0, 2)
-	#Look which major arcana the player is facing
-	match majorBonus:
-		15:
-			#TODO later, not so easy to implements
-			return
-		18:
-			#TODO later, not so easy to implements
-			return
-		_ : 
-			return
 
 #Function called to apply effect that change value of cards
 func majorBonusAppliedToPoint(majorBonus:int, cardPoint: float, card: Node, cardPlayed: int, lastCard: Node, cardToPlay: int) -> float:

@@ -27,7 +27,7 @@ func _on_drop() -> void:
 		$CardArea3D.collision_layer = 2
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and !event.is_double_click():
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			dragging = true
 			#Comment this part because it does not dissable anything, but with it there is some bug that happen when drawing a new card

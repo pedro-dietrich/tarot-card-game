@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://up6kmrhmp5ch"]
+[gd_scene load_steps=6 format=3 uid="uid://up6kmrhmp5ch"]
 
 [ext_resource type="Script" uid="uid://845gnvrf53lb" path="res://scripts/card_game.gd" id="1_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bs3ar44yi25fc" path="res://scenes/table.tscn" id="2_mejnq"]
-[ext_resource type="Script" uid="uid://c6fcyw8lpwwke" path="res://scripts/area_3d.gd" id="3_cqj4n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_thesi"]
 size = Vector3(0.273926, 0.500641, 0.945862)
@@ -34,7 +33,6 @@ shadow_enabled = true
 [node name="Area3DDrag" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0259368, 0, 0)
 input_ray_pickable = false
-script = ExtResource("3_cqj4n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DDrag"]
 physics_interpolation_mode = 2
@@ -55,7 +53,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026, 0.00738252, 0)
 collision_layer = 2
 collision_mask = 2
 input_ray_pickable = false
-script = ExtResource("3_cqj4n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DDrag/Area3DPlay"]
 physics_interpolation_mode = 2

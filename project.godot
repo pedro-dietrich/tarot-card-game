@@ -19,4 +19,5 @@ config/icon="res://icon.svg"
 
 g="*res://scripts/global.gd"
 Events="*res://scripts/utils/events.gd"
-MajorArcana="*res://scripts/MajorArcanas/major_arcana.gd"
+MalusArcana="*res://scripts/MajorArcanas/major_arcana.gd"
+BonusesArcana="*res://scripts/MajorArcanas/bonuses.gd"

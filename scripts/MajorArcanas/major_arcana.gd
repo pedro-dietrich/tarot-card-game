@@ -1,5 +1,6 @@
 extends Node
 
+#TODO Implements 21
 #List of the penalties of each arcana when you fight them
 const arcana_penalty_effect: Array[String] = [
 		"For this round, your hand will be maxed at 3 cards, but, for each turn you will have “infinite” redraw of your entire hand, meaning you discard your hand and draw new cards. If you don’t have any more cards in your hand and deck, the round ends immediately.", 
