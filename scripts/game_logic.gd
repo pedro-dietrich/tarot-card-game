@@ -15,14 +15,14 @@ var majorPath: Array = []
 var level: int = 0
 var major: int
 var points: float = 0
-var last_card_played_points:float = 0
+var last_card_played_points: float = 0
 var last_card_played: Node = null
 var nb_windCard: int = 0 
 
 # Arrays for cards (card node) in the hand, and the round
 # TODO: probably, create a class for this, instead of dict
-var hand_cards: Array[Node] = []
-var played_cards: Array[Node] = []
+var hand_cards: Array[Card] = []
+var played_cards: Array[Card] = []
 
 # TODO: implement card id generation, sequential at the moment
 var next_card_id: Array[int] = []
@@ -114,7 +114,7 @@ func _on_card_played(card_id) -> void:
 		print("card with id '" + var_to_str(card_id) + "' not found in hand")
 		return
 
-	var played_card: Node = hand_cards[index]
+	var played_card: Card = hand_cards[index]
 	#print("card with id '" + var_to_str(card_id) + "' played")
 
 	var position_z: float = played_card.position.z
@@ -142,13 +142,15 @@ func replace_hand() -> void:
 		
 
 func draw_card(possition_z = null) -> void:
-	var card: Node = basicCardPath.instantiate()
+	var card: Card = basicCardPath.instantiate()
 	
 	#Generate a random id for the card and assure that this id was not already taken by a card this round
 	card.id = randi_range(1, 56)
 	while ((next_card_id.has(card.id)) and next_card_id.size() < 56):
 		card.id = randi_range(1, 56)
 	next_card_id.append(card.id)
+	
+	print("Card id is ", card.id)
 	
 	#Write on the card the number and element
 	var cardLabel: Node = card.find_child("CardLabel")
@@ -195,7 +197,7 @@ func play_card(played_card) -> void:
 				if (windCards.has(played_card.id)):
 					last_card_played_points = getWindCardPoints(played_card.id)
 				else:
-					print("Error, id of the card not reconize")
+					print("Error, ID of the card not recognized.")
 					get_tree().reload_current_scene()
 	
 	#Change the value of the card depending on the major arcana rule
@@ -216,7 +218,7 @@ func getWaterCardPoints(cardValue: float) -> float:
 
 func getEarthCardPoints(cardValue: float) -> float:
 	print(cardValue)
-	return (cardValue - 28.0) + 2.0*played_cards.size() 
+	return (cardValue - 28.0) + 2.0 * played_cards.size()
 
 
 func getWindCardPoints(cardValue: float) -> float:
@@ -240,13 +242,14 @@ func _on_area_3d_area_entered(_area: Area3D) -> void:
 func _on_area_3d_area_exited(_area: Area3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 1
 
-func _on_area_3d_play_area_entered(body: Node3D) -> void:
+func _on_area_3d_play_area_entered(area: Area3D) -> void:
 	print("Enter")
-	if("id" in body):
-		print(body.id)
-		_on_card_played(body.id)
-		var cardArea = body.find_child("CardArea3D")
-		body.remove_child(cardArea)
+	print("Card id is ", area.id)
+	if("id" in area):
+		print(area.id)
+		_on_card_played(area.id)
+		#var cardArea = area.find_child("CardArea3D")
+		#area.remove_child(cardArea)
 
 
 func _on_area_3d_drag_mouse_exited() -> void:

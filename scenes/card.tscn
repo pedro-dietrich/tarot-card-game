@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dpat4yk12d3gj"]
 
 [ext_resource type="PackedScene" uid="uid://cpa3yxjpui6s1" path="res://assets/card/card.gltf" id="1_d81rb"]
-[ext_resource type="Script" uid="uid://i0qid814ctb8" path="res://scripts/card.gd" id="2_6u4wf"]
-[ext_resource type="Script" uid="uid://ct64388q2es82" path="res://scripts/card_area_3d.gd" id="3_ktuci"]
+[ext_resource type="Script" uid="uid://7k0dc2bx1mda" path="res://scripts/cards/elemental/elemental_card.gd" id="2_ktuci"]
+[ext_resource type="Script" path="res://scripts/card_area_3d.gd" id="3_ktuci"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6u4wf"]
 
@@ -14,7 +14,7 @@ shading_mode = 0
 size = Vector3(0.401245, 0.01017, 0.240997)
 
 [node name="Card" instance=ExtResource("1_d81rb")]
-script = ExtResource("2_6u4wf")
+script = ExtResource("2_ktuci")
 
 [node name="Card" parent="." index="0"]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
