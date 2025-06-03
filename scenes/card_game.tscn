@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bs3ar44yi25fc" path="res://scenes/table.tscn" id="2_mejnq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_thesi"]
-size = Vector3(0.422241, 0.794716, 3.35281)
+size = Vector3(0.422241, 0.794716, 3.87726)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqj4n"]
 albedo_color = Color(0, 0.34902, 0.996078, 1)
@@ -43,7 +43,7 @@ shape = SubResource("BoxShape3D_thesi")
 debug_color = Color(0.512777, 0.576484, 0.058121, 0.42)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area3DDrag/CollisionShape3D"]
-transform = Transform3D(0.5, 0, 0, 0, 0.4, 0, 0, 0, 2, 0.02, 0, -0.009)
+transform = Transform3D(0.5, 0, 0, 0, 0.4, 0, 0, 0, 2.6, 0.02, 0, 0.1)
 rotation_edit_mode = 2
 material_override = SubResource("StandardMaterial3D_cqj4n")
 transparency = 1.0
@@ -58,7 +58,7 @@ input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3DPlay"]
 physics_interpolation_mode = 2
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.148005, -0.126599, -0.0453565)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.148005, -0.126599, 0.0143692)
 shape = SubResource("BoxShape3D_thesi")
 debug_color = Color(0.512777, 0.576484, 0.058121, 0.42)
 
