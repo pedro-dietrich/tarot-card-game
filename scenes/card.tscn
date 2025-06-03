@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpat4yk12d3gj"]
+[gd_scene load_steps=7 format=3 uid="uid://dpat4yk12d3gj"]
 
 [ext_resource type="PackedScene" uid="uid://cpa3yxjpui6s1" path="res://assets/card/card.gltf" id="1_d81rb"]
 [ext_resource type="Script" uid="uid://i0qid814ctb8" path="res://scripts/card.gd" id="2_6u4wf"]
+[ext_resource type="Script" uid="uid://ct64388q2es82" path="res://scripts/card_area_3d.gd" id="3_ktuci"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6u4wf"]
 
@@ -24,6 +25,9 @@ mesh = SubResource("BoxMesh_6u4wf")
 surface_material_override/0 = SubResource("StandardMaterial3D_ktuci")
 
 [node name="CardArea3D" type="Area3D" parent="." index="1"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("3_ktuci")
 
 [node name="CardCollisionShape" type="CollisionShape3D" parent="CardArea3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000305176, 0.00432205, -4.57764e-05)
