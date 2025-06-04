@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://up6kmrhmp5ch"]
 
 [ext_resource type="Script" uid="uid://845gnvrf53lb" path="res://scripts/card_game.gd" id="1_cqj4n"]
-[ext_resource type="PackedScene" uid="uid://bs3ar44yi25fc" path="res://scenes/table.tscn" id="2_mejnq"]
+[ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/base_table.tscn" id="2_mejnq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_thesi"]
 size = Vector3(0.273926, 0.500641, 0.945862)
@@ -14,21 +14,7 @@ albedo_color = Color(0, 0.34902, 0.996078, 1)
 [node name="CardGame" type="Node3D"]
 script = ExtResource("1_cqj4n")
 
-[node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 1.45, 0)
-fov = 60.0
-
-[node name="Light1" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 1.5)
-light_color = Color(1, 0.705882, 0.235294, 1)
-shadow_enabled = true
-
-[node name="Light2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, -1.5)
-light_color = Color(1, 0.705882, 0.235294, 1)
-shadow_enabled = true
-
-[node name="Table" parent="." instance=ExtResource("2_mejnq")]
+[node name="BaseTable" parent="." instance=ExtResource("2_mejnq")]
 
 [node name="Area3DDrag" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0259368, 0, 0)

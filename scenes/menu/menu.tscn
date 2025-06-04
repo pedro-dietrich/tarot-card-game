@@ -1,60 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqgjpsea4nr4x"]
 
-[ext_resource type="Script" uid="uid://y02si3iikvu4" path="res://scripts/menu/menu.gd" id="1_mcvr8"]
-[ext_resource type="Texture2D" uid="uid://dl7wl21glfjq1" path="res://assets/Menu/Menu_1.png" id="2_e0arn"]
+[ext_resource type="Script" uid="uid://dhtymlupr4if4" path="res://scripts/menu/menu.gd" id="1_mcvr8"]
+[ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/base_table.tscn" id="2_mcvr8"]
 
-[node name="Menu" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Menu" type="Node3D"]
 script = ExtResource("1_mcvr8")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_e0arn")
-expand_mode = 2
+[node name="BaseTable" parent="." instance=ExtResource("2_mcvr8")]
 
-[node name="Credits" type="Button" parent="."]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 5
-layout_mode = 2
-offset_left = 662.0
-offset_top = 317.0
-offset_right = 1037.0
-offset_bottom = 420.0
-theme_override_font_sizes/font_size = 69
-text = "Crédits"
-
-[node name="Quitter" type="Button" parent="."]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 5
-layout_mode = 2
-offset_left = 640.0
-offset_top = 452.0
-offset_right = 1037.0
-offset_bottom = 555.0
-theme_override_font_sizes/font_size = 69
-text = "Quitter"
-
-[node name="Start" type="Button" parent="."]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 5
-layout_mode = 2
-offset_left = 661.0
-offset_top = 184.0
-offset_right = 1032.0
-offset_bottom = 287.0
-theme_override_font_sizes/font_size = 69
-text = "Allons-y !"
-
-[connection signal="button_down" from="Credits" to="." method="_on_button_credits"]
-[connection signal="button_down" from="Quitter" to="." method="_on_button_quit"]
-[connection signal="button_down" from="Start" to="." method="_on_button_start"]
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.866025, -0.5, 0, 0.5, 0.866025, 1, 3.78552e-08, -2.18557e-08, 0, 0.3, 0)
+text = "Press <space> to start"
