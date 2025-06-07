@@ -22,7 +22,5 @@ func bonus_effect_on_points(active_cards: Array[ElementalCard], _max_active_card
 	var base_points: float = target_card.get_points(active_cards.slice(0, -1))
 
 	if(target_card is WaterCard):
-		var card_label: Label3D = target_card.find_child("CardLabel")
-		var card_num: int = int(card_label.text.substr(0, 2))
-		return float(card_num)
+		return 1.5 * base_points
 	return base_points

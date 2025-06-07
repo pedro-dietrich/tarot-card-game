@@ -22,5 +22,5 @@ func bonus_effect_on_points(active_cards: Array[ElementalCard], _max_active_card
 	var base_points: float = target_card.get_points(active_cards.slice(0, -1))
 
 	if(target_card is EarthCard):
-		return 2.0 * base_points
+		return 1.5 * base_points
 	return base_points
