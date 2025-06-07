@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://up6kmrhmp5ch"]
 
-[ext_resource type="Script" uid="uid://u7qmqtat680l" path="res://scripts/game_logic.gd" id="1_cqj4n"]
+[ext_resource type="Script" uid="uid://845gnvrf53lb" path="res://scripts/game_logic.gd" id="1_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bs3ar44yi25fc" path="res://scenes/table.tscn" id="2_mejnq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_thesi"]

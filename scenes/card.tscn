@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dpat4yk12d3gj"]
 
 [ext_resource type="PackedScene" uid="uid://cpa3yxjpui6s1" path="res://assets/card/card.gltf" id="1_d81rb"]
-[ext_resource type="Script" uid="uid://7k0dc2bx1mda" path="res://scripts/cards/elemental/elemental_card.gd" id="2_ktuci"]
-[ext_resource type="Script" path="res://scripts/card_area_3d.gd" id="3_ktuci"]
+[ext_resource type="Script" uid="uid://bjpfemycgr755" path="res://scripts/cards/elementals/elemental_card.gd" id="2_ktuci"]
+[ext_resource type="Script" uid="uid://c0lbwx3nfj1mw" path="res://scripts/card_area_3d.gd" id="3_ktuci"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6u4wf"]
 

@@ -10,20 +10,19 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			dragging = true
-			#Comment this part because it does not dissable anything, but with it there is some bug that happen when drawing a new card
+			# Comment this part because it does not dissable anything, but with it there is some bug that happen when drawing a new card
 			$Card.position.y += DRAG_HEIGHT
 			$CardArea3D.collision_layer = 1
-			print($CardArea3D.collision_layer, " == 1")
 		else:
 			dragging = false
 			$Card.position.y -= DRAG_HEIGHT
 			$CardArea3D.collision_layer = 2
-			print($CardArea3D.collision_layer, " == 2")
-	# When you double_click on a card it emits a signal, which will enable the "play a card" move on the game
 
-	# When you double click on a card it emits a signal, which will enable the "play a card" move on the game
-	if event is InputEventMouseButton && event.is_double_click():
-		_on_card_double_clicked()
+
+# Virtual function to be overridden by the specific cards types
+func get_points(_previous_cards: Array[ElementalCard]) -> float:
+	push_error("Method get_points() cannot be called on a base elemental card.")
+	return 0.0
 
 
 func get_mouse_hit_on_table() -> Dictionary:
@@ -38,7 +37,3 @@ func get_mouse_hit_on_table() -> Dictionary:
 	var result: Dictionary = space_state.intersect_ray(intersect_parameters)
 
 	return result
-
-
-func _on_card_double_clicked() -> void:
-	Events.emit_signal("_on_card_double_clicked", id)
