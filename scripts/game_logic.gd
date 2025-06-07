@@ -6,6 +6,7 @@ const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
 
 @onready var basic_card_path = preload("res://scenes/card.tscn")
 @onready var button = preload("res://scenes/button.tscn")
+@onready var basic_path3D_path = preload("res://scenes/home_path3D.tscn")
 
 # Level your currently playing
 var level: int = 0
@@ -16,6 +17,10 @@ var last_card_played: ElementalCard = null
 var wind_card_count: int = 0 
 
 var card_factory: CardFactory = CardFactory.new()
+
+var card_move: ElementalCard
+var card_move_to: Vector3
+var step: Vector3
 
 # Arrays for cards (card node) in the hand, and the round
 var hand_cards: Array[ElementalCard] = []
@@ -128,7 +133,7 @@ func replace_hand() -> void:
 	for i in range(hand_cards.size()) :
 		var card = hand_cards[i]
 		var lvl_hand_size: int = g.base_num_card + LVL_ADDITIONAL_CARDS[level]
-		var zpos: float = 0.25 * (i - lvl_hand_size / 2.0)
+		var zpos: float = 0.3 * (i - lvl_hand_size / 2.0)
 		card.position.z = zpos
 
 # Selects initial cards for the hand
@@ -164,17 +169,34 @@ func draw_card(_position_z = null) -> void:
 	add_card_to_hand(card)
 
 func add_card_to_hand(card) -> void:
-	position_card_in_hand(card)
-	hand_cards.append(card)
+	animate_move(card)
 	# Keep in memory which card you have to be able to move/delete them later
-	add_child(card)
+	hand_cards.append(card)
 
 func position_card_in_hand(card) -> void:
-	# TODO: validate if zpos logic is enough to position hand cards on table
-	var lvl_hand_size: int = g.base_num_card + LVL_ADDITIONAL_CARDS[level]
-	var zpos: float = 0.25 * (hand_cards.size() - lvl_hand_size / 2.0)
+	var deck_position: Vector3 = $Deck.position
+	card.set_position(deck_position)
 
-	card.set_position(Vector3(-0.6, 0, zpos))
+func animate_move(card) -> void:
+	var lvl_hand_size: int = g.base_num_card + LVL_ADDITIONAL_CARDS[level]
+	var zpos: float = 0.3 * (hand_cards.size() - lvl_hand_size / 2.0)
+	var base_position: Vector3 = $Deck.position
+	var zinipos: int = base_position.z
+	var zstep = -(zinipos - zpos) / 100
+	var zcurve = zinipos
+	
+	var path3D: Node = basic_path3D_path.instantiate()
+	
+	var path_follow3D: Node = path3D.get_child(0)
+	
+	var curve: Curve3D = Curve3D.new()
+	path3D.set_curve(curve)
+	while (zcurve < zpos):
+		curve.add_point(Vector3(-0.6, 0, zcurve))
+		zcurve += zstep
+	
+	path_follow3D.add_child(card)
+	add_child(path3D)
 
 func play_card(played_card: ElementalCard) -> void:
 	var zpos: float = -1.2 + (played_cards.size()*0.25)

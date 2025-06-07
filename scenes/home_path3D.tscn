@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bd7vykl7bkujj"]
+
+[ext_resource type="Script" uid="uid://dn3bef7qxllyb" path="res://scripts/path_follow.gd" id="1_h2ku1"]
+
+[sub_resource type="Curve3D" id="Curve3D_1lw11"]
+
+[node name="HomePath3d" type="Path3D"]
+curve = SubResource("Curve3D_1lw11")
+script = ExtResource("1_h2ku1")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="."]
+rotation_mode = 0
+loop = false
