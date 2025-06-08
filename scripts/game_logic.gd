@@ -55,23 +55,31 @@ func _process(_delta: float) -> void:
 
 	var point_balance: float = points - target_score
 	if(point_balance < 0.0):
-		lifes -= 1
-		if(lifes == 0):
-			print("\n=== Defeat ===")
-			get_tree().reload_current_scene()
+		handle_lose()
 	elif(!(malus_arcana is TheEmperor) or points <= 1.2 * target_score):
-		level += 1
-		g.money += int(point_balance)
+		handle_win_round(point_balance)
 
-		if(malus_arcana is TheSun):
-			lifes += 2
-		elif(malus_arcana is TheWorld):
-			var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size())
-			bonus_arcanas.append(bonus_arcanas[doubled_arcana_index])
-		else:
-			bonus_arcanas.append(malus_arcana)
+func handle_lose():
+	lifes -= 1
+	if(lifes == 0):
+		print("\n=== Defeat ===")
+	get_tree().reload_current_scene()
+
+func handle_win_round(point_balance: float):
+	level += 1
+	g.money += int(point_balance)
+
+	if(malus_arcana is TheSun):
+		lifes += 2
+	elif(malus_arcana is TheWorld):
+		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size())
+		bonus_arcanas.append(bonus_arcanas[doubled_arcana_index])
+	else:
+		bonus_arcanas.append(malus_arcana)
 	print("\nNext level: ", level, " - Lifes: ", lifes)
+	reset_round()
 
+func reset_round() -> void:
 	# Remove all the instances of the card on the scene
 	for card in hand_cards:
 		remove_child(card)
