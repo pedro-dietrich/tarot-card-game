@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://up6kmrhmp5ch"]
+[gd_scene load_steps=8 format=3 uid="uid://up6kmrhmp5ch"]
 
 [ext_resource type="Script" uid="uid://bt22d6bcxt13q" path="res://scripts/game_logic.gd" id="1_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/base_table.tscn" id="2_mejnq"]
+[ext_resource type="PackedScene" uid="uid://bwsral862leo2" path="res://scenes/Overlay.tscn" id="3_cqj4n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_thesi"]
 size = Vector3(0.422241, 0.794716, 3.87726)
@@ -56,6 +57,9 @@ transparency = 1.0
 cast_shadow = 0
 mesh = SubResource("BoxMesh_thesi")
 skin = SubResource("Skin_mejnq")
+
+[node name="Overlay" parent="." instance=ExtResource("3_cqj4n")]
+mouse_filter = 2
 
 [connection signal="area_entered" from="Area3DDrag" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3DDrag" to="." method="_on_area_3d_area_exited"]

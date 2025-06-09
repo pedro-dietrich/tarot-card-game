@@ -6,6 +6,7 @@ const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
 
 @onready var basic_card_path = preload("res://scenes/card.tscn")
 @onready var button = preload("res://scenes/button.tscn")
+@onready var menu_select = preload("res://scenes/menu/shop.tscn")
 
 # Level your currently playing
 var level: int = 0
@@ -33,13 +34,36 @@ var wind_cards: Array = range(43,57)
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = [TheDevil.new(), TheMoon.new()]
 
+enum {STATE_INTRO, STATE_MAIN, STATE_OUTRO}
+var current_state = STATE_INTRO
+
 var lifes: int = 1
 
 func _ready() -> void:
+	current_state = STATE_INTRO
 	next_malus()
-	draw_hand()
+	$Overlay.set_labels("Level " + str(level) + " - Arcana: " + malus_arcana.card_name, "Goal of the Level: Achieve " + str(malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])) + " points \n" + malus_arcana.arcana_penalty_description)
 
 func _process(_delta: float) -> void:
+	match current_state:
+		STATE_INTRO:
+			$Overlay.visibility_on()
+			if Input.is_action_just_pressed("ui_accept"):
+				current_state = STATE_MAIN
+				draw_hand()
+				var card: ElementalCard = basic_card_path.instantiate()
+				card.id = malus_arcana.id
+				var card_label: Label3D = card.find_child("CardLabel")
+				card_label.text = malus_arcana.card_name
+				card.position = Vector3(0, 0, 1)
+				add_child(card)
+				$Overlay.visibility_off()
+		STATE_MAIN:
+			handle_main_state()
+		STATE_OUTRO:
+			$Overlay.visibility_on()
+
+func handle_main_state() -> void:
 	if(level > 6):
 		print("Last level not yet implemented.")
 		get_tree().reload_current_scene()
@@ -63,7 +87,8 @@ func handle_lose():
 	lifes -= 1
 	if(lifes == 0):
 		print("\n=== Defeat ===")
-	get_tree().reload_current_scene()
+		reset_round()
+		get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
 
 func handle_win_round(point_balance: float):
 	level += 1
@@ -93,12 +118,12 @@ func reset_round() -> void:
 	hand_cards = []
 	played_cards = []
 	next_card_id = []
-	draw_hand()
 	points = 0
 	last_card_played_points = 0
 	last_card_played = null
 	wind_card_count = 0
 	malus_arcana.reset_effects()
+	current_state = STATE_INTRO
 
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
@@ -170,6 +195,7 @@ func draw_card(_position_z = null) -> void:
 	# Change the hand in function of the Malus Arcana
 	malus_arcana.malus_effect_on_hand(card)
 	add_card_to_hand(card)
+
 
 func add_card_to_hand(card) -> void:
 	position_card_in_hand(card)
