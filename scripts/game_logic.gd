@@ -169,7 +169,7 @@ func draw_card(_position_z = null) -> void:
 	malus_arcana.malus_effect_on_hand(card)
 	add_card_to_hand(card)
 
-func add_card_to_hand(card) -> void:
+func add_card_to_hand(card: ElementalCard) -> void:
 	# Keep in memory which card you have to be able to move/delete them later
 	hand_cards.append(card)
 	var lvl_hand_size: int = g.base_num_card + LVL_ADDITIONAL_CARDS[level]
@@ -177,31 +177,31 @@ func add_card_to_hand(card) -> void:
 	animate_move(card, -0.6, 0.03, zpos, $Deck.position)
 
 
-func position_card_in_hand(card) -> void:
+func position_card_in_hand(card: ElementalCard) -> void:
 	var deck_position: Vector3 = $Deck.position
 	card.set_position(deck_position)
 
-func animate_move(card, x, y_start, zpos, base_position) -> void:
+func animate_move(card: Card, x: float, y_start: float, zpos: float, base_position: Vector3) -> void:
 	var zinipos: float = base_position.z
-	var sign: int = 1 if (zpos < zinipos) else -1
-	#the different points that the card will follow
-	var zstep: float = sign * (zinipos - zpos) / 100
+	var pos_sign: int = 1 if (zpos < zinipos) else -1
+	# The different points that the card will follow
+	var zstep: float = pos_sign * (zinipos - zpos) / 100
 	var ystep: float = y_start/100
 	var zcurve: float = zinipos
 	var ycurve: float = y_start
-	
+
 	var path3D: Node = basic_path3D_path.instantiate()
 	path3D.card_id = card.id
-	
-	var path_follow3D: Node = path3D.find_child("PathFollow3D")
-	
+
+	var path_follow3D: PathFollow3D = path3D.find_child("PathFollow3D")
+
 	var curve: Curve3D = Curve3D.new()
 	path3D.set_curve(curve)
-	while (sign * zcurve > sign * zpos):
+	while(pos_sign * zcurve > pos_sign * zpos):
 		curve.add_point(Vector3(x, ycurve, zcurve))
 		zcurve += zstep
 		ycurve -= ystep
-	
+
 	path_follow3D.add_child(card)
 	path_follow3D.get_child_count()
 	add_child(path3D)
@@ -219,42 +219,41 @@ func play_card(played_card: ElementalCard) -> void:
 	last_card_played = played_card
 	print("Points: ", points)
 	
-	var zpos: float = -1.45 + (played_cards.size()*0.25)
+	var zpos: float = -1.45 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(0, 0, zpos))
 	#animate_move(played_card, 0, played_card.position.y, zpos, played_card.position)
 
 func _on_path_terminate(card_id: int) -> void:
 	var i: int = 0
-	var nbchild: int = get_child_count()
-	#Find the Path3D child that has emited the signal
-	while (i < nbchild and !(get_child(i) is Path3D and get_child(i).card_id == card_id)):
+	var child_count: int = get_child_count()
+	# Find the Path3D child that has emited the signal
+	while(i < child_count and !(get_child(i) is Path3D and get_child(i).card_id == card_id)):
 		i += 1
-	
-	if (i >= nbchild):
-		print("path not found")
+
+	if(i >= child_count):
+		print("Path not found.")
 		return
-	
+
 	var path3D: Node = get_child(i)
 	var path_follow: Node = path3D.find_child("PathFollow3D")
 	var child_index: int = 0
-	#Get the card child
-	while (child_index < path_follow.get_child_count() and !(path_follow.get_child(child_index) is ElementalCard)):
+	# Get the card child
+	while(child_index < path_follow.get_child_count() and !(path_follow.get_child(child_index) is ElementalCard)):
 		child_index += 1
 	var card: ElementalCard = path_follow.get_child(child_index) 
 	var curve_point: int = path3D.curve.get_point_count()
-	#Position the card where it should be
+	# Position the card where it should be
 	card.position = path3D.curve.get_point_position(curve_point - 1)
-	
-	#Remove the card from the child of Path3D and PathFollow3D and remove them from the scene
+
+	# Remove the card from the child of Path3D and PathFollow3D and remove them from the scene
 	path_follow.remove_child(card)
 	path3D.remove_child(path_follow)
 	path_follow.queue_free()
 	remove_child(path3D)
 	path3D.queue_free()
-	
-	#Add the final Card Object
+
+	# Add the final Card Object
 	add_child(card)
-	
 
 func _on_area_3d_area_entered(_area: Node3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 0.5
