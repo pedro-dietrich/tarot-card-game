@@ -1,7 +1,7 @@
 extends Node3D
 
 const LVL_ADDITIONAL_CARDS: Array[int] = [0,0, 0, 1, 1, 1, 2, 2]
-const LVL_MAX_CARDS_PLAYED: Array[int] = [4, 4, 5, 5, 6, 6, 7, 9]
+const LVL_MAX_CARDS_PLAYED: Array[int] = [3, 4, 5, 5, 6, 6, 7, 9]
 const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
 
 @onready var basic_card_path = preload("res://scenes/card.tscn")
@@ -15,6 +15,7 @@ var points: float = 0
 var last_card_played_points: float = 0
 var last_card_played: ElementalCard = null
 var wind_card_count: int = 0 
+var target_score: float = 0
 
 var card_factory: CardFactory = CardFactory.new()
 
@@ -34,34 +35,52 @@ var wind_cards: Array = range(43,57)
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = [TheDevil.new(), TheMoon.new()]
 
-enum {STATE_INTRO, STATE_MAIN, STATE_OUTRO}
+# TODO TEMP VAR
+var malus_arcana_node = null
+enum {STATE_INTRO, STATE_WAIT_START_CONFIRM, STATE_MAIN, STATE_OUTRO, STATE_WAIT_END_CONFIRM}
 var current_state = STATE_INTRO
 
 var lifes: int = 1
 
 func _ready() -> void:
 	current_state = STATE_INTRO
-	next_malus()
-	$Overlay.set_labels("Level " + str(level) + " - Arcana: " + malus_arcana.card_name, "Goal of the Level: Achieve " + str(malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])) + " points \n" + malus_arcana.arcana_penalty_description)
 
 func _process(_delta: float) -> void:
 	match current_state:
 		STATE_INTRO:
+			next_malus()
+			$Overlay.set_labels("Level " + str(level) + " - Arcana: " + malus_arcana.card_name, "Goal of the Level: Achieve " + str(malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])) + " points \n" + malus_arcana.arcana_penalty_description)
+			malus_arcana_node = basic_card_path.instantiate()
+			add_child(malus_arcana_node)
+			malus_arcana_node.id = malus_arcana.id
+			var card_label: Label3D = malus_arcana_node.find_child("CardLabel")
+			card_label.text = malus_arcana.card_name
+			malus_arcana_node.position = Vector3(-0.3, 0.3, 0)
+			malus_arcana_node.rotation_degrees = Vector3(0, 0, 30)
+			target_score = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
+
 			$Overlay.visibility_on()
+			$Overlay.update_points(0, target_score)
+			current_state = STATE_WAIT_START_CONFIRM
+		STATE_WAIT_START_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
-				current_state = STATE_MAIN
 				draw_hand()
-				var card: ElementalCard = basic_card_path.instantiate()
-				card.id = malus_arcana.id
-				var card_label: Label3D = card.find_child("CardLabel")
-				card_label.text = malus_arcana.card_name
-				card.position = Vector3(0, 0, 1)
-				add_child(card)
+				malus_arcana_node.position = Vector3(0.5, 0.3, -1)
 				$Overlay.visibility_off()
+				current_state = STATE_MAIN
 		STATE_MAIN:
 			handle_main_state()
 		STATE_OUTRO:
 			$Overlay.visibility_on()
+			$Overlay.set_labels("Level " + str(level) + " Completed")
+			current_state = STATE_WAIT_END_CONFIRM
+		STATE_WAIT_END_CONFIRM:
+			if Input.is_action_just_pressed("ui_accept"):
+				remove_child(malus_arcana_node)
+				malus_arcana_node.queue_free()
+				$Overlay.visibility_off()
+				current_state = STATE_INTRO
+				
 
 func handle_main_state() -> void:
 	if(level > 6):
@@ -73,7 +92,6 @@ func handle_main_state() -> void:
 	if(played_cards.size() < (LVL_MAX_CARDS_PLAYED[level] - is_tower)):
 		return
 
-	var target_score: float = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
 	if(bonus_arcanas.any(func(bonus: MajorArcanaCard) -> bool: return bonus is TheEmperor)):
 		target_score *= 0.9
 
@@ -82,6 +100,7 @@ func handle_main_state() -> void:
 		handle_lose()
 	elif(!(malus_arcana is TheEmperor) or points <= 1.2 * target_score):
 		handle_win_round(point_balance)
+		current_state = STATE_OUTRO
 
 func handle_lose():
 	lifes -= 1
@@ -123,7 +142,6 @@ func reset_round() -> void:
 	last_card_played = null
 	wind_card_count = 0
 	malus_arcana.reset_effects()
-	current_state = STATE_INTRO
 
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
@@ -211,7 +229,7 @@ func position_card_in_hand(card) -> void:
 	card.set_position(Vector3(-0.6, 0, zpos))
 
 func play_card(played_card: ElementalCard) -> void:
-	var zpos: float = -1.2 + (played_cards.size()*0.25)
+	var zpos: float = -1.2 + (played_cards.size()*0.35)
 	played_card.set_position(Vector3(0, 0, zpos))
 
 	last_card_played_points = played_card.get_points(played_cards)
@@ -225,6 +243,7 @@ func play_card(played_card: ElementalCard) -> void:
 
 	last_card_played = played_card
 	print("Points: ", points)
+	$Overlay.update_points(points, target_score)
 
 
 func _on_area_3d_area_entered(_area: Node3D) -> void:

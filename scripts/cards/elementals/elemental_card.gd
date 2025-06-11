@@ -4,7 +4,8 @@ func _process(_delta: float) -> void:
 	if dragging:
 		var hit_info: Dictionary = get_mouse_hit_on_table()
 		if hit_info:
-			position = hit_info.position
+			position.x = hit_info.position.x
+			position.z = hit_info.position.z
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -18,11 +19,11 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			$Card.position.y -= DRAG_HEIGHT
 			$CardArea3D.collision_layer = 2
 
-
 # Virtual function to be overridden by the specific cards types
 func get_points(_previous_cards: Array[ElementalCard]) -> float:
 	push_error("Method get_points() cannot be called on a base elemental card.")
-	return 0.0
+	# TODO NO
+	return id
 
 
 func get_mouse_hit_on_table() -> Dictionary:
