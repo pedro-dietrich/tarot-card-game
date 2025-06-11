@@ -174,14 +174,7 @@ func add_card_to_hand(card: ElementalCard) -> void:
 	hand_cards.append(card)
 	var lvl_hand_size: int = g.base_num_card
 	var zpos: float = 0.3 * (hand_cards.size() - ceil(lvl_hand_size / 2.0))
-	animate_path.animate_move(get_tree().current_scene, card, -0.6, 0.03, zpos, $Deck.position, basic_path3D_path)
-
-
-func position_card_in_hand(card: ElementalCard) -> void:
-	var deck_position: Vector3 = $Deck.position
-	card.set_position(deck_position)
-
-
+	animate_path.card_movement(get_tree().current_scene, card, 0.03, zpos, $Deck.position, basic_path3D_path)
 
 func play_card(played_card: ElementalCard) -> void:
 	last_card_played_points = played_card.get_points(played_cards)
@@ -198,7 +191,6 @@ func play_card(played_card: ElementalCard) -> void:
 	
 	var zpos: float = -1.45 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(0, 0, zpos))
-	#animate_move(played_card, 0, played_card.position.y, zpos, played_card.position)
 	
 func _on_path_terminate(card_id: int):
 	animate_path._on_path_terminate(get_tree().current_scene, card_id)

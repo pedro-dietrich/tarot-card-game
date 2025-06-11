@@ -2,13 +2,16 @@ extends Node
 
 class_name AnimatePath
 
-func animate_move(game_scene: Node3D, card: Card, x: float, y_start: float, zpos: float, base_position: Vector3, basic_path3D_path) -> void:
-	var zinipos: float = base_position.z
-	var pos_sign: int = 1 if (zpos < zinipos) else -1
+var sample = 100
+
+#Generate the animation of the card from y_start to 0 and base_position.z to e_end in a direct line
+func card_movement(game_scene: Node3D, card: Card, y_start: float, z_end: float, base_position: Vector3, basic_path3D_path) -> void:
+	var z_start: float = base_position.z
+	var pos_sign: int = 1 if (z_end < z_start) else -1
 	# The different points that the card will follow
-	var zstep: float = pos_sign * (zinipos - zpos) / 100
-	var ystep: float = y_start/100
-	var zcurve: float = zinipos
+	var zstep: float = pos_sign * (z_start - z_end) / sample
+	var ystep: float = y_start / sample
+	var zcurve: float = z_start
 	var ycurve: float = y_start
 
 	var path3D: Path3D = basic_path3D_path.instantiate()
@@ -19,8 +22,8 @@ func animate_move(game_scene: Node3D, card: Card, x: float, y_start: float, zpos
 
 	var curve: Curve3D = Curve3D.new()
 	path3D.set_curve(curve)
-	while(pos_sign * zcurve > pos_sign * zpos):
-		curve.add_point(Vector3(x, ycurve, zcurve))
+	while(pos_sign * zcurve > pos_sign * z_end):
+		curve.add_point(Vector3(base_position.x, ycurve, zcurve))
 		zcurve += zstep
 		ycurve -= ystep
 
