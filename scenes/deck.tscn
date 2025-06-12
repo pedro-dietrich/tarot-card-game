@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://blhkc7ambsvat"]
+
+[ext_resource type="PackedScene" uid="uid://cpa3yxjpui6s1" path="res://assets/card/card.gltf" id="1_sdhao"]
+
+[node name="Deck" type="Node3D"]
+
+[node name="card" parent="." instance=ExtResource("1_sdhao")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
+
+[node name="card2" parent="." instance=ExtResource("1_sdhao")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.005, 0)
+
+[node name="card3" parent="." instance=ExtResource("1_sdhao")]
+transform = Transform3D(1, 0, 0, 0, -1, 2.62268e-07, 0, -2.62268e-07, -1, 0, 0.01, 0)
+
+[node name="card4" parent="." instance=ExtResource("1_sdhao")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.015, 0)
+
+[node name="card5" parent="." instance=ExtResource("1_sdhao")]
+transform = Transform3D(1, 0, 0, 0, -1, 7.86805e-07, 0, -7.86805e-07, -1, 0, 0.02, 0)
+
+[node name="card6" parent="." instance=ExtResource("1_sdhao")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0.025, 0)

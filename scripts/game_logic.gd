@@ -1,12 +1,14 @@
 extends Node3D
 
-const LVL_ADDITIONAL_CARDS: Array[int] = [0,0, 0, 1, 1, 1, 2, 2]
-const LVL_MAX_CARDS_PLAYED: Array[int] = [3, 4, 5, 5, 6, 6, 7, 9]
+const LVL_MAX_CARDS_PLAYED: Array[int] = [4, 4, 5, 5, 6, 6, 7, 9]
 const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
 
 @onready var basic_card_path = preload("res://scenes/card.tscn")
 @onready var button = preload("res://scenes/button.tscn")
 @onready var menu_select = preload("res://scenes/menu/shop.tscn")
+@onready var basic_path3D_path = preload("res://scenes/home_path3D.tscn")
+
+var animate_path: AnimatePath = AnimatePath.new()
 
 # Level your currently playing
 var level: int = 0
@@ -18,6 +20,10 @@ var wind_card_count: int = 0
 var target_score: float = 0
 
 var card_factory: CardFactory = CardFactory.new()
+
+var card_move: ElementalCard
+var card_move_to: Vector3
+var step: Vector3
 
 # Arrays for cards (card node) in the hand, and the round
 var hand_cards: Array[ElementalCard] = []
@@ -44,6 +50,7 @@ var lifes: int = 1
 
 func _ready() -> void:
 	current_state = STATE_INTRO
+	Events.connect("path_terminate", _on_path_terminate)
 
 func _process(_delta: float) -> void:
 	match current_state:
@@ -178,14 +185,14 @@ func next_malus() -> void:
 func replace_hand() -> void:
 	for i in range(hand_cards.size()) :
 		var card = hand_cards[i]
-		var lvl_hand_size: int = g.base_num_card + LVL_ADDITIONAL_CARDS[level]
-		var zpos: float = 0.25 * (i - lvl_hand_size / 2.0)
+		var lvl_hand_size: int = g.base_num_card 
+		var zpos: float = 0.3 * (i + 1 - ceil(lvl_hand_size / 2.0))
 		card.position.z = zpos
 
 # Selects initial cards for the hand
 func draw_hand() -> void:
 	hand_cards = []
-	var lvl_hand_size: int = g.base_num_card + LVL_ADDITIONAL_CARDS[level]
+	var lvl_hand_size: int = g.base_num_card 
 	for i in lvl_hand_size:
 		draw_card()
 
@@ -198,7 +205,6 @@ func draw_card(_position_z = null) -> void:
 		card.id = randi_range(1, 56)
 	next_card_id.append(card.id)
 
-	print("Card ID is ", card.id)
 
 	# Write on the card the number and element
 	var card_label: Label3D = card.find_child("CardLabel")
@@ -214,24 +220,14 @@ func draw_card(_position_z = null) -> void:
 	malus_arcana.malus_effect_on_hand(card)
 	add_card_to_hand(card)
 
-
-func add_card_to_hand(card) -> void:
-	position_card_in_hand(card)
-	hand_cards.append(card)
+func add_card_to_hand(card: ElementalCard) -> void:
 	# Keep in memory which card you have to be able to move/delete them later
-	add_child(card)
-
-func position_card_in_hand(card) -> void:
-	# TODO: validate if zpos logic is enough to position hand cards on table
-	var lvl_hand_size: int = g.base_num_card + LVL_ADDITIONAL_CARDS[level]
-	var zpos: float = 0.25 * (hand_cards.size() - lvl_hand_size / 2.0)
-
-	card.set_position(Vector3(-0.6, 0, zpos))
+	hand_cards.append(card)
+	var lvl_hand_size: int = g.base_num_card
+	var zpos: float = 0.3 * (hand_cards.size() - ceil(lvl_hand_size / 2.0))
+	animate_path.card_movement(get_tree().current_scene, card, 0.03, zpos, $Deck.position, basic_path3D_path)
 
 func play_card(played_card: ElementalCard) -> void:
-	var zpos: float = -1.2 + (played_cards.size()*0.35)
-	played_card.set_position(Vector3(0, 0, zpos))
-
 	last_card_played_points = played_card.get_points(played_cards)
 	played_cards.append(played_card)
 
@@ -245,6 +241,11 @@ func play_card(played_card: ElementalCard) -> void:
 	print("Points: ", points)
 	$Overlay.update_points(points, target_score)
 
+	var zpos: float = -1.45 + (0.25 * played_cards.size())
+	played_card.set_position(Vector3(0, 0, zpos))
+	
+func _on_path_terminate(card_id: int):
+	animate_path._on_path_terminate(get_tree().current_scene, card_id)
 
 func _on_area_3d_area_entered(_area: Node3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 0.5
