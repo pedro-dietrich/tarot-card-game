@@ -22,9 +22,9 @@ func malus_effect_on_hand(_card: ElementalCard) -> void:
 # Calculates the last played card points, considering the Malus Arcana influence
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
 	var target_card: ElementalCard = active_cards.back()
-	return target_card.get_points(active_cards.slice(0, -1))
+	return target_card.element.get_points(active_cards.slice(0, -1))
 
 # Calculates the last played card points, considering the Bonus Arcana influence
 func bonus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
 	var target_card: ElementalCard = active_cards.back()
-	return target_card.get_points(active_cards.slice(0, -1))
+	return target_card.element.get_points(active_cards.slice(0, -1))

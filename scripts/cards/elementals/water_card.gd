@@ -1,6 +1,6 @@
-class_name WaterCard extends ElementalCard
+class_name Water extends Element
 
 func get_points(played_cards: Array[ElementalCard]) -> float:
 	if played_cards.size() == 0:
-		return id - 14.0
-	return (id - 14.0) + 0.5 * played_cards.back().get_points()
+		return id
+	return id + 0.5 * played_cards.back().element.get_points(played_cards)

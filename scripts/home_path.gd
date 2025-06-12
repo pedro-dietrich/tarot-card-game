@@ -18,4 +18,5 @@ func _process(delta: float) -> void:
 		card.rotation = initial_rotation * (1 - path_follow.progress_ratio) + final_rotation * path_follow.progress_ratio
 	if (path_follow.progress_ratio >= 1.0):
 		Events.emit_signal("path_terminate", card_id)
-		card.rotation = final_rotation
+		if (card):
+			card.rotation = final_rotation

@@ -1,4 +1,4 @@
-class_name EarthCard extends ElementalCard
+class_name Earth extends Element
 
 func get_points(played_cards: Array[ElementalCard]) -> float:
-	return (id - 28.0) + 2.0 * played_cards.size()
+	return id + 2.0 * played_cards.size() + 2.0
