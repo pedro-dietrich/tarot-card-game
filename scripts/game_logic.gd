@@ -41,6 +41,7 @@ var wind_cards: Array = range(43,57)
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = [TheDevil.new(), TheMoon.new()]
 
+# State machine logic
 enum {STATE_INTRO, STATE_WAIT_START_CONFIRM, STATE_MAIN, STATE_OUTRO, STATE_WAIT_END_CONFIRM}
 var current_state = STATE_INTRO
 
@@ -53,54 +54,64 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	match current_state:
 		STATE_INTRO:
+			if(level > 6):
+				print("Last level not yet implemented.")
+				get_tree().reload_current_scene()
 			next_malus()
 			target_score = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
 			$Overlay.write_intro_labels(str(level), malus_arcana.card_name, str(target_score), malus_arcana.arcana_penalty_description)
-			$Overlay.write_points(str(0), str(target_score))
+			$Overlay.write_points(0, target_score)
 			current_state = STATE_WAIT_START_CONFIRM
+
 		STATE_WAIT_START_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
 				draw_hand()
-				$Overlay.remove_labels()
 				$Overlay.set_labels(malus_arcana.card_name)
 				current_state = STATE_MAIN
+
 		STATE_MAIN:
-			handle_main_state()
+			if is_end_of_round():
+				if (is_round_won()):
+					handle_win_round()
+					current_state = STATE_OUTRO
+				else:
+					handle_lose_round()
+					get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
+
 		STATE_OUTRO:
 			$Overlay.set_labels("Level " + str(level) + " Completed")
 			current_state = STATE_WAIT_END_CONFIRM
+
 		STATE_WAIT_END_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
 				current_state = STATE_INTRO
 
-func handle_main_state() -> void:
-	if(level > 6):
-		print("Last level not yet implemented.")
-		get_tree().reload_current_scene()
-
+func is_end_of_round() -> bool:
 	# Check if all cards were played
 	var is_tower: int = 1 if(malus_arcana is TheTower) else 0
 	if(played_cards.size() < (LVL_MAX_CARDS_PLAYED[level] - is_tower)):
-		return
+		return false
+	return true
 
+func is_round_won() -> bool:
+	# TODO: is this code still needed?
 	if(bonus_arcanas.any(func(bonus: MajorArcanaCard) -> bool: return bonus is TheEmperor)):
 		target_score *= 0.9
+	if (malus_arcana is TheEmperor):
+		target_score *= 1.2
 
-	var point_balance: float = points - target_score
-	if(point_balance < 0.0):
-		handle_lose()
-	elif(!(malus_arcana is TheEmperor) or points <= 1.2 * target_score):
-		handle_win_round(point_balance)
-		current_state = STATE_OUTRO
+	if(points > target_score):
+		return true
+	return false
 
-func handle_lose():
+func handle_lose_round():
 	lifes -= 1
 	if(lifes == 0):
 		print("\n=== Defeat ===")
 		reset_round()
-		get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
 
-func handle_win_round(point_balance: float):
+func handle_win_round():
+	var point_balance: float = points - target_score
 	level += 1
 	g.money += int(point_balance)
 
@@ -221,7 +232,7 @@ func play_card(played_card: ElementalCard) -> void:
 
 	last_card_played = played_card
 	print("Points: ", points)
-	$Overlay.update_points(points, target_score)
+	$Overlay.write_points(points, target_score)
 
 	var zpos: float = -1.45 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(0, 0, zpos))
