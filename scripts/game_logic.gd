@@ -55,16 +55,14 @@ func _process(_delta: float) -> void:
 		STATE_INTRO:
 			next_malus()
 			target_score = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
-
-			$Overlay.set_labels("Level " + str(level) + " - Arcana: " + malus_arcana.card_name, "Goal of the Level: Achieve " + str(malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])) + " points \n" + malus_arcana.arcana_penalty_description)
-			$Overlay.update_points(0, target_score)
+			$Overlay.write_intro_labels(str(level), malus_arcana.card_name, str(target_score), malus_arcana.arcana_penalty_description)
+			$Overlay.write_points(str(0), str(target_score))
 			current_state = STATE_WAIT_START_CONFIRM
 		STATE_WAIT_START_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
 				draw_hand()
 				$Overlay.remove_labels()
 				$Overlay.set_labels(malus_arcana.card_name)
-
 				current_state = STATE_MAIN
 		STATE_MAIN:
 			handle_main_state()
@@ -189,7 +187,6 @@ func draw_card(_position_z = null) -> void:
 	while((next_card_id.has(card.id)) and next_card_id.size() < 56):
 		card.id = randi_range(1, 56)
 	next_card_id.append(card.id)
-
 
 	# Write on the card the number and element
 	var card_label: Label3D = card.find_child("CardLabel")
