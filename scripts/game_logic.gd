@@ -41,8 +41,6 @@ var wind_cards: Array = range(43,57)
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = [TheDevil.new(), TheMoon.new()]
 
-# TODO TEMP VAR
-var malus_arcana_node = null
 enum {STATE_INTRO, STATE_WAIT_START_CONFIRM, STATE_MAIN, STATE_OUTRO, STATE_WAIT_END_CONFIRM}
 var current_state = STATE_INTRO
 
@@ -56,13 +54,6 @@ func _process(_delta: float) -> void:
 	match current_state:
 		STATE_INTRO:
 			next_malus()
-			malus_arcana_node = basic_card_path.instantiate()
-			add_child(malus_arcana_node)
-			malus_arcana_node.id = malus_arcana.id
-			var card_label: Label3D = malus_arcana_node.find_child("CardLabel")
-			card_label.text = malus_arcana.card_name
-			malus_arcana_node.position = Vector3(-0.3, 0.3, 0)
-			malus_arcana_node.rotation_degrees = Vector3(0, 0, 30)
 			target_score = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
 
 			$Overlay.set_labels("Level " + str(level) + " - Arcana: " + malus_arcana.card_name, "Goal of the Level: Achieve " + str(malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])) + " points \n" + malus_arcana.arcana_penalty_description)
@@ -71,8 +62,9 @@ func _process(_delta: float) -> void:
 		STATE_WAIT_START_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
 				draw_hand()
-				malus_arcana_node.position = Vector3(0.5, 0.3, -1)
 				$Overlay.remove_labels()
+				$Overlay.set_labels(malus_arcana.card_name)
+
 				current_state = STATE_MAIN
 		STATE_MAIN:
 			handle_main_state()
@@ -81,8 +73,6 @@ func _process(_delta: float) -> void:
 			current_state = STATE_WAIT_END_CONFIRM
 		STATE_WAIT_END_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
-				remove_child(malus_arcana_node)
-				malus_arcana_node.queue_free()
 				current_state = STATE_INTRO
 
 func handle_main_state() -> void:
@@ -136,7 +126,6 @@ func reset_round() -> void:
 		card.queue_free()
 
 	# Reset round
-	next_malus()
 	hand_cards = []
 	played_cards = []
 	next_card_id = []
