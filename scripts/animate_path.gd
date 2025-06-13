@@ -30,8 +30,7 @@ func card_movement(game_scene: Node3D, card: Card, y_start: float, z_end: float,
 	path_follow3D.add_child(card)
 	path_follow3D.get_child_count()
 	game_scene.add_child(path3D)
-	
-	
+
 func _on_path_terminate(game_scene: Node3D, card_id: int) -> void:
 	var i: int = 0
 	var child_count: int = game_scene.get_child_count()

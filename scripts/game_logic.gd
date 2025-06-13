@@ -84,7 +84,6 @@ func _process(_delta: float) -> void:
 				remove_child(malus_arcana_node)
 				malus_arcana_node.queue_free()
 				current_state = STATE_INTRO
-				
 
 func handle_main_state() -> void:
 	if(level > 6):
