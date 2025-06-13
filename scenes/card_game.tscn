@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bt22d6bcxt13q" path="res://scripts/game_logic.gd" id="1_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/base_table.tscn" id="2_mejnq"]
 [ext_resource type="PackedScene" uid="uid://blhkc7ambsvat" path="res://scenes/deck.tscn" id="3_cqj4n"]
-[ext_resource type="PackedScene" uid="uid://bwsral862leo2" path="res://scenes/Overlay.tscn" id="4_thesi"]
+[ext_resource type="PackedScene" uid="uid://bwsral862leo2" path="res://scenes/overlay.tscn" id="4_thesi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_thesi"]
 size = Vector3(0.422241, 0.794716, 3.87726)

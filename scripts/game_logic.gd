@@ -56,7 +56,6 @@ func _process(_delta: float) -> void:
 	match current_state:
 		STATE_INTRO:
 			next_malus()
-			$Overlay.set_labels("Level " + str(level) + " - Arcana: " + malus_arcana.card_name, "Goal of the Level: Achieve " + str(malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])) + " points \n" + malus_arcana.arcana_penalty_description)
 			malus_arcana_node = basic_card_path.instantiate()
 			add_child(malus_arcana_node)
 			malus_arcana_node.id = malus_arcana.id
@@ -66,26 +65,24 @@ func _process(_delta: float) -> void:
 			malus_arcana_node.rotation_degrees = Vector3(0, 0, 30)
 			target_score = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
 
-			$Overlay.visibility_on()
+			$Overlay.set_labels("Level " + str(level) + " - Arcana: " + malus_arcana.card_name, "Goal of the Level: Achieve " + str(malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])) + " points \n" + malus_arcana.arcana_penalty_description)
 			$Overlay.update_points(0, target_score)
 			current_state = STATE_WAIT_START_CONFIRM
 		STATE_WAIT_START_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
 				draw_hand()
 				malus_arcana_node.position = Vector3(0.5, 0.3, -1)
-				$Overlay.visibility_off()
+				$Overlay.remove_labels()
 				current_state = STATE_MAIN
 		STATE_MAIN:
 			handle_main_state()
 		STATE_OUTRO:
-			$Overlay.visibility_on()
 			$Overlay.set_labels("Level " + str(level) + " Completed")
 			current_state = STATE_WAIT_END_CONFIRM
 		STATE_WAIT_END_CONFIRM:
 			if Input.is_action_just_pressed("ui_accept"):
 				remove_child(malus_arcana_node)
 				malus_arcana_node.queue_free()
-				$Overlay.visibility_off()
 				current_state = STATE_INTRO
 				
 
