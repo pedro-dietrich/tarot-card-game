@@ -44,6 +44,11 @@ func _on_path_terminate(game_scene: Node3D, card_id: int) -> void:
 
 	var path3D: Path3D = game_scene.get_child(i)
 	var path_follow: PathFollow3D = path3D.find_child("PathFollow3D")
+	if (path_follow.get_child_count() == 0):
+		# TODO evaluate why this happens
+		print("Path follow empty")
+		return
+
 	var child_index: int = 0
 	# Get the card child
 	while(child_index < path_follow.get_child_count() and !(path_follow.get_child(child_index) is ElementalCard)):
