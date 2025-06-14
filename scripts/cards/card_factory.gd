@@ -1,10 +1,10 @@
 class_name CardFactory extends Node
 
 const ELEMENT_CLASSES: Array[Resource] = [
-	preload("res://scripts/cards/elementals/fire_card.gd"),
-	preload("res://scripts/cards/elementals/water_card.gd"),
-	preload("res://scripts/cards/elementals/earth_card.gd"),
-	preload("res://scripts/cards/elementals/wind_card.gd")
+	preload("res://scripts/cards/elementals/fire.gd"),
+	preload("res://scripts/cards/elementals/water.gd"),
+	preload("res://scripts/cards/elementals/earth.gd"),
+	preload("res://scripts/cards/elementals/wind.gd")
 ]
 
 const MAJOR_ARCANA_CARD_CLASSES: Array[Resource] = [
@@ -32,16 +32,16 @@ const MAJOR_ARCANA_CARD_CLASSES: Array[Resource] = [
 	preload("res://scripts/cards/major_arcanas/the_world.gd")
 ]
 
-func random_elemental_card(card: ElementalCard, next_card_id: Array[int]) -> void:
-	var card_type_index: int = randi() % ELEMENT_CLASSES.size()
+func assign_random_element_to_card(card: ElementalCard, next_card_id: Array[int], deck: Array) -> void:
+	var draw_card: int = randi() % deck.size()
+	card.id = deck[draw_card]
+	deck.remove_at(draw_card)
+	
+	var card_type_index: int = (card.id - 1) / 14
 	card.element = ELEMENT_CLASSES[card_type_index].new()
 	
-	var card_num:int = randi() % 14 + 1 
-	card.element.id = card_num
-	card.id = card_num + card_type_index * 14
-	
-	while((next_card_id.has(card.id)) and next_card_id.size() < 56):
-		random_elemental_card(card, next_card_id)
+	var card_num:int =  (card.id - 1) % 14
+	card.element.id = card_num + 1
 
 # Instantiates a random Major Arcana, not including The Fool
 func random_major_arcana_card() -> MajorArcanaCard:

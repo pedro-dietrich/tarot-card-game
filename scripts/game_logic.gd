@@ -16,6 +16,7 @@ var points: float = 0
 var last_card_played_points: float = 0
 var last_card_played: ElementalCard = null
 var wind_card_count: int = 0 
+var deck: Array = range(1, 56) 
 
 var card_factory: CardFactory = CardFactory.new()
 
@@ -149,19 +150,14 @@ func draw_card(_position_z = null) -> void:
 	var card: ElementalCard = basic_card_path.instantiate()
 
 	# Generate a random id for the card and assure that this id was not already taken by a card this round
-	card_factory.random_elemental_card(card, next_card_id)
+	card_factory.assign_random_element_to_card(card, next_card_id, deck)
 	next_card_id.append(card.id)
 
 	# Write on the card the number and element
 	var card_label: Label3D = card.find_child("CardLabel")
 	card_label.text = str(card.element.id)
-	if(card.element is Fire): card_label.text += " fire"
-	elif(card.element is Water): card_label.text += " water"
-	elif(card.element is Earth): card_label.text += " earth"
-	elif(card.element is Wind): card_label.text += " wind"
-	else:
-		print("Error, card ID not recognized.")
-		get_tree().reload_current_scene()
+	card_label.text += card.element.get_label_text()
+	
 	# Change the hand in function of the Malus Arcana
 	malus_arcana.malus_effect_on_hand(card)
 	add_card_to_hand(card)

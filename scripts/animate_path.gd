@@ -54,15 +54,13 @@ func _on_path_terminate(game_scene: Node3D, card_id: int) -> void:
 	# Position the card where it should be
 	if (card):
 		card.position = path3D.curve.get_point_position(curve_point - 1)
-
-	# Remove the card from the child of Path3D and PathFollow3D and remove them from the scene
-	if (card):
+		# Remove the card from the child of Path3D and PathFollow3D and remove them from the scene
 		path_follow.remove_child(card)
+		# Add the final Card Object
+		game_scene.add_child(card)
+		
+
 	path3D.remove_child(path_follow)
 	path_follow.queue_free()
 	game_scene.remove_child(path3D)
 	path3D.queue_free()
-
-	# Add the final Card Object
-	if (card):
-		game_scene.add_child(card)

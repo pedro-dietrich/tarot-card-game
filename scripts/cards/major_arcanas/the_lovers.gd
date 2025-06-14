@@ -26,7 +26,7 @@ func bonus_effect_on_points(active_cards: Array[ElementalCard], _max_active_card
 	var target_card: ElementalCard = active_cards.back()
 	var base_points: float = target_card.element.get_points(active_cards.slice(0, -1))
 
-	if(active_cards.size() > 1 and typeof(target_card.element) != typeof(active_cards[-2].elemeent)):
+	if(active_cards.size() > 1 and typeof(target_card.element) != typeof(active_cards[-2].element)):
 		sequence += 0.2
 		return base_points * (1.0 + sequence)
 	return base_points

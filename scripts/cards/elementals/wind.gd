@@ -10,6 +10,9 @@ func get_points(played_cards: Array[ElementalCard]) -> float:
 
 
 func fibonacci(n: int) -> int:
-	if(n <= 0): return 1
-	if(n == 1): return 1
+	if(n == 0 or n == 1): return 1
+	if(n < 0): return 0
 	return fibonacci(n - 1) + fibonacci(n - 2)
+	
+func get_label_text() -> String:
+	return "Wind"
