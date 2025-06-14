@@ -1,5 +1,8 @@
 class_name ElementalCard extends Card
 
+var element: Element
+var point: float = 0.0
+
 func _process(_delta: float) -> void:
 	if dragging:
 		var hit_info: Dictionary = get_mouse_hit_on_table()
@@ -18,13 +21,6 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			dragging = false
 			$Card.position.y -= DRAG_HEIGHT
 			$CardArea3D.collision_layer = 2
-
-# Virtual function to be overridden by the specific cards types
-func get_points(_previous_cards: Array[ElementalCard]) -> float:
-	push_error("Method get_points() cannot be called on a base elemental card.")
-	# TODO NO
-	return id
-
 
 func get_mouse_hit_on_table() -> Dictionary:
 	var camera: Camera3D = get_viewport().get_camera_3d()

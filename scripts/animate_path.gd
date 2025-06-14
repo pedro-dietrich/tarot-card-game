@@ -53,17 +53,18 @@ func _on_path_terminate(game_scene: Node3D, card_id: int) -> void:
 	# Get the card child
 	while(child_index < path_follow.get_child_count() and !(path_follow.get_child(child_index) is ElementalCard)):
 		child_index += 1
-	var card: ElementalCard = path_follow.get_child(child_index) 
+	var card: ElementalCard = path_follow.get_child(child_index)
 	var curve_point: int = path3D.curve.get_point_count()
 	# Position the card where it should be
-	card.position = path3D.curve.get_point_position(curve_point - 1)
+	if (card):
+		card.position = path3D.curve.get_point_position(curve_point - 1)
+		# Remove the card from the child of Path3D and PathFollow3D and remove them from the scene
+		path_follow.remove_child(card)
+		# Add the final Card Object
+		game_scene.add_child(card)
+		
 
-	# Remove the card from the child of Path3D and PathFollow3D and remove them from the scene
-	path_follow.remove_child(card)
 	path3D.remove_child(path_follow)
 	path_follow.queue_free()
 	game_scene.remove_child(path3D)
 	path3D.queue_free()
-
-	# Add the final Card Object
-	game_scene.add_child(card)

@@ -13,9 +13,10 @@ func _ready():
 
 func _process(delta: float) -> void:
 	path_follow.progress_ratio += speed * delta
-	if (path_follow.get_child_count() > 0):
-		var card: Card = path_follow.get_child(0)
+	var card: Card = path_follow.get_child(0)
+	if (card):
 		card.rotation = initial_rotation * (1 - path_follow.progress_ratio) + final_rotation * path_follow.progress_ratio
-		if (path_follow.progress_ratio >= 1.0):
-			Events.emit_signal("path_terminate", card_id)
+	if (path_follow.progress_ratio >= 1.0):
+		Events.emit_signal("path_terminate", card_id)
+		if (card):
 			card.rotation = final_rotation
