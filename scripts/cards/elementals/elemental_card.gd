@@ -7,8 +7,7 @@ func _process(_delta: float) -> void:
 	if dragging:
 		var hit_info: Dictionary = get_mouse_hit_on_table()
 		if hit_info:
-			position.x = hit_info.position.x
-			position.z = hit_info.position.z
+			position = hit_info.position
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -21,6 +20,7 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			dragging = false
 			$Card.position.y -= DRAG_HEIGHT
 			$CardArea3D.collision_layer = 2
+
 
 func get_mouse_hit_on_table() -> Dictionary:
 	var camera: Camera3D = get_viewport().get_camera_3d()
