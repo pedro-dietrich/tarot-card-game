@@ -13,7 +13,6 @@ var animate_path: AnimatePath = AnimatePath.new()
 var level: int = 0
 var malus_arcana: MajorArcanaCard = null
 var points: float = 0
-var last_card_played_points: float = 0
 var last_card_played: ElementalCard = null
 var wind_card_count: int = 0 
 var deck: Array = range(1, 56) 
@@ -95,10 +94,10 @@ func _process(_delta: float) -> void:
 	next_card_id = []
 	draw_hand()
 	points = 0
-	last_card_played_points = 0
 	last_card_played = null
 	wind_card_count = 0
 	malus_arcana.reset_effects()
+	deck = range(1, 56)
 
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
@@ -150,7 +149,7 @@ func draw_card(_position_z = null) -> void:
 	var card: ElementalCard = basic_card_path.instantiate()
 
 	# Generate a random id for the card and assure that this id was not already taken by a card this round
-	card_factory.assign_random_element_to_card(card, next_card_id, deck)
+	card_factory.assign_random_element_to_card(card, deck)
 	next_card_id.append(card.id)
 
 	# Write on the card the number and element
@@ -171,14 +170,14 @@ func add_card_to_hand(card: ElementalCard) -> void:
 		animate_path.card_movement(get_tree().current_scene, card, 0.03, zpos, $Deck.position, basic_path3D_path)
 
 func play_card(played_card: ElementalCard) -> void:
-	last_card_played_points = played_card.element.get_points(played_cards)
+	played_card.point = played_card.element.get_points(played_cards)
 	played_cards.append(played_card)
 
 	# Change the value of the card depending on the major arcana rule
-	last_card_played_points = malus_arcana.malus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
+	played_card.point = malus_arcana.malus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
 	for major_bonus in bonus_arcanas:
-		last_card_played_points = major_bonus.bonus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
-	points += last_card_played_points
+		played_card.point = major_bonus.bonus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
+	points += played_card.point
 
 	last_card_played = played_card
 	print("Points: ", points)

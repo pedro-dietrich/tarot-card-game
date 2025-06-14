@@ -1,6 +1,7 @@
 class_name ElementalCard extends Card
 
 var element: Element
+var point: float = 0.0
 
 func _process(_delta: float) -> void:
 	if dragging:

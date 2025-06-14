@@ -32,7 +32,7 @@ const MAJOR_ARCANA_CARD_CLASSES: Array[Resource] = [
 	preload("res://scripts/cards/major_arcanas/the_world.gd")
 ]
 
-func assign_random_element_to_card(card: ElementalCard, next_card_id: Array[int], deck: Array) -> void:
+func assign_random_element_to_card(card: ElementalCard, deck: Array) -> void:
 	var draw_card: int = randi() % deck.size()
 	card.id = deck[draw_card]
 	deck.remove_at(draw_card)
