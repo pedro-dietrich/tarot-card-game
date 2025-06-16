@@ -75,8 +75,13 @@ func _process(_delta: float) -> void:
 					handle_win_round()
 					current_state = STATE_OUTRO
 				else:
-					handle_lose_round()
-					get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
+					lifes -= 1
+					if(lifes == 0):
+						handle_lose_game()
+						get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
+					$Overlay.set_labels("Level " + str(level) + " Not completed", "Lifes remaining: " + str(lifes))
+					reset_round()
+					current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
 			$Overlay.set_labels("Level " + str(level) + " Completed")
@@ -104,9 +109,7 @@ func is_round_won() -> bool:
 		return true
 	return false
 
-func handle_lose_round():
-	lifes -= 1
-	if(lifes == 0):
+func handle_lose_game():
 		print("\n=== Defeat ===")
 		reset_round()
 

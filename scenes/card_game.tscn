@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://up6kmrhmp5ch"]
 
 [ext_resource type="Script" uid="uid://bt22d6bcxt13q" path="res://scripts/game_logic.gd" id="1_cqj4n"]
-[ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/base_table.tscn" id="2_mejnq"]
+[ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/playing_table.tscn" id="2_mejnq"]
 [ext_resource type="PackedScene" uid="uid://blhkc7ambsvat" path="res://scenes/deck.tscn" id="3_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bwsral862leo2" path="res://scenes/overlay.tscn" id="4_thesi"]
 
@@ -15,10 +15,10 @@ albedo_color = Color(0, 0.34902, 0.996078, 1)
 
 [sub_resource type="Skin" id="Skin_mejnq"]
 
-[node name="CardGame" type="Node3D"]
+[node name="PlayingTable" type="Node3D"]
 script = ExtResource("1_cqj4n")
 
-[node name="BaseTable" parent="." instance=ExtResource("2_mejnq")]
+[node name="BaseScene" parent="." instance=ExtResource("2_mejnq")]
 
 [node name="Area3DDrag" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0259368, -0.103703, -0.0135075)
