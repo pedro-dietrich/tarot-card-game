@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwsral862leo2"]
+
+[ext_resource type="Script" uid="uid://cu72j2t173u8v" path="res://scripts/overlay.gd" id="1_7mkhq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o1jrt"]
+
+[node name="Overlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7mkhq")
+
+[node name="TopLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 64.0
+offset_right = 832.0
+offset_bottom = 128.0
+label_settings = SubResource("LabelSettings_o1jrt")
+horizontal_alignment = 1
+
+[node name="BottomLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 448.0
+offset_right = 832.0
+offset_bottom = 576.0
+label_settings = SubResource("LabelSettings_o1jrt")
+horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 832.0
+offset_right = 1024.0
+offset_bottom = 64.0
+label_settings = SubResource("LabelSettings_o1jrt")
+horizontal_alignment = 2
+vertical_alignment = 1

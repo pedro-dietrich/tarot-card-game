@@ -1,4 +1,4 @@
-extends Control
+extends Node3D
 
 @onready var start_game = preload("res://scenes/card_game.tscn")
 
