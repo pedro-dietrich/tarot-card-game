@@ -2,6 +2,7 @@ class_name Level extends Node
  
 const LVL_MAX_CARDS_PLAYED: Array[int] = [4, 4, 5, 5, 6, 6, 7, 9]
 const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
+const LAST_LEVEL: int = 6
 
 var level: int = 0
 var malus_arcana: MajorArcanaCard = null
@@ -11,7 +12,7 @@ var wind_card_count: int = 0
 var target_score: float = 0
 
 func is_last_level():
-	return level > 6
+	return level > LAST_LEVEL
 
 func update_target_score():
 	target_score = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
@@ -19,9 +20,8 @@ func update_target_score():
 func is_end_of_round(played_cards: Array[ElementalCard]) -> bool:
 	# Check if all cards were played
 	var is_tower: int = 1 if(malus_arcana is TheTower) else 0
-	if(played_cards.size() < (LVL_MAX_CARDS_PLAYED[level] - is_tower)):
-		return false
-	return true
+
+	return played_cards.size() >= (LVL_MAX_CARDS_PLAYED[level] - is_tower)
 
 func is_round_won(bonus_arcanas: Array[MajorArcanaCard]) -> bool:
 	# TODO: is this code still needed? Should the update_target_score change the score before?
@@ -30,9 +30,7 @@ func is_round_won(bonus_arcanas: Array[MajorArcanaCard]) -> bool:
 	if (malus_arcana is TheEmperor):
 		target_score *= 1.2
 
-	if(points > target_score):
-		return true
-	return false
+	return points > target_score
 
 func reset() -> void:
 	points = 0
