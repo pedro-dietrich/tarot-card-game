@@ -10,7 +10,7 @@ func set_labels(upper_text: String = "", bottom_text: String = "") -> void:
 	$BottomLabel.text = bottom_text
 
 func write_points(level: Level) -> void:
-	$PointsLabel.text = str(level.ponts) + " / " + str(level.target_score)
+	$PointsLabel.text = str(level.points) + " / " + str(level.target_score)
 
 func write_intro_labels(level: Level):
 	set_labels("Level " + str(level.level) + " - Arcana: " + level.malus_arcana.card_name, "Goal of the Level: Achieve " + str(level.target_score) + " points \n" + level.malus_arcana.arcana_penalty_description)
