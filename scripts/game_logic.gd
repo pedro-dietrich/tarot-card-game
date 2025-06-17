@@ -56,14 +56,14 @@ func _process(_delta: float) -> void:
 			current_state = STATE_WAIT_START_CONFIRM
 
 		STATE_WAIT_START_CONFIRM:
-			if Input.is_action_just_pressed("ui_accept"):
+			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
 				$Overlay.set_labels(level.malus_arcana.card_name)
 				current_state = STATE_MAIN
 
 		STATE_MAIN:
-			if level.is_end_of_round(played_cards):
-				if (level.is_round_won(bonus_arcanas)):
+			if(level.is_end_of_round(played_cards)):
+				if(level.is_round_won(bonus_arcanas)):
 					handle_win_round()
 					current_state = STATE_OUTRO
 				else:
@@ -76,12 +76,12 @@ func _process(_delta: float) -> void:
 					current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
-				# TODO could have been just a some code in the if above, oops
-				$Overlay.set_outro_labels(level, lifes)
-				current_state = STATE_WAIT_END_CONFIRM
+			# TODO could have been just a some code in the if above, oops
+			$Overlay.set_outro_labels(level, lifes)
+			current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_WAIT_END_CONFIRM:
-			if Input.is_action_just_pressed("ui_accept"):
+			if(Input.is_action_just_pressed("ui_accept")):
 				current_state = STATE_INTRO
 
 func handle_lose_game():
