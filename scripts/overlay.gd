@@ -16,8 +16,8 @@ func write_intro_labels(level: Level):
 	set_labels("Level " + str(level.level) + " - Arcana: " + level.malus_arcana.card_name, "Goal of the Level: Achieve " + str(level.target_score) + " points \n" + level.malus_arcana.arcana_penalty_description)
 	write_points(level)
 
-func set_lost_level_label(level: Level, lifes):
+func set_lost_level_label(level: Level, lifes: int):
 	set_labels("Level " + str(level.level) + " Not completed", "Lifes remaining: " + str(lifes))
 
-func set_outro_labels(level: Level, lifes):
-	set_labels("Level " + str(level.level) + " Completed - Lifes: ", lifes)
+func set_outro_labels(level: Level, lifes: int):
+	set_labels("Level " + str(level.level), "Lifes: " +str(lifes))
