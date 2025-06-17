@@ -2,15 +2,22 @@ extends Control
 
 func _ready():
 	$TopLabel.text = "UPPER-TEXT"
-	$PointsLabel.text = "POINTS-TEXT"
 	$BottomLabel.text = "BOTTOM-TEXT"
+	$PointsLabel.text = "POINTS-TEXT"
 
 func set_labels(upper_text: String = "", bottom_text: String = "") -> void:
 	$TopLabel.text = upper_text
 	$BottomLabel.text = bottom_text
 
-func write_points(points: float, target: float) -> void:
-	$PointsLabel.text = str(points) + " / " + str(target)
+func write_points(level: Level) -> void:
+	$PointsLabel.text = str(level.points) + " / " + str(level.target_score)
 
-func write_intro_labels(level: String, card_name: String, target_score: String, arcana_penalty_description: String):
-	set_labels("Level " + level + " - Arcana: " + card_name, "Goal of the Level: Achieve " + target_score + " points \n" + arcana_penalty_description)
+func write_intro_labels(level: Level):
+	set_labels("Level " + str(level.level) + " - Arcana: " + level.malus_arcana.card_name, "Goal of the Level: Achieve " + str(level.target_score) + " points \n" + level.malus_arcana.arcana_penalty_description)
+	write_points(level)
+
+func set_lost_level_label(level: Level, lifes):
+	set_labels("Level " + str(level.level) + " Not completed", "Lifes remaining: " + str(lifes))
+
+func set_outro_labels(level: Level, lifes):
+	set_labels("Level " + str(level.level) + " Completed - Lifes: ", lifes)
