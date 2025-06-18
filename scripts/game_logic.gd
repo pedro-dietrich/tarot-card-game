@@ -1,8 +1,5 @@
 extends Node3D
 
-const LVL_MAX_CARDS_PLAYED: Array[int] = [4, 4, 5, 5, 6, 6, 7, 9]
-const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
-
 @onready var basic_card_path = preload("res://scenes/card.tscn")
 @onready var button = preload("res://scenes/button.tscn")
 @onready var menu_select = preload("res://scenes/menu/shop.tscn")
@@ -11,13 +8,7 @@ const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
 var animate_path: AnimatePath = AnimatePath.new()
 
 # Level your currently playing
-var level: int = 0
-var malus_arcana: MajorArcanaCard = null
-var points: float = 0
-var last_card_played: ElementalCard = null
-var wind_card_count: int = 0 
-var target_score: float = 0
-var deck: Array = range(1, 56) 
+var level: Level = Level.new()
 
 var card_factory: CardFactory = CardFactory.new()
 
@@ -41,6 +32,8 @@ var wind_cards: Array = range(43,57)
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = []
 
+var deck: Array = range(1, 56)
+
 # State machine logic
 enum {STATE_INTRO, STATE_WAIT_START_CONFIRM, STATE_MAIN, STATE_OUTRO, STATE_WAIT_END_CONFIRM}
 var current_state = STATE_INTRO
@@ -54,24 +47,23 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	match current_state:
 		STATE_INTRO:
-			if(level > 6):
+			if(level.is_last_level()):
 				print("Last level not yet implemented.")
 				get_tree().reload_current_scene()
 			next_malus()
-			target_score = malus_arcana.score_to_obtain(LVL_TARGET_SCORE[level])
-			$Overlay.write_intro_labels(str(level), malus_arcana.card_name, str(target_score), malus_arcana.arcana_penalty_description)
-			$Overlay.write_points(0, target_score)
+			level.update_target_score()
+			$Overlay.write_intro_labels(level)
 			current_state = STATE_WAIT_START_CONFIRM
 
 		STATE_WAIT_START_CONFIRM:
-			if Input.is_action_just_pressed("ui_accept"):
+			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
-				$Overlay.set_labels(malus_arcana.card_name)
+				$Overlay.set_labels(level.malus_arcana.card_name)
 				current_state = STATE_MAIN
 
 		STATE_MAIN:
-			if is_end_of_round():
-				if (is_round_won()):
+			if(level.is_end_of_round(played_cards)):
+				if(level.is_round_won(bonus_arcanas)):
 					handle_win_round()
 					current_state = STATE_OUTRO
 				else:
@@ -79,53 +71,34 @@ func _process(_delta: float) -> void:
 					if(lifes == 0):
 						handle_lose_game()
 						get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
-					$Overlay.set_labels("Level " + str(level) + " Not completed", "Lifes remaining: " + str(lifes))
+					$Overlay.set_lost_level_label(level, lifes)
 					reset_round()
 					current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
-			$Overlay.set_labels("Level " + str(level) + " Completed")
+			# TODO could have been just a some code in the if above, oops
+			$Overlay.set_outro_labels(level, lifes)
 			current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_WAIT_END_CONFIRM:
-			if Input.is_action_just_pressed("ui_accept"):
+			if(Input.is_action_just_pressed("ui_accept")):
 				current_state = STATE_INTRO
-
-func is_end_of_round() -> bool:
-	# Check if all cards were played
-	var is_tower: int = 1 if(malus_arcana is TheTower) else 0
-	if(played_cards.size() < (LVL_MAX_CARDS_PLAYED[level] - is_tower)):
-		return false
-	return true
-
-func is_round_won() -> bool:
-	# TODO: is this code still needed?
-	if(bonus_arcanas.any(func(bonus: MajorArcanaCard) -> bool: return bonus is TheEmperor)):
-		target_score *= 0.9
-	if (malus_arcana is TheEmperor):
-		target_score *= 1.2
-
-	if(points > target_score):
-		return true
-	return false
 
 func handle_lose_game():
 		print("\n=== Defeat ===")
 		reset_round()
 
 func handle_win_round():
-	var point_balance: float = points - target_score
-	level += 1
-	g.money += int(point_balance)
+	level.increment()
 
-	if(malus_arcana is TheSun):
+	if(level.malus_arcana is TheSun):
 		lifes += 2
-	elif(malus_arcana is TheWorld):
+	elif(level.malus_arcana is TheWorld):
 		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size())
+		# TODO error when world is the first malus arcana
 		bonus_arcanas.append(bonus_arcanas[doubled_arcana_index])
 	else:
-		bonus_arcanas.append(malus_arcana)
-	print("\nNext level: ", level, " - Lifes: ", lifes)
+		bonus_arcanas.append(level.malus_arcana)
 	reset_round()
 
 func reset_round() -> void:
@@ -141,11 +114,8 @@ func reset_round() -> void:
 	hand_cards = []
 	played_cards = []
 	next_card_id = []
-	points = 0
-	last_card_played = null
-	wind_card_count = 0
-	malus_arcana.reset_effects()
 	deck = range(1, 56)
+	level.reset()
 
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
@@ -163,7 +133,7 @@ func _on_card_played(card_id: int) -> void:
 	card_area_3D.collision_layer = 3
 
 	# Verify of the rule of the major arcana authorize this play, if not do not add any point on the board and sacrifice the card
-	if(malus_arcana.is_card_playable(played_card, played_cards)):
+	if(level.malus_arcana.is_card_playable(played_card, played_cards)):
 		play_card(played_card)
 	else:
 		played_cards.append(played_card)
@@ -172,12 +142,11 @@ func _on_card_played(card_id: int) -> void:
 	replace_hand()
 	draw_card(position_z)
 
-
 func next_malus() -> void:
-	malus_arcana = card_factory.random_major_arcana_card()
-	while(bonus_arcanas.has(malus_arcana)):
-		malus_arcana = card_factory.random_major_arcana()
-	print("Playing level with Major Arcana: ", malus_arcana.card_name)
+	level.malus_arcana = card_factory.random_major_arcana_card()
+	while(bonus_arcanas.has(level.malus_arcana)):
+		level.malus_arcana = card_factory.random_major_arcana()
+	print("Playing level with Major Arcana: ", level.malus_arcana.card_name)
 
 func replace_hand() -> void:
 	for i in range(hand_cards.size()) :
@@ -206,7 +175,7 @@ func draw_card(_position_z = null) -> void:
 	card_label.text += card.element.get_label_text()
 	
 	# Change the hand in function of the Malus Arcana
-	malus_arcana.malus_effect_on_hand(card)
+	level.malus_arcana.malus_effect_on_hand(card)
 	add_card_to_hand(card)
 
 func add_card_to_hand(card: ElementalCard) -> void:
@@ -221,15 +190,8 @@ func play_card(played_card: ElementalCard) -> void:
 	played_card.point = played_card.element.get_points(played_cards)
 	played_cards.append(played_card)
 
-	# Change the value of the card depending on the major arcana rule
-	played_card.point = malus_arcana.malus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
-	for major_bonus in bonus_arcanas:
-		played_card.point = major_bonus.bonus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
-	points += played_card.point
-
-	last_card_played = played_card
-	print("Points: ", points)
-	$Overlay.write_points(points, target_score)
+	level.get_card_points(played_card, played_cards, bonus_arcanas)
+	$Overlay.write_points(level)
 
 	var zpos: float = -1.45 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(0, 0, zpos))
