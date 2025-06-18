@@ -171,7 +171,7 @@ func draw_card(_position_z = null) -> void:
 
 	# Write on the card the number and element
 	var card_label: Label3D = card.find_child("CardLabel")
-	card_label.text = str(card.element.id)
+	card_label.text = str(card.element.id) + " "
 	card_label.text += card.element.get_label_text()
 	
 	# Change the hand in function of the Malus Arcana
@@ -184,9 +184,10 @@ func add_card_to_hand(card: ElementalCard) -> void:
 	var lvl_hand_size: int = g.base_num_card
 	var zpos: float = 0.3 * (hand_cards.size() - ceil(lvl_hand_size / 2.0))
 	if(get_tree()):
-		animate_path.card_movement(get_tree().current_scene, card, 0.03, zpos, $Deck.position, basic_path3D_path)
+		animate_path.card_movement(get_tree().current_scene, card, 0.1, zpos, $Deck.position, basic_path3D_path)
 
 func play_card(played_card: ElementalCard) -> void:
+	played_card.rotate_z(-PI/8)
 	played_card.point = played_card.element.get_points(played_cards)
 	played_cards.append(played_card)
 
@@ -201,13 +202,12 @@ func _on_path_terminate(card_id: int):
 
 func _on_area_3d_area_entered(_area: Node3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 0.5
+	Events.emit_signal("_on_entered")
 
 func _on_area_3d_area_exited(_area: Node3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 1
+	Events.emit_signal("_on_exit")
 
 func _on_area_3d_play_area_entered(area: Area3D) -> void:
 	if("id" in area):
 		_on_card_played(area.id)
-
-func _on_area_3d_drag_mouse_exited() -> void:
-	Events.emit_signal("_on_drop")

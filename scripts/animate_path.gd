@@ -10,7 +10,7 @@ func card_movement(game_scene: Node3D, card: Card, y_start: float, z_end: float,
 	var pos_sign: int = 1 if (z_end < z_start) else -1
 	# The different points that the card will follow
 	var zstep: float = pos_sign * (z_start - z_end) / sample
-	var ystep: float = y_start / sample
+	var ystep: float = (y_start - 0.1) / sample
 	var zcurve: float = z_start
 	var ycurve: float = y_start
 

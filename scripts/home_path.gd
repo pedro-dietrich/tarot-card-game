@@ -5,8 +5,8 @@ extends Node
 
 @export var card_id: int = 0
 
-var initial_rotation: Vector3 = Vector3(PI, 0, 0)
-var final_rotation = Vector3(0,0,0)
+var initial_rotation: Vector3 = Vector3(PI, 0, PI/8)
+var final_rotation = Vector3(0,0,PI/8)
 
 func _ready():
 	path_follow.progress = 0

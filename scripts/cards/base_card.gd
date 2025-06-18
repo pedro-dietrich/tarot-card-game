@@ -16,7 +16,7 @@ func _ready() -> void:
 func _on_drop() -> void:
 	if(dragging):
 		dragging = false
-		$Card.position.y -= DRAG_HEIGHT
+		#$Card.position.y -= DRAG_HEIGHT
 		$CardArea3D.collision_layer = 2
 
 func _on_area_3d_mouse_entered() -> void:

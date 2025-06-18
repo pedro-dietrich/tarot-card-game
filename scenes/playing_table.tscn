@@ -1,23 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bco8gllbsljum"]
+[gd_scene load_steps=3 format=3 uid="uid://bco8gllbsljum"]
 
-[ext_resource type="Texture2D" uid="uid://boolujmgaa8c5" path="res://assets/table/table-background.png" id="1_bfr6b"]
 [ext_resource type="PackedScene" uid="uid://bs3ar44yi25fc" path="res://scenes/table.tscn" id="2_bctxu"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_w3831"]
-panorama = ExtResource("1_bfr6b")
-
-[sub_resource type="Sky" id="Sky_tfuki"]
-sky_material = SubResource("PanoramaSkyMaterial_w3831")
-
-[sub_resource type="Environment" id="Environment_00pl2"]
-background_mode = 2
-sky = SubResource("Sky_tfuki")
+[ext_resource type="PackedScene" uid="uid://bkar2tpe45h2h" path="res://scenes/background.tscn" id="2_bfr6b"]
 
 [node name="PlayingTable" type="Node3D"]
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0.866025, -0.5, 0, 0.5, 0.866025, 1, 3.78552e-08, -2.18557e-08, -1, 1.45, 0)
-environment = SubResource("Environment_00pl2")
 fov = 60.0
 
 [node name="Light1" type="OmniLight3D" parent="."]
@@ -31,3 +20,5 @@ light_color = Color(1, 0.705882, 0.235294, 1)
 shadow_enabled = true
 
 [node name="Table" parent="." instance=ExtResource("2_bctxu")]
+
+[node name="TextureRect" parent="." instance=ExtResource("2_bfr6b")]
