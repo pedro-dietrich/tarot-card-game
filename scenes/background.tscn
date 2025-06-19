@@ -11,7 +11,6 @@ sky_material = SubResource("PanoramaSkyMaterial_jougr")
 
 [sub_resource type="Environment" id="Environment_cbsqf"]
 background_mode = 3
-background_canvas_max_layer = 1
 sky = SubResource("Sky_x0iqe")
 
 [node name="TextureRect" type="Node3D"]
@@ -20,10 +19,7 @@ script = ExtResource("1_y0upk")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cbsqf")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="WorldEnvironment"]
-layer = -1
-
-[node name="TextureRect" type="TextureRect" parent="WorldEnvironment/CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="WorldEnvironment"]
 offset_right = 1280.0
 offset_bottom = 717.0
 scale = Vector2(2.1, 2.1)
