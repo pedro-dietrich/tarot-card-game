@@ -94,7 +94,7 @@ func handle_win_round():
 	if(level.malus_arcana is TheSun):
 		lifes += 2
 	elif(level.malus_arcana is TheWorld):
-		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size())
+		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size() - 1)
 		# TODO error when world is the first malus arcana
 		bonus_arcanas.append(bonus_arcanas[doubled_arcana_index])
 	else:
