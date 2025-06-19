@@ -131,6 +131,7 @@ func _on_card_played(card_id: int) -> void:
 
 	var card_area_3D: Area3D = played_card.find_child("CardArea3D")
 	card_area_3D.collision_layer = 3
+	played_card.card_played = true
 
 	# Verify of the rule of the major arcana authorize this play, if not do not add any point on the board and sacrifice the card
 	if(level.malus_arcana.is_card_playable(played_card, played_cards)):
@@ -197,16 +198,18 @@ func play_card(played_card: ElementalCard) -> void:
 	var zpos: float = -1.45 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(0, 0, zpos))
 	
+	#Await that all movement off the card stop before making the mesh instance transparent again
+	await get_tree().create_timer(0.1).timeout
+	_on_area_3d_area_exited(played_card.find_child("CardArea3D"))
+	
 func _on_path_terminate(card_id: int):
 	animate_path._on_path_terminate(get_tree().current_scene, card_id)
 
 func _on_area_3d_area_entered(_area: Node3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 0.5
-	Events.emit_signal("_on_entered")
 
 func _on_area_3d_area_exited(_area: Node3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 1
-	Events.emit_signal("_on_exit")
 
 func _on_area_3d_play_area_entered(area: Area3D) -> void:
 	if("id" in area):
