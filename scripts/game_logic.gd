@@ -172,8 +172,7 @@ func draw_card(_position_z = null) -> void:
 
 	# Write on the card the number and element
 	var card_label: Label3D = card.find_child("CardLabel")
-	card_label.text = str(card.element.id) + " "
-	card_label.text += card.element.get_label_text()
+	card_label.text = str(card.element.id) + " " + card.element.get_label_text()
 	
 	# Change the hand in function of the Malus Arcana
 	level.malus_arcana.malus_effect_on_hand(card)

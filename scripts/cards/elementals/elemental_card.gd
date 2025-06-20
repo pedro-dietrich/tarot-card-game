@@ -6,10 +6,6 @@ var place_before_drag: Vector3
 var card_in_play_area: bool = false
 var card_played: bool = false
 
-#func _ready() -> void:
-	#Events.connect("_on_entered", _on_entered)
-	#Events.connect("_on_exit", _on_exit)
-	
 func _process(_delta: float) -> void:
 	if dragging:
 		var hit_info: Dictionary = get_mouse_hit_on_table()
@@ -42,12 +38,6 @@ func replace_card() -> void:
 	await get_tree().create_timer(0.1).timeout
 	if (!card_played):
 		position = place_before_drag
- 
-#func _on_entered() -> void:
-	#card_in_play_area = true
-	#
-#func _on_exit() -> void:
-	#card_in_play_area = false
 
 func get_mouse_hit_on_table() -> Dictionary:
 	var camera: Camera3D = get_viewport().get_camera_3d()
