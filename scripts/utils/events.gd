@@ -1,4 +1,5 @@
 extends Node
 
-signal _on_drop()
 signal path_terminate(card_id)
+signal _on_entered()
+signal _on_exit()

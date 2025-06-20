@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://up6kmrhmp5ch"]
 
-[ext_resource type="Script" uid="uid://bt22d6bcxt13q" path="res://scripts/game_logic.gd" id="1_cqj4n"]
+[ext_resource type="Script" uid="uid://u7qmqtat680l" path="res://scripts/game_logic.gd" id="1_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/playing_table.tscn" id="2_mejnq"]
 [ext_resource type="PackedScene" uid="uid://blhkc7ambsvat" path="res://scenes/deck.tscn" id="3_cqj4n"]
 [ext_resource type="PackedScene" uid="uid://bwsral862leo2" path="res://scenes/overlay.tscn" id="4_thesi"]
@@ -62,7 +62,9 @@ skin = SubResource("Skin_mejnq")
 [node name="Deck" parent="." instance=ExtResource("3_cqj4n")]
 transform = Transform3D(3.5, 0, 0, 0, 3.5, 0, 0, 0, 3.5, -0.6, 0, -1.214)
 
-[node name="Overlay" parent="." instance=ExtResource("4_thesi")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Overlay" parent="CanvasLayer" instance=ExtResource("4_thesi")]
 mouse_filter = 1
 
 [connection signal="area_entered" from="Area3DDrag" to="." method="_on_area_3d_area_entered"]

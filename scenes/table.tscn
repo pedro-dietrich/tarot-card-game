@@ -1,11 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://bs3ar44yi25fc"]
+[gd_scene load_steps=7 format=3 uid="uid://bs3ar44yi25fc"]
 
 [ext_resource type="PackedScene" uid="uid://cebtskkdg8mmj" path="res://assets/table/table.gltf" id="1_02ppr"]
+[ext_resource type="Texture2D" uid="uid://bvu04k8oyi2bc" path="res://assets/table/Golden Ring.png" id="2_eotx8"]
+[ext_resource type="Script" uid="uid://d0027ouxdafdq" path="res://scripts/table.gd" id="3_x8522"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_eotx8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x8522"]
+transparency = 1
+albedo_texture = ExtResource("2_eotx8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_02ppr"]
 size = Vector3(2.00287, 0.103577, 3)
 
 [node name="Table" instance=ExtResource("1_02ppr")]
+
+[node name="Table" parent="." index="0"]
+mesh = SubResource("PlaneMesh_eotx8")
+surface_material_override/0 = SubResource("StandardMaterial3D_x8522")
+script = ExtResource("3_x8522")
 
 [node name="TableStaticBody" type="StaticBody3D" parent="." index="1"]
 

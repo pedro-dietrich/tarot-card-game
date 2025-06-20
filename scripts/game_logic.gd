@@ -52,13 +52,13 @@ func _process(_delta: float) -> void:
 				get_tree().reload_current_scene()
 			next_malus()
 			level.update_target_score()
-			$Overlay.write_intro_labels(level)
+			$CanvasLayer/Overlay.write_intro_labels(level)
 			current_state = STATE_WAIT_START_CONFIRM
 
 		STATE_WAIT_START_CONFIRM:
 			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
-				$Overlay.set_labels(level.malus_arcana.card_name)
+				$CanvasLayer/Overlay.set_labels(level.malus_arcana.card_name)
 				current_state = STATE_MAIN
 
 		STATE_MAIN:
@@ -71,13 +71,13 @@ func _process(_delta: float) -> void:
 					if(lifes == 0):
 						handle_lose_game()
 						get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
-					$Overlay.set_lost_level_label(level, lifes)
+					$CanvasLayer/Overlay.set_lost_level_label(level, lifes)
 					reset_round()
 					current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
 			# TODO could have been just a some code in the if above, oops
-			$Overlay.set_outro_labels(level, lifes)
+			$CanvasLayer/Overlay.set_outro_labels(level, lifes)
 			current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_WAIT_END_CONFIRM:
@@ -94,7 +94,7 @@ func handle_win_round():
 	if(level.malus_arcana is TheSun):
 		lifes += 2
 	elif(level.malus_arcana is TheWorld):
-		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size())
+		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size() - 1)
 		# TODO error when world is the first malus arcana
 		bonus_arcanas.append(bonus_arcanas[doubled_arcana_index])
 	else:
@@ -131,6 +131,7 @@ func _on_card_played(card_id: int) -> void:
 
 	var card_area_3D: Area3D = played_card.find_child("CardArea3D")
 	card_area_3D.collision_layer = 3
+	played_card.card_played = true
 
 	# Verify of the rule of the major arcana authorize this play, if not do not add any point on the board and sacrifice the card
 	if(level.malus_arcana.is_card_playable(played_card, played_cards)):
@@ -171,8 +172,7 @@ func draw_card(_position_z = null) -> void:
 
 	# Write on the card the number and element
 	var card_label: Label3D = card.find_child("CardLabel")
-	card_label.text = str(card.element.id)
-	card_label.text += card.element.get_label_text()
+	card_label.text = str(card.element.id) + " " + card.element.get_label_text()
 	
 	# Change the hand in function of the Malus Arcana
 	level.malus_arcana.malus_effect_on_hand(card)
@@ -184,17 +184,22 @@ func add_card_to_hand(card: ElementalCard) -> void:
 	var lvl_hand_size: int = g.base_num_card
 	var zpos: float = 0.3 * (hand_cards.size() - ceil(lvl_hand_size / 2.0))
 	if(get_tree()):
-		animate_path.card_movement(get_tree().current_scene, card, 0.03, zpos, $Deck.position, basic_path3D_path)
+		animate_path.card_movement(get_tree().current_scene, card, 0.1, zpos, $Deck.position, basic_path3D_path)
 
 func play_card(played_card: ElementalCard) -> void:
+	played_card.rotate_z(-PI/8)
 	played_card.point = played_card.element.get_points(played_cards)
 	played_cards.append(played_card)
 
 	level.get_card_points(played_card, played_cards, bonus_arcanas)
-	$Overlay.write_points(level)
+	$CanvasLayer/Overlay.write_points(level)
 
 	var zpos: float = -1.45 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(0, 0, zpos))
+	
+	#Await that all movement off the card stop before making the mesh instance transparent again
+	await get_tree().create_timer(0.1).timeout
+	_on_area_3d_area_exited(null)
 	
 func _on_path_terminate(card_id: int):
 	animate_path._on_path_terminate(get_tree().current_scene, card_id)
@@ -208,6 +213,3 @@ func _on_area_3d_area_exited(_area: Node3D) -> void:
 func _on_area_3d_play_area_entered(area: Area3D) -> void:
 	if("id" in area):
 		_on_card_played(area.id)
-
-func _on_area_3d_drag_mouse_exited() -> void:
-	Events.emit_signal("_on_drop")

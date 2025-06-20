@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkar2tpe45h2h"]
+
+[ext_resource type="Texture2D" uid="uid://cds0u8ddtisif" path="res://assets/DeWatermark.ai_1747781732505.png" id="1_bkp1e"]
+[ext_resource type="Script" uid="uid://cw8hkiop620l1" path="res://scripts/texture.gd" id="1_y0upk"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jougr"]
+panorama = ExtResource("1_bkp1e")
+
+[sub_resource type="Sky" id="Sky_x0iqe"]
+sky_material = SubResource("PanoramaSkyMaterial_jougr")
+
+[sub_resource type="Environment" id="Environment_cbsqf"]
+background_mode = 3
+sky = SubResource("Sky_x0iqe")
+
+[node name="TextureRect" type="Node3D"]
+script = ExtResource("1_y0upk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cbsqf")
+
+[node name="TextureRect" type="TextureRect" parent="WorldEnvironment"]
+offset_right = 1280.0
+offset_bottom = 717.0
+scale = Vector2(2.1, 2.1)
+pivot_offset = Vector2(640, 358.5)
+texture = ExtResource("1_bkp1e")
