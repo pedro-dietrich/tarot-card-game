@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qk3pm75ecjig"
-path.s3tc="res://.godot/imported/card_diffuse.png-2839f3a925bd3948124db6958b726bd1.s3tc.ctex"
+uid="uid://d17hkqirlcc2p"
+path.s3tc="res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/card/card_diffuse.png"
-dest_files=["res://.godot/imported/card_diffuse.png-2839f3a925bd3948124db6958b726bd1.s3tc.ctex"]
+source_file="res://assets/background.png"
+dest_files=["res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.s3tc.ctex"]
 
 [params]
 
