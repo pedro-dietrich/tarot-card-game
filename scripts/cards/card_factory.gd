@@ -21,11 +21,11 @@ func assign_random_element_to_card(card: ElementalCard, deck: Array) -> void:
 	var draw_card: int = randi() % deck.size()
 	card.id = deck[draw_card]
 	deck.remove_at(draw_card)
-	
-	var card_type_index: int = (card.id - 1) / 14
+
+	var card_type_index: int = int((card.id - 1) / 14)
 	card.element = ELEMENT_CLASSES[card_type_index].new()
-	
-	var card_num:int =  (card.id - 1) % 14
+
+	var card_num: int = (card.id - 1) % 14
 	card.element.id = card_num + 1
 
 # Instantiates a random Major Arcana, not including The Fool
