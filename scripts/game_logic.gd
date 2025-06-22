@@ -28,8 +28,8 @@ var next_card_id: Array[int] = []
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = []
 
-var deck: Array = range(1, 56)
-var list_major_arcana: Array = range(1, 6)
+var deck: Array = range(1, 57)
+var list_major_arcana: Array = range(1, 7)
 
 # State machine logic
 enum {STATE_INTRO, STATE_CHOOSE_MALUS, STATE_WAIT_START_CONFIRM, STATE_MAIN, STATE_OUTRO, STATE_WAIT_END_CONFIRM}
@@ -130,11 +130,11 @@ func reset_round() -> void:
 	level.reset()
 	
 func change_major() -> void:
-	$CanvasLayer/Overlay/Button.hide()
-	$CanvasLayer/Overlay/Button2.hide()
+	$CanvasLayer/Overlay/OptionArcana1.hide()
+	$CanvasLayer/Overlay/OptionArcana2.hide()
 	
 	if ($CanvasLayer/Overlay.major_chosen == 2):
-		level.malus_arcana = level.malus_arcana2
+		level.malus_arcana = level.alternate_malus_arcana
 
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
@@ -168,7 +168,7 @@ func next_malus() -> void:
 		level.malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
 		
 		if(g.random_major):
-			level.malus_arcana2 = card_factory.random_major_arcana_card(list_major_arcana)
+			level.alternate_malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
 			
 			
 	print("Playing level with Major Arcana: ", level.malus_arcana.card_name)
