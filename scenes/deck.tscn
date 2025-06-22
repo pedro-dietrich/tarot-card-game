@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://blhkc7ambsvat"]
 
-[ext_resource type="PackedScene" uid="uid://cpa3yxjpui6s1" path="res://assets/card/card.gltf" id="1_sdhao"]
+[ext_resource type="PackedScene" uid="uid://g1ryy4vtxc6w" path="res://assets/card/card.gltf" id="1_sdhao"]
 
 [node name="Deck" type="Node3D"]
 

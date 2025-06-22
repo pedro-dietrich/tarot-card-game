@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bkar2tpe45h2h"]
 
-[ext_resource type="Texture2D" uid="uid://cds0u8ddtisif" path="res://assets/DeWatermark.ai_1747781732505.png" id="1_bkp1e"]
-[ext_resource type="Script" uid="uid://cw8hkiop620l1" path="res://scripts/texture.gd" id="1_y0upk"]
+[ext_resource type="Texture2D" uid="uid://d17hkqirlcc2p" path="res://assets/background.png" id="1_bkp1e"]
+[ext_resource type="Script" uid="uid://chdxcboo4yhfl" path="res://scripts/texture.gd" id="1_y0upk"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jougr"]
 panorama = ExtResource("1_bkp1e")

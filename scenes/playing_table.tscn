@@ -22,3 +22,6 @@ shadow_enabled = true
 [node name="Table" parent="." instance=ExtResource("2_bctxu")]
 
 [node name="TextureRect" parent="." instance=ExtResource("2_bfr6b")]
+
+[node name="WhiteLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48474, 1.96048, 0)

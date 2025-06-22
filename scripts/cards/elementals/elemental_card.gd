@@ -7,14 +7,14 @@ var card_in_play_area: bool = false
 var card_played: bool = false
 
 func _process(_delta: float) -> void:
-	if dragging:
+	if(dragging):
 		var hit_info: Dictionary = get_mouse_hit_on_table()
-		if hit_info:
+		if(hit_info):
 			position = hit_info.position
 
-func _on_area_3d_input_event(camera: Camera3D, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.pressed:
+func _on_area_3d_input_event(_camera: Camera3D, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if(event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT):
+		if(event.pressed):
 			dragging = !card_played
 			if dragging:
 				place_before_drag = position
@@ -24,19 +24,17 @@ func _on_area_3d_input_event(camera: Camera3D, event: InputEvent, _event_positio
 		else:
 			dragging = false
 			var change_pos: bool = !card_played
-			if change_pos:
+			if(change_pos):
 				position.y = 0.1
 				rotate_z(PI/8)
-				
+
 				$CardArea3D.collision_layer = 2
 				replace_card()
-			
-			
 
 func replace_card() -> void:
 	# Wait 0.1 second that the function on the game_logic file get time to finish before doing more
 	await get_tree().create_timer(0.1).timeout
-	if (!card_played):
+	if(!card_played):
 		position = place_before_drag
 
 func get_mouse_hit_on_table() -> Dictionary:

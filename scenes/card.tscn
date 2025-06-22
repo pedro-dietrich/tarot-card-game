@@ -1,8 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpat4yk12d3gj"]
+[gd_scene load_steps=13 format=3 uid="uid://dpat4yk12d3gj"]
 
-[ext_resource type="PackedScene" uid="uid://cpa3yxjpui6s1" path="res://assets/card/card.gltf" id="1_d81rb"]
+[ext_resource type="PackedScene" uid="uid://g1ryy4vtxc6w" path="res://assets/card/card.gltf" id="1_d81rb"]
 [ext_resource type="Script" uid="uid://c3ajd708k5jua" path="res://scripts/cards/elementals/elemental_card.gd" id="2_ktuci"]
+[ext_resource type="Shader" uid="uid://df0oqd8lvqbtw" path="res://shaders/card.gdshader" id="3_kg30u"]
 [ext_resource type="Script" uid="uid://cuq1umeafxsoc" path="res://scripts/cards/card_area_3d.gd" id="3_ktuci"]
+[ext_resource type="Texture2D" uid="uid://bnee8w5xyrm06" path="res://assets/card/major_arcanas/placeholder/background.png" id="4_nvopj"]
+[ext_resource type="Texture2D" uid="uid://j871k2chtf35" path="res://assets/card/card.jpg" id="4_sy11y"]
+[ext_resource type="Texture2D" uid="uid://cxs66vja5lt5y" path="res://assets/card/major_arcanas/placeholder/foreground.png" id="6_1yd6c"]
+[ext_resource type="Texture2D" uid="uid://ps1d74xvbal" path="res://assets/card/major_arcanas/placeholder/middleground.png" id="7_we8pq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sy11y"]
+render_priority = 0
+shader = ExtResource("3_kg30u")
+shader_parameter/base_albedo = ExtResource("4_sy11y")
+shader_parameter/background = ExtResource("4_nvopj")
+shader_parameter/middleground = ExtResource("7_we8pq")
+shader_parameter/foreground = ExtResource("6_1yd6c")
 
 [sub_resource type="BoxMesh" id="BoxMesh_6u4wf"]
 
@@ -17,7 +30,8 @@ size = Vector3(0.401245, 0.01017, 0.240997)
 script = ExtResource("2_ktuci")
 
 [node name="Card" parent="." index="0"]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+transform = Transform3D(-3.49691e-10, -0.008, 3.49691e-10, 0, -3.49691e-10, -0.008, 0.008, -3.49691e-10, 1.52855e-17, 0.19, 0, -0.11)
+material_override = SubResource("ShaderMaterial_sy11y")
 
 [node name="Outline" type="MeshInstance3D" parent="Card" index="0"]
 transform = Transform3D(0.101, 0, 0, 0, 0.002, 0, 0, 0, 0.061, 1.30534e-05, 0.00100001, 0.000145026)
