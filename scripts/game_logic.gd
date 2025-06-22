@@ -4,6 +4,8 @@ extends Node3D
 @onready var button = preload("res://scenes/button.tscn")
 @onready var menu_select = preload("res://scenes/menu/shop.tscn")
 @onready var basic_path3D_path = preload("res://scenes/home_path3D.tscn")
+@onready var victory_screen = preload("res://scenes/victory.tscn")
+@onready var defeat_screen = preload("res://scenes/defeat.tscn")
 
 var animate_path: AnimatePath = AnimatePath.new()
 
@@ -23,19 +25,14 @@ var played_cards: Array[ElementalCard] = []
 # TODO: implement card id generation, sequential at the moment
 var next_card_id: Array[int] = []
 
-# Distribution of each elements
-var fire_cards: Array = range(1,15)
-var water_cards: Array = range(15,29)
-var earth_cards: Array = range(29,43)
-var wind_cards: Array = range(43,57)
-
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = []
 
-var deck: Array = range(1, 56)
+var deck: Array = range(1, 57)
+var list_major_arcana: Array = range(1, 7)
 
 # State machine logic
-enum {STATE_INTRO, STATE_WAIT_START_CONFIRM, STATE_MAIN, STATE_OUTRO, STATE_WAIT_END_CONFIRM}
+enum {STATE_INTRO, STATE_CHOOSE_MALUS, STATE_WAIT_START_CONFIRM, STATE_MAIN, STATE_OUTRO, STATE_WAIT_END_CONFIRM}
 var current_state = STATE_INTRO
 
 var lifes: int = 1
@@ -45,15 +42,27 @@ func _ready() -> void:
 	Events.connect("path_terminate", _on_path_terminate)
 
 func _process(_delta: float) -> void:
+	
+
 	match current_state:
 		STATE_INTRO:
-			if(level.is_last_level()):
-				print("Last level not yet implemented.")
+			if(level.is_game_won()):
+				print("Game already won.")
 				get_tree().reload_current_scene()
 			next_malus()
 			level.update_target_score()
-			$CanvasLayer/Overlay.write_intro_labels(level)
-			current_state = STATE_WAIT_START_CONFIRM
+			if (g.random_major):
+				current_state = STATE_CHOOSE_MALUS
+				$CanvasLayer/Overlay.write_choose_labels(level)
+			else:
+				$CanvasLayer/Overlay.write_intro_labels(level)
+				current_state = STATE_WAIT_START_CONFIRM
+		
+		STATE_CHOOSE_MALUS:
+			if ($CanvasLayer/Overlay.major_chosen > 0):
+				change_major()
+				$CanvasLayer/Overlay.write_intro_labels(level)
+				current_state = STATE_WAIT_START_CONFIRM
 
 		STATE_WAIT_START_CONFIRM:
 			if(Input.is_action_just_pressed("ui_accept")):
@@ -70,10 +79,10 @@ func _process(_delta: float) -> void:
 					lifes -= 1
 					if(lifes == 0):
 						handle_lose_game()
-						get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")
-					$CanvasLayer/Overlay.set_lost_level_label(level, lifes)
-					reset_round()
-					current_state = STATE_WAIT_END_CONFIRM
+					else:
+						$CanvasLayer/Overlay.set_lost_level_label(level, lifes)
+						reset_round()
+						current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
 			# TODO could have been just a some code in the if above, oops
@@ -85,11 +94,14 @@ func _process(_delta: float) -> void:
 				current_state = STATE_INTRO
 
 func handle_lose_game():
-		print("\n=== Defeat ===")
-		reset_round()
+		get_tree().change_scene_to_packed(defeat_screen)
 
 func handle_win_round():
 	level.increment()
+	
+	if (level.is_game_won()): 
+		get_tree().change_scene_to_packed(victory_screen)
+		return
 
 	if(level.malus_arcana is TheSun):
 		lifes += 2
@@ -116,6 +128,13 @@ func reset_round() -> void:
 	next_card_id = []
 	deck = range(1, 56)
 	level.reset()
+	
+func change_major() -> void:
+	$CanvasLayer/Overlay/OptionArcana1.hide()
+	$CanvasLayer/Overlay/OptionArcana2.hide()
+	
+	if ($CanvasLayer/Overlay.major_chosen == 2):
+		level.malus_arcana = level.alternate_malus_arcana
 
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
@@ -144,9 +163,14 @@ func _on_card_played(card_id: int) -> void:
 	draw_card(position_z)
 
 func next_malus() -> void:
-	level.malus_arcana = card_factory.random_major_arcana_card()
-	while(bonus_arcanas.has(level.malus_arcana)):
-		level.malus_arcana = card_factory.random_major_arcana()
+	if (level.is_last_level()): level.malus_arcana = card_factory.fool_arcana_card()
+	else:
+		level.malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
+		
+		if(g.random_major):
+			level.alternate_malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
+			
+			
 	print("Playing level with Major Arcana: ", level.malus_arcana.card_name)
 
 func replace_hand() -> void:

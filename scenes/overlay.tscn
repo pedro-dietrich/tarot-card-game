@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwsral862leo2"]
+[gd_scene load_steps=4 format=3 uid="uid://bwsral862leo2"]
 
 [ext_resource type="Script" uid="uid://cu72j2t173u8v" path="res://scripts/overlay.gd" id="1_7mkhq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_o1jrt"]
+
+[sub_resource type="Theme" id="Theme_d607a"]
+default_font_size = 50
 
 [node name="Overlay" type="Control"]
 layout_mode = 3
@@ -19,15 +22,17 @@ offset_left = 320.0
 offset_top = 64.0
 offset_right = 832.0
 offset_bottom = 128.0
+theme_override_font_sizes/font_size = 20
 label_settings = SubResource("LabelSettings_o1jrt")
 horizontal_alignment = 1
 
 [node name="BottomLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 320.0
+offset_left = 146.0
 offset_top = 448.0
-offset_right = 832.0
+offset_right = 1034.0
 offset_bottom = 576.0
+theme = SubResource("Theme_d607a")
 label_settings = SubResource("LabelSettings_o1jrt")
 horizontal_alignment = 1
 
@@ -39,3 +44,22 @@ offset_bottom = 64.0
 label_settings = SubResource("LabelSettings_o1jrt")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="OptionArcana1" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 300.0
+offset_top = 250.0
+offset_right = 452.0
+offset_bottom = 326.0
+
+[node name="OptionArcana2" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 700.0
+offset_top = 250.0
+offset_right = 879.0
+offset_bottom = 335.0
+
+[connection signal="button_down" from="OptionArcana1" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="OptionArcana2" to="." method="_on_button_2_button_down"]

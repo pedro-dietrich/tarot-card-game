@@ -2,16 +2,20 @@ class_name Level extends Node
  
 const LVL_MAX_CARDS_PLAYED: Array[int] = [4, 4, 5, 5, 6, 6, 7, 9]
 const LVL_TARGET_SCORE: Array[int] = [40, 50, 65, 75, 90, 100, 115, 150]
-const LAST_LEVEL: int = 6
+const LAST_LEVEL: int = 3
 
 var level: int = 0
 var malus_arcana: MajorArcanaCard = null
+var alternate_malus_arcana: MajorArcanaCard = null
 var points: float = 0
 var last_card_played: ElementalCard = null
 var wind_card_count: int = 0 
 var target_score: float = 0
 
 func is_last_level():
+	return level == LAST_LEVEL
+
+func is_game_won():
 	return level > LAST_LEVEL
 
 func update_target_score():

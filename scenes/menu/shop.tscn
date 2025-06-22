@@ -1,83 +1,88 @@
-[gd_scene load_steps=3 format=3 uid="uid://017itoxakhcb"]
+[gd_scene load_steps=5 format=3 uid="uid://017itoxakhcb"]
 
 [ext_resource type="Script" uid="uid://u7qiolsr8hlj" path="res://scripts/menu/shop.gd" id="1_360xs"]
-[ext_resource type="PackedScene" uid="uid://bco8gllbsljum" path="res://scenes/playing_table.tscn" id="2_r07u6"]
+[ext_resource type="PackedScene" uid="uid://bkar2tpe45h2h" path="res://scenes/background.tscn" id="2_6yf3s"]
+[ext_resource type="FontFile" uid="uid://dtaxr6ajd2psd" path="res://assets/fonts/wiggle-parade-font/WiggleParade-MA5Ow.otf" id="3_8bnh1"]
+[ext_resource type="FontFile" uid="uid://uhxxvcgntgb0" path="res://assets/fonts/yoon-path-font/YoonPath-xRZlO.otf" id="4_svvuu"]
 
 [node name="Shop" type="Node3D"]
 script = ExtResource("1_360xs")
 
-[node name="PlayingTable" parent="." instance=ExtResource("2_r07u6")]
+[node name="TextureRect" parent="." instance=ExtResource("2_6yf3s")]
 
-[node name="Label" type="Label" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
 offset_left = 1046.0
 offset_top = 72.0
 offset_right = 1092.0
 offset_bottom = 112.0
+theme_override_font_sizes/font_size = 35
 
-[node name="Start" type="Button" parent="."]
-offset_right = 94.0
-offset_bottom = 43.0
+[node name="Start" type="Button" parent="CanvasLayer"]
+offset_left = 550.0
+offset_top = 488.0
+offset_right = 686.0
+offset_bottom = 589.0
+theme_override_colors/font_hover_color = Color(0.862745, 0.431373, 0.647059, 1)
+theme_override_colors/font_color = Color(0.862745, 0.431373, 0.647059, 1)
+theme_override_fonts/font = ExtResource("4_svvuu")
+theme_override_font_sizes/font_size = 50
+text = "START"
 
-[node name="ButtonShop" type="Control" parent="."]
+[node name="ButtonShop" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="NumCard" type="Button" parent="ButtonShop"]
+[node name="RandomArcana" type="Label" parent="CanvasLayer/ButtonShop"]
 layout_mode = 0
-offset_left = 329.0
-offset_top = 262.0
-offset_right = 420.0
-offset_bottom = 305.0
+offset_left = 40.0
+offset_top = 342.0
+offset_right = 511.0
+offset_bottom = 416.0
+theme_override_fonts/font = ExtResource("3_8bnh1")
+theme_override_font_sizes/font_size = 40
+text = "Choose which arcana to fight"
 
-[node name="HighFire" type="Button" parent="ButtonShop"]
+[node name="RandomMajor" type="Button" parent="CanvasLayer/ButtonShop/RandomArcana"]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 356.0
-offset_right = 211.0
-offset_bottom = 401.0
+offset_left = 725.0
+offset_right = 820.0
+offset_bottom = 82.0
+theme_override_fonts/font = ExtResource("3_8bnh1")
+theme_override_font_sizes/font_size = 40
+text = "BUY"
 
-[node name="HighWater" type="Button" parent="ButtonShop"]
+[node name="Label" type="Label" parent="CanvasLayer/ButtonShop"]
 layout_mode = 0
-offset_left = 706.0
-offset_top = 217.0
-offset_right = 767.0
-offset_bottom = 256.0
+offset_left = 106.0
+offset_top = 188.0
+offset_right = 469.0
+offset_bottom = 262.0
+theme_override_fonts/font = ExtResource("3_8bnh1")
+theme_override_font_sizes/font_size = 40
+text = "Add more card in hand"
 
-[node name="HighWind" type="Button" parent="ButtonShop"]
+[node name="NumCard" type="Button" parent="CanvasLayer/ButtonShop/Label"]
 layout_mode = 0
-offset_left = 767.0
-offset_top = 419.0
-offset_right = 857.0
-offset_bottom = 490.0
+offset_left = 661.0
+offset_right = 752.0
+offset_bottom = 82.0
+theme_override_fonts/font = ExtResource("3_8bnh1")
+theme_override_font_sizes/font_size = 40
+text = "BUY"
 
-[node name="HighEarth" type="Button" parent="ButtonShop"]
-layout_mode = 0
-offset_left = 343.0
-offset_top = 428.0
-offset_right = 407.0
-offset_bottom = 480.0
+[node name="Label2" type="Label" parent="CanvasLayer"]
+offset_left = 531.0
+offset_top = 72.0
+offset_right = 668.0
+offset_bottom = 164.0
+theme_override_fonts/font = ExtResource("3_8bnh1")
+theme_override_font_sizes/font_size = 50
+text = "SHOP"
 
-[node name="RandomMajor" type="Button" parent="ButtonShop"]
-layout_mode = 0
-offset_left = 571.0
-offset_top = 351.0
-offset_right = 619.0
-offset_bottom = 394.0
-
-[node name="DiscardCard" type="Button" parent="ButtonShop"]
-layout_mode = 0
-offset_left = 972.0
-offset_top = 278.0
-offset_right = 1039.0
-offset_bottom = 345.0
-
-[connection signal="button_down" from="Start" to="." method="_on_start_button_down"]
-[connection signal="button_down" from="ButtonShop/NumCard" to="." method="_on_num_card_button_"]
-[connection signal="button_down" from="ButtonShop/HighFire" to="." method="_on_high_fire_button_down"]
-[connection signal="button_down" from="ButtonShop/HighWater" to="." method="_on_high_water_button_down"]
-[connection signal="button_down" from="ButtonShop/HighWind" to="." method="_on_high_wind_button_down"]
-[connection signal="button_down" from="ButtonShop/HighEarth" to="." method="_on_high_earth_button_down"]
-[connection signal="button_down" from="ButtonShop/RandomMajor" to="." method="_on_random_major_button_down"]
-[connection signal="button_down" from="ButtonShop/DiscardCard" to="." method="_on_discard_card_button_down"]
+[connection signal="button_down" from="CanvasLayer/Start" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="CanvasLayer/ButtonShop/RandomArcana/RandomMajor" to="." method="_on_random_major_button_down"]
+[connection signal="button_down" from="CanvasLayer/ButtonShop/Label/NumCard" to="." method="_on_num_card_button_"]

@@ -3,6 +3,8 @@ class_name TheHermit extends MajorArcanaCard
 func _init() -> void:
 	id = 9
 	card_name = "The Hermit"
+	arcana_penalty_description = "Only the fire element have a bonus (other cards are without elements)."
+	arcana_bonus_effect = "The value of a fire card is doubled."
 
 
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
