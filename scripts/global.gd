@@ -1,7 +1,7 @@
 extends Node
 
 # Player's money
-var money: int = 200
+var money: int = 0
 
 # Number of card in your hand at the start of the round
 var base_num_card: int  = 3

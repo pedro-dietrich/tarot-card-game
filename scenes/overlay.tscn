@@ -39,3 +39,22 @@ offset_bottom = 64.0
 label_settings = SubResource("LabelSettings_o1jrt")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 300.0
+offset_top = 250.0
+offset_right = 452.0
+offset_bottom = 326.0
+
+[node name="Button2" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 700.0
+offset_top = 250.0
+offset_right = 879.0
+offset_bottom = 335.0
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="Button2" to="." method="_on_button_2_button_down"]

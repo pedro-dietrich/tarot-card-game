@@ -5,6 +5,8 @@ var sequence: float = 0.0
 func _init() -> void:
 	id = 6
 	card_name = "The Lovers"
+	arcana_penalty_description = "If you play two cards of the same element in sequence, the second one lose his element bonus"
+	arcana_bonus_effect = "if you two cards of a different element in sequence it gains X*20% in value, where X is the actual sequence of cards with a different element"
 
 
 func reset_effects() -> void:

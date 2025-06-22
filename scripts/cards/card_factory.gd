@@ -9,27 +9,12 @@ const ELEMENT_CLASSES: Array[Resource] = [
 
 const MAJOR_ARCANA_CARD_CLASSES: Array[Resource] = [
 	preload("res://scripts/cards/major_arcanas/the_fool.gd"),
-	preload("res://scripts/cards/major_arcanas/the_magician.gd"),
 	preload("res://scripts/cards/major_arcanas/the_high_priestess.gd"),
-	preload("res://scripts/cards/major_arcanas/the_empress.gd"),
-	preload("res://scripts/cards/major_arcanas/the_emperor.gd"),
-	preload("res://scripts/cards/major_arcanas/the_hierophant.gd"),
 	preload("res://scripts/cards/major_arcanas/the_lovers.gd"),
-	preload("res://scripts/cards/major_arcanas/the_chariot.gd"),
-	preload("res://scripts/cards/major_arcanas/justice.gd"),
 	preload("res://scripts/cards/major_arcanas/the_hermit.gd"),
-	preload("res://scripts/cards/major_arcanas/the_wheel_of_fortune.gd"),
 	preload("res://scripts/cards/major_arcanas/strength.gd"),
-	preload("res://scripts/cards/major_arcanas/the_hanged_man.gd"),
 	preload("res://scripts/cards/major_arcanas/death.gd"),
-	preload("res://scripts/cards/major_arcanas/temperance.gd"),
-	preload("res://scripts/cards/major_arcanas/the_devil.gd"),
-	preload("res://scripts/cards/major_arcanas/the_tower.gd"),
-	preload("res://scripts/cards/major_arcanas/the_star.gd"),
-	preload("res://scripts/cards/major_arcanas/the_moon.gd"),
-	preload("res://scripts/cards/major_arcanas/the_sun.gd"),
-	preload("res://scripts/cards/major_arcanas/judgement.gd"),
-	preload("res://scripts/cards/major_arcanas/the_world.gd")
+	preload("res://scripts/cards/major_arcanas/temperance.gd")
 ]
 
 func assign_random_element_to_card(card: ElementalCard, deck: Array) -> void:
@@ -44,6 +29,11 @@ func assign_random_element_to_card(card: ElementalCard, deck: Array) -> void:
 	card.element.id = card_num + 1
 
 # Instantiates a random Major Arcana, not including The Fool
-func random_major_arcana_card() -> MajorArcanaCard:
-	var major_arcana_index: int = (randi() % (MAJOR_ARCANA_CARD_CLASSES.size() - 1)) + 1
-	return MAJOR_ARCANA_CARD_CLASSES[major_arcana_index].new()
+func random_major_arcana_card(list_major_arcana: Array) -> MajorArcanaCard:
+	var major_arcana_index: int = (randi() % (list_major_arcana.size())) 
+	var major_arcana: MajorArcanaCard = MAJOR_ARCANA_CARD_CLASSES[list_major_arcana[major_arcana_index]].new()
+	list_major_arcana.remove_at(major_arcana_index)
+	return major_arcana
+	
+func fool_arcana_card() -> MajorArcanaCard:
+	return MAJOR_ARCANA_CARD_CLASSES[0].new()
