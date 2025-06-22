@@ -1,6 +1,8 @@
 extends Control
 
-var major_chosen: int = 0
+enum MajorChoice {NONE = 0, FIRST = 1, SECOND = 2}
+
+var major_chosen: MajorChoice = MajorChoice.NONE
 
 func _ready():
 	$TopLabel.text = "UPPER-TEXT"
@@ -33,7 +35,7 @@ func set_outro_labels(level: Level, lifes: int):
 	set_labels("Level " + str(level.level), "Lifes: " +str(lifes))
 	
 func _on_button_2_button_down() -> void:
-	major_chosen = 2
+	major_chosen = MajorChoice.SECOND
 
 func _on_button_button_down() -> void:
-	major_chosen = 1
+	major_chosen = MajorChoice.FIRST

@@ -3,8 +3,8 @@ extends MajorArcanaCard
 func _init() -> void:
 	id = 13
 	card_name = "Death"
-	arcana_penalty_description = "Cards 1-6 are worth -50%"
-	arcana_bonus_effect = "Cards 1-6 are worth +50%"
+	arcana_penalty_description = "Cards 1-6 are worth -50%."
+	arcana_bonus_effect = "Cards 1-6 are worth +50%."
 
 
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:

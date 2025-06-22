@@ -3,8 +3,8 @@ extends MajorArcanaCard
 func _init() -> void:
 	id = 11
 	card_name = "Strength"
-	arcana_penalty_description = "Only the water element have a bonus (other cards are without elements)"
-	arcana_bonus_effect = "the value of a water card is doubled"
+	arcana_penalty_description = "Only the water element have a bonus (other cards are without elements)."
+	arcana_bonus_effect = "The value of a water card is doubled."
 
 
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:

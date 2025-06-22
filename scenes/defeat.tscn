@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cg4o67ij76007"]
+[gd_scene load_steps=5 format=3 uid="uid://lhy3fq85yc1b"]
 
-[ext_resource type="Script" uid="uid://bqmwbwrfo8k5h" path="res://scripts/defeat.gd" id="1_ycbao"]
+[ext_resource type="Script" path="res://scripts/defeat.gd" id="1_ycbao"]
 [ext_resource type="PackedScene" uid="uid://bkar2tpe45h2h" path="res://scenes/background.tscn" id="2_31oti"]
 [ext_resource type="FontFile" uid="uid://uhxxvcgntgb0" path="res://assets/fonts/yoon-path-font/YoonPath-xRZlO.otf" id="3_gofgq"]
 [ext_resource type="FontFile" uid="uid://dtaxr6ajd2psd" path="res://assets/fonts/wiggle-parade-font/WiggleParade-MA5Ow.otf" id="4_sjy8s"]
@@ -40,7 +40,7 @@ offset_right = 917.0
 offset_bottom = 342.0
 theme_override_fonts/font = ExtResource("4_sjy8s")
 theme_override_font_sizes/font_size = 35
-text = "You did not suceed this time.
+text = "You did not succeed this time.
 Try again after buying some stuff on the shop."
 
 [connection signal="button_down" from="CanvasLayer/Button" to="." method="_on_button_button_down"]
