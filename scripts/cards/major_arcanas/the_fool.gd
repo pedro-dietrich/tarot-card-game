@@ -1,4 +1,4 @@
-class_name TheFool extends MajorArcanaCard
+class_name TheFool extends MajorArcana
 
 var increase_mode: bool = true
 

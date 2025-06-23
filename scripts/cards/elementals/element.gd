@@ -1,4 +1,4 @@
-class_name  Element extends Node
+class_name Element extends Node
 
 var id: int
 

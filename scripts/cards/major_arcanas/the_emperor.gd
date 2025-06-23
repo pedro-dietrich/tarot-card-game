@@ -1,4 +1,4 @@
-class_name TheEmperor extends MajorArcanaCard
+class_name TheEmperor extends MajorArcana
 
 func _init() -> void:
 	id = 4

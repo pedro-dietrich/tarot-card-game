@@ -25,8 +25,6 @@ var played_cards: Array[ElementalCard] = []
 # TODO: implement card id generation, sequential at the moment
 var next_card_id: Array[int] = []
 
-var malus_arcana: MajorArcanaCard
-
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = []
 
@@ -44,8 +42,6 @@ func _ready() -> void:
 	Events.connect("path_terminate", _on_path_terminate)
 
 func _process(_delta: float) -> void:
-	
-
 	match current_state:
 		STATE_INTRO:
 			if(level.is_game_won()):
@@ -59,8 +55,8 @@ func _process(_delta: float) -> void:
 			else:
 				$CanvasLayer/Overlay.write_intro_labels(level)
 				current_state = STATE_WAIT_START_CONFIRM
-			add_child(level.malus_arcana)
-			print("Playing level with Major Arcana: ", level.malus_arcana.card_name)
+			add_child(level.malus_arcana_card)
+			print("Playing level with Major Arcana: ", level.get_malus_arcana().card_name)
 
 		STATE_CHOOSE_MALUS:
 			if ($CanvasLayer/Overlay.major_chosen > 0):
@@ -71,7 +67,7 @@ func _process(_delta: float) -> void:
 		STATE_WAIT_START_CONFIRM:
 			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
-				$CanvasLayer/Overlay.set_labels(level.malus_arcana.card_name)
+				$CanvasLayer/Overlay.set_labels(level.get_malus_arcana().card_name)
 				current_state = STATE_MAIN
 
 		STATE_MAIN:
@@ -106,14 +102,14 @@ func handle_win_round():
 		get_tree().change_scene_to_packed(victory_screen)
 		return
 
-	if(level.malus_arcana is TheSun):
+	if(level.get_malus_arcana() is TheSun):
 		lifes += 2
-	elif(level.malus_arcana is TheWorld):
+	elif(level.get_malus_arcana() is TheWorld):
 		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size() - 1)
 		# TODO error when world is the first malus arcana
 		bonus_arcanas.append(bonus_arcanas[doubled_arcana_index])
 	else:
-		bonus_arcanas.append(level.malus_arcana)
+		bonus_arcanas.append(level.malus_arcana_card)
 	reset_round()
 
 func reset_round() -> void:
@@ -157,7 +153,7 @@ func _on_card_played(card_id: int) -> void:
 	played_card.card_played = true
 
 	# Verify of the rule of the major arcana authorize this play, if not do not add any point on the board and sacrifice the card
-	if(level.malus_arcana.is_card_playable(played_card, played_cards)):
+	if(level.get_malus_arcana().is_card_playable(played_card, played_cards)):
 		play_card(played_card)
 	else:
 		played_cards.append(played_card)
@@ -167,12 +163,12 @@ func _on_card_played(card_id: int) -> void:
 	draw_card(position_z)
 
 func next_malus() -> void:
-	if (level.is_last_level()): level.malus_arcana = card_factory.fool_arcana_card()
+	if (level.is_last_level()): level.malus_arcana_card = card_factory.fool_arcana_card()
 	else:
-		level.malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
+		level.malus_arcana_card = card_factory.random_major_arcana_card(list_major_arcana)
 
 		if(g.random_major):
-			level.alternate_malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
+			level.alternate_malus_arcana_card = card_factory.random_major_arcana_card(list_major_arcana)
 
 
 func replace_hand() -> void:
@@ -201,7 +197,7 @@ func draw_card(_position_z = null) -> void:
 	card_label.text = str(card.element.id) + " " + card.element.get_label_text()
 	
 	# Change the hand in function of the Malus Arcana
-	level.malus_arcana.malus_effect_on_hand(card)
+	level.get_malus_arcana().malus_effect_on_hand(card)
 	add_card_to_hand(card)
 
 func add_card_to_hand(card: ElementalCard) -> void:

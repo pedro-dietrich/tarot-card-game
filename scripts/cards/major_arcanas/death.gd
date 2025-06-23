@@ -1,4 +1,4 @@
-extends MajorArcanaCard
+extends MajorArcana
 
 func _init() -> void:
 	id = 13

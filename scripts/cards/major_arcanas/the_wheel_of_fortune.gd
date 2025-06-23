@@ -1,4 +1,4 @@
-class_name TheWheelOfFortune extends MajorArcanaCard
+class_name TheWheelOfFortune extends MajorArcana
 
 var random_effect_done: bool = false
 

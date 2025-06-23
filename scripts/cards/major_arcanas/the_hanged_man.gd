@@ -1,4 +1,4 @@
-class_name TheHangedMan extends MajorArcanaCard
+class_name TheHangedMan extends MajorArcana
 
 func _init() -> void:
 	id = 12

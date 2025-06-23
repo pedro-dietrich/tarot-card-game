@@ -1,4 +1,4 @@
-class_name TheTower extends MajorArcanaCard
+class_name TheTower extends MajorArcana
 
 func _init() -> void:
 	id = 16
