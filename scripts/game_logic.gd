@@ -133,7 +133,7 @@ func change_major() -> void:
 	$CanvasLayer/Overlay/OptionArcana2.hide()
 	
 	if ($CanvasLayer/Overlay.major_chosen == 2):
-		level.malus_arcana = level.alternate_malus_arcana
+		level.malus_arcana_card = level.alternate_malus_arcana_card
 
 
 func _on_card_played(card_id: int) -> void:

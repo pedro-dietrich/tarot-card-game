@@ -6,7 +6,7 @@ const LAST_LEVEL: int = 3
 
 var level: int = 0
 var malus_arcana_card: MajorArcanaCard = null
-var alternate_malus_arcana: MajorArcanaCard = null
+var alternate_malus_arcana_card: MajorArcanaCard = null
 var points: float = 0
 var last_card_played: ElementalCard = null
 var wind_card_count: int = 0 
