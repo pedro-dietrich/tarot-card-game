@@ -44,7 +44,9 @@ func random_major_arcana_card(list_major_arcana: Array) -> MajorArcanaCard:
 		major_arcana = fool_arcana()
 
 	card.set_major_arcana(major_arcana)
+	card.rotate_z(PI/8)
 	return card
+
 
 func fool_arcana_card() -> MajorArcanaCard:
 	var major_arcana: MajorArcana

@@ -68,6 +68,8 @@ func _process(_delta: float) -> void:
 			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
 				$CanvasLayer/Overlay.set_labels(level.get_malus_arcana().card_name)
+				level.malus_arcana_card.position = Vector3(0.35, 0.3, 1.3)
+
 				current_state = STATE_MAIN
 
 		STATE_MAIN:
