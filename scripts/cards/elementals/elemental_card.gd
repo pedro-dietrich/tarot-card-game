@@ -49,3 +49,16 @@ func get_mouse_hit_on_table() -> Dictionary:
 	var result: Dictionary = space_state.intersect_ray(intersect_parameters)
 
 	return result
+
+func set_card_images() -> void: 
+	var material: Material = ShaderMaterial.new()
+	material.shader = load("res://shaders/card.gdshader")
+	
+	if(material is ShaderMaterial):
+		var texture = load(element.get_image_path())
+		material.set_shader_parameter("background", texture)
+		material.set_shader_parameter("middleground", load("res://assets/card/major_arcanas/placeholder/transparent.png"))
+		material.set_shader_parameter("foreground", load("res://assets/card/major_arcanas/placeholder/transparent.png"))
+		material.set_shader_parameter("base_albedo", load("res://assets/card/card.jpg"))
+	
+	$Card.material_override = material
