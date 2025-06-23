@@ -191,10 +191,6 @@ func draw_card(_position_z = null) -> void:
 	# Generate a random id for the card and assure that this id was not already taken by a card this round
 	card_factory.assign_random_element_to_card(card, deck)
 	next_card_id.append(card.id)
-
-	# Write on the card the number and element
-	var card_label: Label3D = card.find_child("CardLabel")
-	card_label.text = str(card.element.id) + " " + card.element.get_label_text()
 	
 	# Change the hand in function of the Malus Arcana
 	level.get_malus_arcana().malus_effect_on_hand(card)
