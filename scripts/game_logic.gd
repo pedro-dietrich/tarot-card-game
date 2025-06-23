@@ -213,7 +213,7 @@ func play_card(played_card: ElementalCard) -> void:
 	$CanvasLayer/Overlay.write_points(level)
 
 	var zpos: float = -1.45 + (0.25 * played_cards.size())
-	played_card.set_position(Vector3(0, 0, zpos))
+	played_card.set_position(Vector3(0, 0.2, zpos))
 	
 	#Await that all movement off the card stop before making the mesh instance transparent again
 	await get_tree().create_timer(0.1).timeout
