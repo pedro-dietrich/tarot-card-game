@@ -1,5 +1,8 @@
 class_name TheFool extends MajorArcana
 
+func get_arcana_path() -> String:
+	return base_path + "fool/fool"
+
 var increase_mode: bool = true
 
 func _init() -> void:

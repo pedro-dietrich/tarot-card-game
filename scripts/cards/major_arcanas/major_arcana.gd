@@ -2,6 +2,11 @@ class_name MajorArcana extends Node
 
 var id: int = -1
 var card_name: String = "Major Arcana Name"
+var base_path: String = "res://assets/card/major_arcanas/"
+
+# To be overriden by concrete functions
+func get_arcana_path() -> String:
+	return ""
 
 # Descriptions should be overridden by the derived classes
 var arcana_bonus_effect: String = "Major Arcana bonus effect."
