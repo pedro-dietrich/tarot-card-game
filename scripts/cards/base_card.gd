@@ -18,7 +18,6 @@ func set_card_images() -> void:
 
 func _ready() -> void:
 	$Card/Outline.hide()
-	$CardArea3D.id = id
 	set_card_images()
 
 func _on_area_3d_mouse_entered() -> void:

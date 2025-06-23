@@ -6,6 +6,9 @@ var place_before_drag: Vector3
 var card_in_play_area: bool = false
 var card_played: bool = false
 
+func _ready() -> void:
+	$CardArea3D.id = id
+
 func _process(_delta: float) -> void:
 	if(dragging):
 		var hit_info: Dictionary = get_mouse_hit_on_table()

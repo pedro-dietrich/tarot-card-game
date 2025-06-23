@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var basic_card_path = preload("res://scenes/card.tscn")
+@onready var elemental_card_path = preload("res://scenes/elemental_card.tscn")
 @onready var button = preload("res://scenes/button.tscn")
 @onready var menu_select = preload("res://scenes/menu/shop.tscn")
 @onready var basic_path3D_path = preload("res://scenes/home_path3D.tscn")
@@ -24,6 +24,8 @@ var played_cards: Array[ElementalCard] = []
 
 # TODO: implement card id generation, sequential at the moment
 var next_card_id: Array[int] = []
+
+var malus_arcana: MajorArcanaCard
 
 # Majors you own and gives you bonuses
 var bonus_arcanas: Array[MajorArcanaCard] = []
@@ -57,7 +59,9 @@ func _process(_delta: float) -> void:
 			else:
 				$CanvasLayer/Overlay.write_intro_labels(level)
 				current_state = STATE_WAIT_START_CONFIRM
-		
+			add_child(level.malus_arcana)
+			print("Playing level with Major Arcana: ", level.malus_arcana.card_name)
+
 		STATE_CHOOSE_MALUS:
 			if ($CanvasLayer/Overlay.major_chosen > 0):
 				change_major()
@@ -85,7 +89,6 @@ func _process(_delta: float) -> void:
 						current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
-			# TODO could have been just a some code in the if above, oops
 			$CanvasLayer/Overlay.set_outro_labels(level, lifes)
 			current_state = STATE_WAIT_END_CONFIRM
 
@@ -136,6 +139,7 @@ func change_major() -> void:
 	if ($CanvasLayer/Overlay.major_chosen == 2):
 		level.malus_arcana = level.alternate_malus_arcana
 
+
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
 
@@ -166,12 +170,10 @@ func next_malus() -> void:
 	if (level.is_last_level()): level.malus_arcana = card_factory.fool_arcana_card()
 	else:
 		level.malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
-		
+
 		if(g.random_major):
 			level.alternate_malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
-			
-			
-	print("Playing level with Major Arcana: ", level.malus_arcana.card_name)
+
 
 func replace_hand() -> void:
 	for i in range(hand_cards.size()) :
@@ -188,7 +190,7 @@ func draw_hand() -> void:
 		draw_card()
 
 func draw_card(_position_z = null) -> void:
-	var card: ElementalCard = basic_card_path.instantiate()
+	var card: ElementalCard = elemental_card_path.instantiate()
 
 	# Generate a random id for the card and assure that this id was not already taken by a card this round
 	card_factory.assign_random_element_to_card(card, deck)

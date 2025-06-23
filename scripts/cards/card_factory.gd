@@ -1,5 +1,7 @@
 class_name CardFactory extends Node
 
+const major_arcana_card_path = preload("res://scenes/major_arcana_card.tscn")
+
 const ELEMENT_CLASSES: Array[Resource] = [
 	preload("res://scripts/cards/elementals/fire.gd"),
 	preload("res://scripts/cards/elementals/water.gd"),
@@ -33,10 +35,16 @@ func random_major_arcana_card(list_major_arcana: Array) -> MajorArcanaCard:
 	if list_major_arcana.size() > 0:
 		var major_arcana_index: int = (randi() % (list_major_arcana.size())) 
 		var major_arcana: MajorArcanaCard = MAJOR_ARCANA_CARD_CLASSES[list_major_arcana[major_arcana_index]].new()
-		
+
 		print("Remove", list_major_arcana[major_arcana_index] )
 		list_major_arcana.remove_at(major_arcana_index)
-		return major_arcana
+
+		var card: MajorArcanaCard = major_arcana_card_path.instantiate()
+		var card_label: Label3D = card.find_child("CardLabel")
+		card_label.text = card.name
+
+		return card
+		
 	return MAJOR_ARCANA_CARD_CLASSES[0].new()
 	
 func fool_arcana_card() -> MajorArcanaCard:

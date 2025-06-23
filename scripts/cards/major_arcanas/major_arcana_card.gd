@@ -4,6 +4,14 @@ class_name MajorArcanaCard extends Card
 var arcana_bonus_effect: String = "Major Arcana bonus effect."
 var arcana_penalty_description: String = "Major Arcana penalty description."
 
+#var placeholder = "placeholder/"
+#
+#func set_card_major_images(path: String) -> void:
+	#var material: Material = card_mesh.get_active_material(0)
+	#if(material is ShaderMaterial):
+		#material.set_shader_parameter("background", load("res://assets/card/major_arcanas/"+path+"background.png"))
+		#material.set_shader_parameter("middleground", load("res://assets/card/major_arcanas"+path+"middleground.png"))
+		#material.set_shader_parameter("foreground", load("res://assets/card/major_arcanas"+path+"foreground.png"))
 
 func score_to_obtain(score: float) -> float:
 	return score
