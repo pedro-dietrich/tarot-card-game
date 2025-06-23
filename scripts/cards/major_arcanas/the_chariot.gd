@@ -1,4 +1,4 @@
-class_name TheChariot extends MajorArcanaCard
+class_name TheChariot extends MajorArcana
 
 func _init() -> void:
 	id = 7

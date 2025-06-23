@@ -1,4 +1,4 @@
-class_name TheHierophant extends MajorArcanaCard
+class_name TheHierophant extends MajorArcana
 
 var increase_mode: bool = true
 

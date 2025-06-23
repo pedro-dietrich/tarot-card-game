@@ -1,4 +1,4 @@
-extends MajorArcanaCard
+extends MajorArcana
 
 var sequence: float = 0.0
 

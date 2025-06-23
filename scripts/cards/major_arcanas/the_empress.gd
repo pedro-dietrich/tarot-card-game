@@ -1,4 +1,4 @@
-class_name TheEmpress extends MajorArcanaCard
+class_name TheEmpress extends MajorArcana
 
 func _init() -> void:
 	id = 3

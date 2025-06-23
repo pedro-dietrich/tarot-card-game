@@ -1,4 +1,4 @@
-class_name TheHermit extends MajorArcanaCard
+class_name TheHermit extends MajorArcana
 
 func _init() -> void:
 	id = 9

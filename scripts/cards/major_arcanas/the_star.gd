@@ -1,4 +1,4 @@
-class_name TheStar extends MajorArcanaCard
+class_name TheStar extends MajorArcana
 
 func _init() -> void:
 	id = 17

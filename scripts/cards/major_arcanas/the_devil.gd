@@ -1,4 +1,4 @@
-class_name TheDevil extends MajorArcanaCard
+class_name TheDevil extends MajorArcana
 
 func _init() -> void:
 	id = 15

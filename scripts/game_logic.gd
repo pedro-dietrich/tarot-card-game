@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var basic_card_path = preload("res://scenes/card.tscn")
+@onready var elemental_card_path = preload("res://scenes/elemental_card.tscn")
 @onready var button = preload("res://scenes/button.tscn")
 @onready var menu_select = preload("res://scenes/menu/shop.tscn")
 @onready var basic_path3D_path = preload("res://scenes/home_path3D.tscn")
@@ -42,8 +42,6 @@ func _ready() -> void:
 	Events.connect("path_terminate", _on_path_terminate)
 
 func _process(_delta: float) -> void:
-	
-
 	match current_state:
 		STATE_INTRO:
 			if(level.is_game_won()):
@@ -57,7 +55,9 @@ func _process(_delta: float) -> void:
 			else:
 				$CanvasLayer/Overlay.write_intro_labels(level)
 				current_state = STATE_WAIT_START_CONFIRM
-		
+			add_child(level.malus_arcana_card)
+			print("Playing level with Major Arcana: ", level.get_malus_arcana().card_name)
+
 		STATE_CHOOSE_MALUS:
 			if ($CanvasLayer/Overlay.major_chosen > 0):
 				change_major()
@@ -67,7 +67,9 @@ func _process(_delta: float) -> void:
 		STATE_WAIT_START_CONFIRM:
 			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
-				$CanvasLayer/Overlay.set_labels(level.malus_arcana.card_name)
+				$CanvasLayer/Overlay.set_labels(level.get_malus_arcana().card_name)
+				level.malus_arcana_card.position = Vector3(0.35, 0.3, 1.3)
+
 				current_state = STATE_MAIN
 
 		STATE_MAIN:
@@ -85,7 +87,6 @@ func _process(_delta: float) -> void:
 						current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
-			# TODO could have been just a some code in the if above, oops
 			$CanvasLayer/Overlay.set_outro_labels(level, lifes)
 			current_state = STATE_WAIT_END_CONFIRM
 
@@ -103,14 +104,14 @@ func handle_win_round():
 		get_tree().change_scene_to_packed(victory_screen)
 		return
 
-	if(level.malus_arcana is TheSun):
+	if(level.get_malus_arcana() is TheSun):
 		lifes += 2
-	elif(level.malus_arcana is TheWorld):
+	elif(level.get_malus_arcana() is TheWorld):
 		var doubled_arcana_index: int = randi_range(0, bonus_arcanas.size() - 1)
 		# TODO error when world is the first malus arcana
 		bonus_arcanas.append(bonus_arcanas[doubled_arcana_index])
 	else:
-		bonus_arcanas.append(level.malus_arcana)
+		bonus_arcanas.append(level.malus_arcana_card)
 	reset_round()
 
 func reset_round() -> void:
@@ -134,7 +135,8 @@ func change_major() -> void:
 	$CanvasLayer/Overlay/OptionArcana2.hide()
 	
 	if ($CanvasLayer/Overlay.major_chosen == 2):
-		level.malus_arcana = level.alternate_malus_arcana
+		level.malus_arcana_card = level.alternate_malus_arcana_card
+
 
 func _on_card_played(card_id: int) -> void:
 	var index: int = hand_cards.find_custom(func(card: ElementalCard) -> bool: return card.id == card_id)
@@ -153,7 +155,7 @@ func _on_card_played(card_id: int) -> void:
 	played_card.card_played = true
 
 	# Verify of the rule of the major arcana authorize this play, if not do not add any point on the board and sacrifice the card
-	if(level.malus_arcana.is_card_playable(played_card, played_cards)):
+	if(level.get_malus_arcana().is_card_playable(played_card, played_cards)):
 		play_card(played_card)
 	else:
 		played_cards.append(played_card)
@@ -163,15 +165,13 @@ func _on_card_played(card_id: int) -> void:
 	draw_card(position_z)
 
 func next_malus() -> void:
-	if (level.is_last_level()): level.malus_arcana = card_factory.fool_arcana_card()
+	if (level.is_last_level()): level.malus_arcana_card = card_factory.fool_arcana_card()
 	else:
-		level.malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
-		
+		level.malus_arcana_card = card_factory.random_major_arcana_card(list_major_arcana)
+
 		if(g.random_major):
-			level.alternate_malus_arcana = card_factory.random_major_arcana_card(list_major_arcana)
-			
-			
-	print("Playing level with Major Arcana: ", level.malus_arcana.card_name)
+			level.alternate_malus_arcana_card = card_factory.random_major_arcana_card(list_major_arcana)
+
 
 func replace_hand() -> void:
 	for i in range(hand_cards.size()) :
@@ -188,14 +188,14 @@ func draw_hand() -> void:
 		draw_card()
 
 func draw_card(_position_z = null) -> void:
-	var card: ElementalCard = basic_card_path.instantiate()
+	var card: ElementalCard = elemental_card_path.instantiate()
 
 	# Generate a random id for the card and assure that this id was not already taken by a card this round
 	card_factory.assign_random_element_to_card(card, deck)
 	next_card_id.append(card.id)
 	
 	# Change the hand in function of the Malus Arcana
-	level.malus_arcana.malus_effect_on_hand(card)
+	level.get_malus_arcana().malus_effect_on_hand(card)
 	add_card_to_hand(card)
 
 func add_card_to_hand(card: ElementalCard) -> void:
@@ -215,7 +215,7 @@ func play_card(played_card: ElementalCard) -> void:
 	$CanvasLayer/Overlay.write_points(level)
 
 	var zpos: float = -1.45 + (0.25 * played_cards.size())
-	played_card.set_position(Vector3(0, 0, zpos))
+	played_card.set_position(Vector3(0, 0.2, zpos))
 	
 	#Await that all movement off the card stop before making the mesh instance transparent again
 	await get_tree().create_timer(0.1).timeout

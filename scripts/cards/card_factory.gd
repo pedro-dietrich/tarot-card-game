@@ -1,5 +1,7 @@
 class_name CardFactory extends Node
 
+const major_arcana_card_path = preload("res://scenes/major_arcana_card.tscn")
+
 const ELEMENT_CLASSES: Array[Resource] = [
 	preload("res://scripts/cards/elementals/fire.gd"),
 	preload("res://scripts/cards/elementals/water.gd"),
@@ -30,14 +32,29 @@ func assign_random_element_to_card(card: ElementalCard, deck: Array) -> void:
 
 # Instantiates a random Major Arcana, not including The Fool
 func random_major_arcana_card(list_major_arcana: Array) -> MajorArcanaCard:
+	var major_arcana: MajorArcana
+	var card: MajorArcanaCard = major_arcana_card_path.instantiate()
+
 	if list_major_arcana.size() > 0:
 		var major_arcana_index: int = (randi() % (list_major_arcana.size())) 
-		var major_arcana: MajorArcanaCard = MAJOR_ARCANA_CARD_CLASSES[list_major_arcana[major_arcana_index]].new()
-		
+		major_arcana = MAJOR_ARCANA_CARD_CLASSES[list_major_arcana[major_arcana_index]].new()
 		print("Remove", list_major_arcana[major_arcana_index] )
 		list_major_arcana.remove_at(major_arcana_index)
-		return major_arcana
-	return MAJOR_ARCANA_CARD_CLASSES[0].new()
-	
+	else:
+		major_arcana = fool_arcana()
+
+	card.set_major_arcana(major_arcana)
+	card.rotate_z(PI/8)
+	return card
+
+
 func fool_arcana_card() -> MajorArcanaCard:
+	var major_arcana: MajorArcana
+	var card: MajorArcanaCard = major_arcana_card_path.instantiate()
+	major_arcana = fool_arcana()
+
+	card.set_major_arcana(major_arcana)
+	return card
+
+func fool_arcana() -> MajorArcana:
 	return MAJOR_ARCANA_CARD_CLASSES[0].new()

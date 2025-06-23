@@ -1,4 +1,4 @@
-class_name TheLovers extends MajorArcanaCard
+class_name TheLovers extends MajorArcana
 
 var sequence: float = 0.0
 
