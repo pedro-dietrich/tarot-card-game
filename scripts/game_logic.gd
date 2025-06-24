@@ -51,7 +51,12 @@ func _process(_delta: float) -> void:
 			level.update_target_score()
 			if (g.random_major):
 				current_state = STATE_CHOOSE_MALUS
+				level.malus_arcana_card.position.z = -0.5
+				level.malus_arcana_card.position.y = 0.1
+				level.alternate_malus_arcana_card.position.z = 0.3
+				level.alternate_malus_arcana_card.position.y = 0.1
 				$CanvasLayer/Overlay.write_choose_labels(level)
+				add_child(level.alternate_malus_arcana_card)
 			else:
 				$CanvasLayer/Overlay.write_intro_labels(level)
 				current_state = STATE_WAIT_START_CONFIRM
@@ -68,7 +73,7 @@ func _process(_delta: float) -> void:
 			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
 				$CanvasLayer/Overlay.set_labels(level.get_malus_arcana().card_name)
-				level.malus_arcana_card.position = Vector3(0.35, 0.3, 1.3)
+				level.malus_arcana_card.position = Vector3(0.35, 0.3, -1.3)
 
 				current_state = STATE_MAIN
 
@@ -135,7 +140,12 @@ func change_major() -> void:
 	$CanvasLayer/Overlay/OptionArcana2.hide()
 	
 	if ($CanvasLayer/Overlay.major_chosen == 2):
+		remove_child(level.malus_arcana_card)
 		level.malus_arcana_card = level.alternate_malus_arcana_card
+	else:
+		remove_child(level.alternate_malus_arcana_card)
+	level.malus_arcana_card.position.z = 0
+	$CanvasLayer/Overlay.major_chosen = 0
 
 
 func _on_card_played(card_id: int) -> void:
@@ -202,7 +212,8 @@ func add_card_to_hand(card: ElementalCard) -> void:
 	# Keep in memory which card you have to be able to move/delete them later
 	hand_cards.append(card)
 	var lvl_hand_size: int = g.base_num_card
-	var zpos: float = 0.3 * (hand_cards.size() - ceil(lvl_hand_size / 2.0))
+	var lag: float = 0.24 if lvl_hand_size == 6 else (0.12 if lvl_hand_size == 4 else 0.0)
+	var zpos: float = 0.24 * (hand_cards.size() - ceil(lvl_hand_size / 2.0)) - lag
 	if(get_tree()):
 		animate_path.card_movement(get_tree().current_scene, card, 0.1, zpos, $Deck.position, basic_path3D_path)
 

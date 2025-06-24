@@ -33,8 +33,6 @@ func write_choose_labels(level: Level):
 	write_points(level)
 	$OptionArcana1.show()
 	$OptionArcana2.show()
-	$OptionArcana1.text = level.get_malus_arcana().card_name
-	$OptionArcana2.text = level.alternate_malus_arcana_card.major_arcana.card_name
 
 func set_lost_level_label(level: Level, lifes: int):
 	set_labels(level.get_level_label() + " Not completed", "Lifes remaining: " + str(lifes))

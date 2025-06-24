@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://lhy3fq85yc1b"]
+[gd_scene load_steps=7 format=3 uid="uid://lhy3fq85yc1b"]
 
 [ext_resource type="Script" uid="uid://bqmwbwrfo8k5h" path="res://scripts/defeat.gd" id="1_ycbao"]
 [ext_resource type="PackedScene" uid="uid://bkar2tpe45h2h" path="res://scenes/background.tscn" id="2_31oti"]
 [ext_resource type="FontFile" uid="uid://uhxxvcgntgb0" path="res://assets/fonts/yoon-path-font/YoonPath-xRZlO.otf" id="3_gofgq"]
+[ext_resource type="LabelSettings" uid="uid://drbrl8ld0s4op" path="res://assets/label_settings/scene-title.tres" id="4_31oti"]
 [ext_resource type="FontFile" uid="uid://dtaxr6ajd2psd" path="res://assets/fonts/wiggle-parade-font/WiggleParade-MA5Ow.otf" id="4_sjy8s"]
+[ext_resource type="Texture2D" uid="uid://b68628eslg2jp" path="res://assets/BG_word.png" id="6_gofgq"]
 
 [node name="Defeat" type="Node3D"]
 script = ExtResource("1_ycbao")
@@ -11,17 +13,6 @@ script = ExtResource("1_ycbao")
 [node name="TextureRect" parent="." instance=ExtResource("2_31oti")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Button" type="Button" parent="CanvasLayer"]
-offset_left = 454.0
-offset_top = 462.0
-offset_right = 654.0
-offset_bottom = 563.0
-theme_override_colors/font_hover_color = Color(0.905882, 0.584314, 0.709804, 1)
-theme_override_colors/font_color = Color(0.870588, 0.454902, 0.619608, 1)
-theme_override_fonts/font = ExtResource("3_gofgq")
-theme_override_font_sizes/font_size = 50
-text = "Try Again"
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 offset_left = 417.0
@@ -32,15 +23,38 @@ theme_override_colors/font_color = Color(0.870588, 0.454902, 0.619608, 1)
 theme_override_fonts/font = ExtResource("3_gofgq")
 theme_override_font_sizes/font_size = 70
 text = "Defeat !!!!!!!!!!"
+label_settings = ExtResource("4_31oti")
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 offset_left = 276.0
 offset_top = 209.0
 offset_right = 917.0
 offset_bottom = 342.0
+theme_override_colors/font_color = Color(0.705882, 0.568627, 0.764706, 1)
 theme_override_fonts/font = ExtResource("4_sjy8s")
 theme_override_font_sizes/font_size = 35
 text = "You did not succeed this time.
 Try again after buying some stuff on the shop."
 
-[connection signal="button_down" from="CanvasLayer/Button" to="." method="_on_button_button_down"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 402.0
+offset_top = 457.0
+offset_right = 688.0
+offset_bottom = 558.0
+texture = ExtResource("6_gofgq")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/TextureRect"]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 5.0
+offset_right = 252.0
+offset_bottom = 106.0
+theme_override_colors/font_hover_color = Color(0.905882, 0.584314, 0.709804, 1)
+theme_override_colors/font_color = Color(0.870588, 0.454902, 0.619608, 1)
+theme_override_fonts/font = ExtResource("3_gofgq")
+theme_override_font_sizes/font_size = 50
+text = "Try Again"
+flat = true
+
+[connection signal="button_down" from="CanvasLayer/TextureRect/Button" to="." method="_on_button_button_down"]
