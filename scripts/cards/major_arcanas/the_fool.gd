@@ -5,7 +5,7 @@ var increase_mode: bool = true
 func _init() -> void:
 	id = 0
 	card_name = "The Fool"
-	arcana_penalty_description = "Play only in increasing or decreasing sequence."
+	arcana_penalty_description = "Play only in increasing or decreasing sequence. The first 2 cards played define the sequence you need to follow."
 
 func reset_effects() -> void:
 	increase_mode = true
