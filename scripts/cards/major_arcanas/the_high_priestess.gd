@@ -3,8 +3,8 @@ class_name TheHighPriestess extends MajorArcana
 func _init() -> void:
 	id = 2
 	card_name = "The High Priestess"
-	arcana_penalty_description = "Only the earth element have a bonus (other cards are without elements)."
-	arcana_bonus_effect = "The value of a earth card is doubled."
+	arcana_penalty_description = "Only the coins element has an elemental bonus (e.g. other cards only punctuate their value)."
+	arcana_bonus_effect = "Coins cards are worth 50% more."
 
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
 	var target_card: ElementalCard = active_cards.back()
