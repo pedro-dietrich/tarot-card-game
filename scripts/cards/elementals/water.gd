@@ -7,7 +7,7 @@ var card_image = [
 	"w2.png",
 	"w3.png",
 	"w4.png",
-	"w5,png",
+	"w5.png",
 	"w6.png",
 	"w7.png",
 	"w8.png",

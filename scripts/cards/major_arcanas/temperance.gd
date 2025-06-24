@@ -3,7 +3,7 @@ extends MajorArcana
 func _init() -> void:
 	id = 14
 	card_name = "Temperance"
-	arcana_penalty_description = "Only the wands element has an elemental bonus (other cards are without one)."
+	arcana_penalty_description = "Only the wands element has an elemental bonus  (e.g. other cards only punctuate their value)."
 	arcana_bonus_effect = "Wands cards are worth 50% more."
 
 

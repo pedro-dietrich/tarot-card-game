@@ -3,7 +3,7 @@ class_name TheHermit extends MajorArcana
 func _init() -> void:
 	id = 9
 	card_name = "The Hermit"
-	arcana_penalty_description = "Only the swords element has an elemental bonus (other cards are without one)."
+	arcana_penalty_description = "Only the swords element has an elemental bonus  (e.g. other cards only punctuate their value)."
 	arcana_bonus_effect = "Swords cards are worth 50% more."
 
 
