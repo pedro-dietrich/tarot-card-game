@@ -35,6 +35,14 @@ mesh = SubResource("BoxMesh_6u4wf")
 surface_material_override/0 = SubResource("StandardMaterial3D_ktuci")
 
 [node name="CardLabel" type="Label3D" parent="." index="1"]
-transform = Transform3D(-0.0398423, 0.993042, 0.110812, 0.0106757, -0.110471, 0.993822, 0.999149, 0.0407792, -0.00620005, 0, 0.0136271, 0)
-text = "GG"
-font_size = 21
+transform = Transform3D(6.03983e-10, 0.008, 3.49691e-10, 0, -3.49691e-10, 0.008, 0.008, -6.03983e-10, -2.64009e-17, -0.16629, 0.0196944, 0.00501075)
+sorting_use_aabb_center = false
+pixel_size = 0.12
+double_sided = false
+render_priority = 1
+outline_render_priority = 1
+outline_modulate = Color(1, 1, 0, 1)
+text = "ELEMENTAL TEMPLATE"
+font_size = 27
+outline_size = 1
+uppercase = true

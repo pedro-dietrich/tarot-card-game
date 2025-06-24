@@ -7,9 +7,9 @@ var card_in_play_area: bool = false
 var card_played: bool = false
 
 func _ready() -> void:
-	super._ready()
 	$CardArea3D.id = id
 	set_card_images()
+	$Label.text = str(element.id) + " of " + element.get_label_text()
 
 func _process(_delta: float) -> void:
 	if(dragging):

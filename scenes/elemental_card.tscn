@@ -29,7 +29,20 @@ size = Vector3(0.401245, 0.01017, 0.240997)
 [node name="ElementalCard" instance=ExtResource("1_eu3qk")]
 script = ExtResource("2_783ue")
 
-[node name="Card" parent="." index="0"]
+[node name="Label" type="Label3D" parent="." index="0"]
+transform = Transform3D(6.03983e-10, 0.008, 3.49691e-10, 0, -3.49691e-10, 0.008, 0.008, -6.03983e-10, -2.64009e-17, -0.16629, 0.0196944, 0.00501075)
+sorting_use_aabb_center = false
+pixel_size = 0.12
+double_sided = false
+render_priority = 1
+outline_render_priority = 1
+outline_modulate = Color(1, 1, 0, 1)
+text = "ELEMENTAL TEMPLATE"
+font_size = 27
+outline_size = 1
+uppercase = true
+
+[node name="Card" parent="." index="1"]
 transform = Transform3D(-3.49691e-10, -0.008, 3.49691e-10, 0, -3.49691e-10, -0.008, 0.008, -3.49691e-10, 1.52855e-17, 0.19, 0, -0.11)
 material_override = SubResource("ShaderMaterial_sy11y")
 
@@ -38,7 +51,7 @@ transform = Transform3D(0.101, 0, 0, 0, 0.002, 0, 0, 0, 0.061, 1.30534e-05, 0.00
 mesh = SubResource("BoxMesh_6u4wf")
 surface_material_override/0 = SubResource("StandardMaterial3D_ktuci")
 
-[node name="CardArea3D" type="Area3D" parent="." index="1"]
+[node name="CardArea3D" type="Area3D" parent="." index="2"]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("8_7tko7")

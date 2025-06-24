@@ -3,6 +3,11 @@
 [ext_resource type="Script" uid="uid://cu72j2t173u8v" path="res://scripts/overlay.gd" id="1_7mkhq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_o1jrt"]
+font_size = 27
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_d607a"]
 default_font_size = 50
@@ -25,6 +30,7 @@ offset_bottom = 128.0
 theme_override_font_sizes/font_size = 20
 label_settings = SubResource("LabelSettings_o1jrt")
 horizontal_alignment = 1
+text_overrun_behavior = 4
 
 [node name="BottomLabel" type="Label" parent="."]
 layout_mode = 0
@@ -35,6 +41,7 @@ offset_bottom = 576.0
 theme = SubResource("Theme_d607a")
 label_settings = SubResource("LabelSettings_o1jrt")
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="PointsLabel" type="Label" parent="."]
 layout_mode = 0
