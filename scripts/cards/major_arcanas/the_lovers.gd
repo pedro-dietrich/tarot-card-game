@@ -5,8 +5,8 @@ var sequence: float = 0.0
 func _init() -> void:
 	id = 6
 	card_name = "The Lovers"
-	arcana_penalty_description = "If you play two cards of the same element in sequence, the second one lose his elemental bonus."
-	arcana_bonus_effect = "If you play two cards of a different element in sequence it gains X*20% in value, where X is the actual sequence of cards with a different element."
+	arcana_penalty_description = "If you play two cards of the same type in sequence, the second one lose it's type bonus."
+	arcana_bonus_effect = "If you play two cards of a different type in sequence it gains bonus points."
 
 
 func reset_effects() -> void:
@@ -19,7 +19,7 @@ func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_card
 
 	var card_num: int = target_card.element.id
 
-	if(active_cards.size() > 1 and typeof(target_card.element) == typeof(active_cards[-2].element)):
+	if(active_cards.size() > 1 and target_card.element.get_label_text() == active_cards[-2].element.get_label_text()):
 		return float(card_num)
 	return base_points
 

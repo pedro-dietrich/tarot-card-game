@@ -44,7 +44,7 @@ func reset() -> void:
 	last_card_played = null
 	wind_card_count = 0
 	get_malus_arcana().reset_effects()
-	malus_arcana_card.position = Vector3(-0.6, 0, 0.5 + level * 0.25)
+	malus_arcana_card.position = Vector3(-0.75, 0, 0.5 + level * 0.25)
 	
 func increment() -> void:
 	level += 1
@@ -60,3 +60,9 @@ func get_card_points(played_card: ElementalCard, played_cards, bonus_arcanas):
 	points += played_card.point
 	last_card_played = played_card
 	print("Points: ", points)
+
+func get_level_label():
+	return "Level " + str(level+1)
+
+func get_win_label():
+	return "Level " + str(level+1) + " won! \n Bonus Arcana effect: " + get_malus_arcana().arcana_bonus_effect

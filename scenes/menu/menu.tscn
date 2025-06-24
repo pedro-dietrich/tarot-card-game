@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqgjpsea4nr4x"]
+[gd_scene load_steps=6 format=3 uid="uid://cqgjpsea4nr4x"]
 
 [ext_resource type="Script" uid="uid://dhtymlupr4if4" path="res://scripts/menu/menu.gd" id="1_mcvr8"]
 [ext_resource type="PackedScene" uid="uid://bkar2tpe45h2h" path="res://scenes/background.tscn" id="2_mcvr8"]
 [ext_resource type="FontFile" uid="uid://uhxxvcgntgb0" path="res://assets/fonts/yoon-path-font/YoonPath-xRZlO.otf" id="3_e0arn"]
-[ext_resource type="Texture2D" uid="uid://biuotyb3xfo4g" path="res://assets/BG_word.png" id="4_037ec"]
+[ext_resource type="Texture2D" uid="uid://b68628eslg2jp" path="res://assets/BG_word.png" id="4_037ec"]
+[ext_resource type="LabelSettings" uid="uid://drbrl8ld0s4op" path="res://assets/label_settings/scene-title.tres" id="4_y1o0p"]
 
 [node name="Menu" type="Node3D"]
 script = ExtResource("1_mcvr8")
@@ -60,6 +61,7 @@ theme_override_colors/font_color = Color(0.988235, 0.811765, 0.45098, 1)
 theme_override_fonts/font = ExtResource("3_e0arn")
 theme_override_font_sizes/font_size = 60
 text = "HOME"
+label_settings = ExtResource("4_y1o0p")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 offset_left = 432.0

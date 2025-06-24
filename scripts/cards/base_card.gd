@@ -3,7 +3,6 @@ class_name Card extends Node3D
 
 @export var id: int = -1
 @export var card_name: String = "Base Card"
-
 @onready var card_mesh: MeshInstance3D = $Card
 
 var dragging: bool = false

@@ -1,4 +1,4 @@
 extends Node3D
 
 func _process(delta: float) -> void:
-	$WorldEnvironment/TextureRect.rotation += delta * 0.05
+	$WorldEnvironment/TextureRect.rotation += delta * 0.02

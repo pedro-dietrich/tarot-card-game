@@ -38,13 +38,13 @@ func random_major_arcana_card(list_major_arcana: Array) -> MajorArcanaCard:
 	if list_major_arcana.size() > 0:
 		var major_arcana_index: int = (randi() % (list_major_arcana.size())) 
 		major_arcana = MAJOR_ARCANA_CARD_CLASSES[list_major_arcana[major_arcana_index]].new()
-		print("Remove", list_major_arcana[major_arcana_index] )
 		list_major_arcana.remove_at(major_arcana_index)
 	else:
 		major_arcana = fool_arcana()
 
 	card.set_major_arcana(major_arcana)
 	card.rotate_z(PI/8)
+	card.position = Vector3(-0.4, 0.7, 0)
 	return card
 
 

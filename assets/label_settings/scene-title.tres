@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://drbrl8ld0s4op"]
+
+[ext_resource type="FontFile" uid="uid://uhxxvcgntgb0" path="res://assets/fonts/yoon-path-font/YoonPath-xRZlO.otf" id="1_b5sv1"]
+
+[resource]
+font = ExtResource("1_b5sv1")
+font_size = 60
+font_color = Color(0.988235, 0.811765, 0.45098, 1)

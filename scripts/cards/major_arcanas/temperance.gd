@@ -13,9 +13,9 @@ func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_card
 
 	var card_num: int = target_card.element.id
 
-	if(target_card.element is Fire):
-		return base_points
-	return float(card_num)
+	if(target_card.element is not Fire):
+		return float(card_num)  
+	return base_points
 
 
 func bonus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
