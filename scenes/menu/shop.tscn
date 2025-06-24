@@ -30,18 +30,19 @@ offset_bottom = 40.0
 
 [node name="RandomArcana" type="Label" parent="CanvasLayer/ButtonShop"]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 180.0
 offset_top = 342.0
-offset_right = 516.0
+offset_right = 651.0
 offset_bottom = 416.0
-theme_override_colors/font_color = Color(0.705882, 0.568627, 0.764706, 1)
+theme_override_colors/font_color = Color(0.988235, 0.811765, 0.45098, 1)
 theme_override_fonts/font = ExtResource("3_8bnh1")
 theme_override_font_sizes/font_size = 40
 text = "Choose which arcana to fight"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/ButtonShop/RandomArcana"]
-offset_left = 819.0
-offset_right = 999.0
+layout_mode = 0
+offset_left = 611.0
+offset_right = 791.0
 offset_bottom = 93.0
 texture = ExtResource("5_svvuu")
 expand_mode = 1
@@ -61,19 +62,19 @@ flat = true
 
 [node name="Label" type="Label" parent="CanvasLayer/ButtonShop"]
 layout_mode = 0
-offset_left = 45.0
+offset_left = 180.0
 offset_top = 221.0
-offset_right = 408.0
+offset_right = 543.0
 offset_bottom = 295.0
-theme_override_colors/font_color = Color(0.705882, 0.568627, 0.764706, 1)
+theme_override_colors/font_color = Color(0.988235, 0.811765, 0.45098, 1)
 theme_override_fonts/font = ExtResource("3_8bnh1")
 theme_override_font_sizes/font_size = 40
 text = "Add more card in hand"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/ButtonShop/Label"]
 layout_mode = 0
-offset_left = 819.0
-offset_right = 999.0
+offset_left = 611.0
+offset_right = 791.0
 offset_bottom = 93.0
 texture = ExtResource("5_svvuu")
 expand_mode = 1
@@ -92,9 +93,9 @@ text = "BUY"
 flat = true
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
-offset_left = 517.0
+offset_left = 497.0
 offset_top = 37.0
-offset_right = 681.0
+offset_right = 661.0
 offset_bottom = 147.0
 theme_override_colors/font_color = Color(0.988235, 0.811765, 0.45098, 1)
 theme_override_fonts/font = ExtResource("3_8bnh1")
@@ -102,14 +103,15 @@ theme_override_font_sizes/font_size = 60
 text = "SHOP"
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-offset_left = 409.0
+offset_left = 377.0
 offset_top = 475.0
-offset_right = 809.0
+offset_right = 777.0
 offset_bottom = 576.0
 texture = ExtResource("6_5a14i")
 expand_mode = 1
 
 [node name="Start" type="Button" parent="CanvasLayer/TextureRect"]
+layout_mode = 0
 offset_left = 74.0
 offset_top = 11.0
 offset_right = 333.0
