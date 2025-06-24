@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dpat4yk12d3gj"]
+[gd_scene load_steps=14 format=3 uid="uid://dpat4yk12d3gj"]
 
 [ext_resource type="PackedScene" uid="uid://g1ryy4vtxc6w" path="res://assets/card/card.gltf" id="1_eu3qk"]
 [ext_resource type="Script" uid="uid://c3ajd708k5jua" path="res://scripts/cards/elementals/elemental_card.gd" id="2_783ue"]
+[ext_resource type="FontFile" uid="uid://qdahtoccj7w4" path="res://assets/fonts/rukoyah-font/Rukoyah-pggav.otf" id="3_783ue"]
 [ext_resource type="Shader" uid="uid://df0oqd8lvqbtw" path="res://shaders/card.gdshader" id="3_mfcmy"]
 [ext_resource type="Texture2D" uid="uid://bnee8w5xyrm06" path="res://assets/card/major_arcanas/placeholder/background.png" id="4_lv5we"]
 [ext_resource type="Texture2D" uid="uid://j871k2chtf35" path="res://assets/card/card.jpg" id="5_tusa6"]
@@ -38,6 +39,7 @@ render_priority = 1
 outline_render_priority = 1
 outline_modulate = Color(1, 1, 0, 1)
 text = "ELEMENTAL TEMPLATE"
+font = ExtResource("3_783ue")
 font_size = 27
 outline_size = 1
 uppercase = true

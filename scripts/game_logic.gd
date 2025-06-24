@@ -73,7 +73,7 @@ func _process(_delta: float) -> void:
 			if(Input.is_action_just_pressed("ui_accept")):
 				draw_hand()
 				$CanvasLayer/Overlay.set_labels(level.get_malus_arcana().card_name)
-				level.malus_arcana_card.position = Vector3(0.35, 0.3, -1.3)
+				level.malus_arcana_card.position = Vector3(-0.3, 0.75, -0.8)
 
 				current_state = STATE_MAIN
 
@@ -92,7 +92,8 @@ func _process(_delta: float) -> void:
 						current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_OUTRO:
-			$CanvasLayer/Overlay.set_outro_labels(level, lifes)
+			$CanvasLayer/Overlay.set_outro_labels(level)
+			level.malus_arcana_card.position = Vector3(-0.4, 0.7, 0)
 			current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_WAIT_END_CONFIRM:
@@ -225,7 +226,7 @@ func play_card(played_card: ElementalCard) -> void:
 	level.get_card_points(played_card, played_cards, bonus_arcanas)
 	$CanvasLayer/Overlay.write_points(level)
 
-	var zpos: float = -1.45 + (0.25 * played_cards.size())
+	var zpos: float = -0.85 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(0, 0.2, zpos))
 	
 	#Await that all movement off the card stop before making the mesh instance transparent again

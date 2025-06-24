@@ -5,9 +5,9 @@ enum MajorChoice {NONE = 0, FIRST = 1, SECOND = 2}
 var major_chosen: MajorChoice = MajorChoice.NONE
 
 func _ready():
-	$TopLabel.text = "UPPER-TEXT"
-	$BottomLabel.text = "BOTTOM-TEXT"
-	$PointsLabel.text = "POINTS-TEXT"
+	$TopLabel.text = ""
+	$BottomLabel.text = ""
+	$PointsLabel.text = ""
 
 func set_labels(upper_text: String = "", bottom_text: String = "") -> void:
 	$TopLabel.text = upper_text
@@ -37,8 +37,8 @@ func write_choose_labels(level: Level):
 func set_lost_level_label(level: Level, lifes: int):
 	set_labels(level.get_level_label() + " Not completed", "Lifes remaining: " + str(lifes))
 
-func set_outro_labels(level: Level, lifes: int):
-	set_labels(level.get_level_label(), "Lifes: " +str(lifes))
+func set_outro_labels(level: Level):
+	set_labels(level.get_level_label(), level.get_win_label())
 	
 func _on_button_2_button_down() -> void:
 	major_chosen = MajorChoice.SECOND

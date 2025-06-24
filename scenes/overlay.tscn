@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bwsral862leo2"]
+[gd_scene load_steps=16 format=3 uid="uid://bwsral862leo2"]
 
 [ext_resource type="Script" uid="uid://cu72j2t173u8v" path="res://scripts/overlay.gd" id="1_7mkhq"]
 [ext_resource type="FontFile" uid="uid://qdahtoccj7w4" path="res://assets/fonts/rukoyah-font/Rukoyah-pggav.otf" id="2_0miq5"]
@@ -18,12 +18,25 @@ font_color = Color(0.988235, 0.811765, 0.45098, 1)
 [sub_resource type="Theme" id="Theme_d607a"]
 default_font_size = 50
 
-[sub_resource type="LabelSettings" id="LabelSettings_o1jrt"]
-font_size = 40
-outline_size = 5
+[sub_resource type="LabelSettings" id="LabelSettings_i2ryd"]
+font = ExtResource("2_0miq5")
+font_size = 30
+font_color = Color(0.988235, 0.811765, 0.454902, 1)
 outline_color = Color(0, 0, 0, 1)
-shadow_size = 10
 shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cpe4y"]
+font = ExtResource("2_0miq5")
+font_size = 40
+font_color = Color(0.988235, 0.811765, 0.45098, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qq5m3"]
+font = ExtResource("2_0miq5")
+font_color = Color(0.980392, 0.937255, 0.560784, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qmol3"]
+font = ExtResource("2_0miq5")
+font_color = Color(0.980392, 0.937255, 0.560784, 1)
 
 [node name="Overlay" type="Control"]
 layout_mode = 3
@@ -46,14 +59,13 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="BottomLabel" type="Label" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 146.0
 offset_top = 448.0
 offset_right = 1034.0
 offset_bottom = 576.0
 theme = SubResource("Theme_d607a")
-label_settings = SubResource("LabelSettings_o1jrt")
+label_settings = SubResource("LabelSettings_i2ryd")
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -63,7 +75,7 @@ offset_left = 916.0
 offset_top = 11.0
 offset_right = 1108.0
 offset_bottom = 75.0
-label_settings = SubResource("LabelSettings_o1jrt")
+label_settings = SubResource("LabelSettings_cpe4y")
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -94,9 +106,9 @@ expand_mode = 1
 
 [node name="RulesLevel" type="Label" parent="GameInformation"]
 layout_mode = 0
-offset_left = 2.0
+offset_left = 14.0
 offset_top = 77.0
-offset_right = 341.0
+offset_right = 353.0
 offset_bottom = 134.0
 text = "RULES OF THE LEVEL"
 label_settings = ExtResource("3_sfd0e")
@@ -109,16 +121,16 @@ offset_left = 8.0
 offset_top = 41.0
 offset_right = 328.0
 offset_bottom = 141.0
-label_settings = ExtResource("4_p5j10")
+label_settings = SubResource("LabelSettings_qq5m3")
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="GoalAtLevel" type="Label" parent="GameInformation"]
 layout_mode = 0
-offset_left = -797.0
-offset_top = -84.0
-offset_right = -458.0
-offset_bottom = -20.0
+offset_left = 16.0
+offset_top = 6.0
+offset_right = 355.0
+offset_bottom = 70.0
 text = "GOAL OF THE LEVEL"
 label_settings = ExtResource("3_sfd0e")
 horizontal_alignment = 1
@@ -130,26 +142,26 @@ offset_left = 3.0
 offset_top = 43.0
 offset_right = 339.0
 offset_bottom = 75.0
-label_settings = ExtResource("4_p5j10")
+label_settings = SubResource("LabelSettings_qmol3")
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="RulesElements" type="Label" parent="GameInformation"]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 184.0
-offset_right = 341.0
-offset_bottom = 241.0
-text = "RULES OF THE ELEMENTTS"
+offset_left = 18.0
+offset_top = 176.0
+offset_right = 357.0
+offset_bottom = 233.0
+text = "RULES OF THE ELEMENTS"
 label_settings = ExtResource("3_sfd0e")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Fire" type="TextureRect" parent="GameInformation/RulesElements"]
 layout_mode = 0
-offset_left = 51.0
+offset_left = 38.0
 offset_top = 45.0
-offset_right = 64.0
+offset_right = 51.0
 offset_bottom = 101.0
 texture = ExtResource("6_nx175")
 expand_mode = 1
@@ -177,17 +189,17 @@ label_settings = ExtResource("4_p5j10")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Wiind" type="TextureRect" parent="GameInformation/RulesElements"]
+[node name="Wind" type="TextureRect" parent="GameInformation/RulesElements"]
 layout_mode = 0
-offset_left = 126.0
+offset_left = 113.0
 offset_top = 40.0
-offset_right = 147.0
+offset_right = 134.0
 offset_bottom = 95.0
 texture = ExtResource("7_tn5s6")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Name" type="Label" parent="GameInformation/RulesElements/Wiind"]
+[node name="Name" type="Label" parent="GameInformation/RulesElements/Wind"]
 layout_mode = 0
 offset_left = -23.0
 offset_top = 64.0
@@ -198,7 +210,7 @@ label_settings = ExtResource("4_p5j10")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Bonus" type="Label" parent="GameInformation/RulesElements/Wiind/Name"]
+[node name="Bonus" type="Label" parent="GameInformation/RulesElements/Wind/Name"]
 layout_mode = 0
 offset_left = 1.0
 offset_top = 19.0
@@ -211,9 +223,9 @@ autowrap_mode = 2
 
 [node name="Water" type="TextureRect" parent="GameInformation/RulesElements"]
 layout_mode = 0
-offset_left = 201.0
+offset_left = 188.0
 offset_top = 46.0
-offset_right = 237.0
+offset_right = 224.0
 offset_bottom = 90.0
 texture = ExtResource("8_cpe4y")
 expand_mode = 1
@@ -243,9 +255,9 @@ autowrap_mode = 2
 
 [node name="Earth" type="TextureRect" parent="GameInformation/RulesElements"]
 layout_mode = 0
-offset_left = 273.0
+offset_left = 260.0
 offset_top = 57.0
-offset_right = 312.0
+offset_right = 299.0
 offset_bottom = 117.0
 texture = ExtResource("9_qq5m3")
 expand_mode = 1
