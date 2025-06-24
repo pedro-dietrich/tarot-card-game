@@ -60,3 +60,6 @@ func get_card_points(played_card: ElementalCard, played_cards, bonus_arcanas):
 	points += played_card.point
 	last_card_played = played_card
 	print("Points: ", points)
+
+func get_level_label():
+	return "Level " + str(level+1)
