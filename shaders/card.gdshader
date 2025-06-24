@@ -20,9 +20,9 @@ void fragment() {
 	vec2 mg_uv = (1.0 - 2.0 * mg_strength) * base_uv + vec2(mg_strength);
 	vec2 fg_uv = (1.0 - 2.0 * fg_strength) * base_uv + vec2(fg_strength);
 
-	vec4 bg_color = texture(background, bg_uv + (bg_strength * shift));
-	vec4 mg_color = texture(middleground, mg_uv + (mg_strength * shift));
-	vec4 fg_color = texture(foreground, fg_uv + (fg_strength * shift));
+	vec4 bg_color = texture(background, base_uv);
+	vec4 mg_color = texture(middleground, base_uv);
+	vec4 fg_color = texture(foreground, base_uv);
 
 	if(base_color.g > 0.9) {
 		base_color.rgb = bg_color.rgb;

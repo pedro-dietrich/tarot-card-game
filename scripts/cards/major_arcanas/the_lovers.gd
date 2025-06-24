@@ -23,7 +23,15 @@ func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_card
 		return float(card_num)
 	return base_points
 
+func get_background() -> String:
+	return "res://assets/card/major_arcanas/LOVERS/1-BG.png"
+	
+func get_middleground() -> String:
+	return "res://assets/card/major_arcanas/LOVERS/2-Clouds/Clouds_00000.png"
 
+func get_foreground() -> String:
+	return "res://assets/card/major_arcanas/LOVERS/3- Person/The Lover Loop_00000.png"
+	
 func bonus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
 	var target_card: ElementalCard = active_cards.back()
 	var base_points: float = target_card.element.get_points(active_cards.slice(0, -1))

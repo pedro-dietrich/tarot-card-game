@@ -7,6 +7,15 @@ func _init() -> void:
 	card_name = "The Fool"
 	arcana_penalty_description = "Play only in increasing or decreasing sequence. The first 2 cards played define the sequence you need to follow."
 
+func get_background() -> String:
+	return "res://assets/card/major_arcanas/FOOL/1-BG.png"
+	
+func get_middleground() -> String:
+	return "res://assets/card/major_arcanas/FOOL/2-Person/fool_00000.png"
+
+func get_foreground() -> String:
+	return "res://assets/card/major_arcanas/FOOL/3-Dog/fool_00000.png"
+	
 func reset_effects() -> void:
 	increase_mode = true
 

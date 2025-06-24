@@ -5,6 +5,15 @@ func _init() -> void:
 	card_name = "Death"
 	arcana_penalty_description = "Cards 1-6 are worth -50%."
 	arcana_bonus_effect = "Cards 1-6 are worth +50%."
+	
+func get_background() -> String:
+	return "res://assets/card/major_arcanas/DEATH/1-BG.png"
+	
+func get_middleground() -> String:
+	return "res://assets/card/major_arcanas/DEATH/2-Person.png"
+
+func get_foreground() -> String:
+	return "res://assets/card/major_arcanas/DEATH/3-Death/Death Loop_00000.png"
 
 
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
