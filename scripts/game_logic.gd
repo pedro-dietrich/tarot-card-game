@@ -93,7 +93,7 @@ func _process(_delta: float) -> void:
 
 		STATE_OUTRO:
 			$CanvasLayer/Overlay.set_outro_labels(level)
-			level.malus_arcana_card.position = Vector3(-0.4, 0.7, 0)
+			level.malus_arcana_card.position = Vector3(-0.8, 0.3, 0.35 +  0.2 * bonus_arcanas.size())
 			current_state = STATE_WAIT_END_CONFIRM
 
 		STATE_WAIT_END_CONFIRM:
@@ -135,6 +135,7 @@ func reset_round() -> void:
 	next_card_id = []
 	deck = range(1, 56)
 	level.reset()
+	
 	
 func change_major() -> void:
 	$CanvasLayer/Overlay/OptionArcana1.hide()
@@ -188,7 +189,8 @@ func replace_hand() -> void:
 	for i in range(hand_cards.size()) :
 		var card = hand_cards[i]
 		var lvl_hand_size: int = g.base_num_card 
-		var zpos: float = 0.3 * (i + 1 - ceil(lvl_hand_size / 2.0))
+		var lag: float = 0.24 if lvl_hand_size == 6 else (0.12 if lvl_hand_size == 4 else 0.0)
+		var zpos: float = 0.24 * (i + 1 - ceil(lvl_hand_size / 2.0)) - lag
 		card.position.z = zpos
 
 # Selects initial cards for the hand
@@ -237,7 +239,7 @@ func _on_path_terminate(card_id: int):
 	animate_path._on_path_terminate(get_tree().current_scene, card_id)
 
 func _on_area_3d_area_entered(_area: Node3D) -> void:
-	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 0.5
+	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 0.7
 
 func _on_area_3d_area_exited(_area: Node3D) -> void:
 	$Area3DDrag/CollisionShape3D/MeshInstance3D.transparency = 1
