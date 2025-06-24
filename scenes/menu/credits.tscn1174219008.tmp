@@ -14,69 +14,70 @@ script = ExtResource("1_0s65u")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
-offset_left = 535.0
-offset_top = 243.0
-offset_right = 1062.0
-offset_bottom = 373.0
-theme_override_colors/font_color = Color(0.705882, 0.568627, 0.764706, 1)
+offset_left = 500.0
+offset_top = 270.0
+offset_right = 1027.0
+offset_bottom = 400.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.90281, 0.587562, 0.748559, 1)
 theme_override_fonts/font = ExtResource("2_drpar")
-theme_override_font_sizes/font_size = 45
-text = "Gavril, Pedro, Victor"
+theme_override_font_sizes/font_size = 50
+text = "Gavril, Victor, Pedro"
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
-offset_left = 535.0
-offset_top = 343.0
-offset_right = 1062.0
-offset_bottom = 473.0
-theme_override_colors/font_color = Color(0.705882, 0.568627, 0.764706, 1)
+offset_left = 500.0
+offset_top = 370.0
+offset_right = 1027.0
+offset_bottom = 500.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_drpar")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 50
 text = "Gavril, Sara"
 
 [node name="Label4" type="Label" parent="CanvasLayer"]
-offset_left = 429.0
-offset_top = 243.0
-offset_right = 564.0
-offset_bottom = 373.0
-theme_override_colors/font_color = Color(0.6, 0.388235, 0.658824, 1)
+offset_left = 379.0
+offset_top = 270.0
+offset_right = 514.0
+offset_bottom = 400.0
+theme_override_colors/font_color = Color(0.917647, 0.113725, 0.517647, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_drpar")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 50
 text = "Code: "
 
 [node name="Label5" type="Label" parent="CanvasLayer"]
-offset_left = 292.0
-offset_top = 343.0
-offset_right = 653.0
-offset_bottom = 473.0
-theme_override_colors/font_color = Color(0.6, 0.388235, 0.658824, 1)
+offset_left = 227.0
+offset_top = 370.0
+offset_right = 588.0
+offset_bottom = 500.0
+theme_override_colors/font_color = Color(0.917647, 0.113725, 0.517647, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_drpar")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 50
 text = "Game Design:"
 
 [node name="Label3" type="Label" parent="CanvasLayer"]
-offset_left = 535.0
-offset_top = 143.0
-offset_right = 1062.0
-offset_bottom = 273.0
-theme_override_colors/font_color = Color(0.705882, 0.568627, 0.764706, 1)
+offset_left = 500.0
+offset_top = 170.0
+offset_right = 1027.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_drpar")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 50
 text = "Sara, Yingtong "
 
 [node name="Label6" type="Label" parent="CanvasLayer"]
-offset_left = 362.0
-offset_top = 143.0
-offset_right = 632.0
-offset_bottom = 273.0
-theme_override_colors/font_color = Color(0.6, 0.388235, 0.658824, 1)
+offset_left = 305.0
+offset_top = 170.0
+offset_right = 575.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(0.917647, 0.113725, 0.517647, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_drpar")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 50
 text = "Graphism:"
 metadata/_edit_group_ = true
 
@@ -95,9 +96,9 @@ flat = true
 
 [node name="Label7" type="Label" parent="CanvasLayer"]
 offset_left = 476.0
-offset_top = 19.0
+offset_top = 9.0
 offset_right = 671.0
-offset_bottom = 131.0
+offset_bottom = 121.0
 theme_override_colors/font_color = Color(0.988235, 0.811765, 0.45098, 1)
 theme_override_fonts/font = ExtResource("2_ff4am")
 theme_override_font_sizes/font_size = 60

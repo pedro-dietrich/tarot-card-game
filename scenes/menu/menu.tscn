@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqgjpsea4nr4x"]
+[gd_scene load_steps=5 format=3 uid="uid://cqgjpsea4nr4x"]
 
 [ext_resource type="Script" uid="uid://dhtymlupr4if4" path="res://scripts/menu/menu.gd" id="1_mcvr8"]
 [ext_resource type="PackedScene" uid="uid://bkar2tpe45h2h" path="res://scenes/background.tscn" id="2_mcvr8"]
 [ext_resource type="FontFile" uid="uid://uhxxvcgntgb0" path="res://assets/fonts/yoon-path-font/YoonPath-xRZlO.otf" id="3_e0arn"]
+[ext_resource type="Texture2D" uid="uid://biuotyb3xfo4g" path="res://assets/BG_word.png" id="4_037ec"]
 
 [node name="Menu" type="Node3D"]
 script = ExtResource("1_mcvr8")
@@ -12,40 +13,77 @@ script = ExtResource("1_mcvr8")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="StartButton" type="Button" parent="CanvasLayer"]
-offset_left = 355.0
-offset_top = 85.0
-offset_right = 791.0
-offset_bottom = 189.0
+offset_left = 435.0
+offset_top = 157.0
+offset_right = 711.0
+offset_bottom = 258.0
 theme_override_colors/font_hover_pressed_color = Color(0.886275, 0.580392, 0.678431, 1)
 theme_override_colors/font_color = Color(0.905882, 0.435294, 0.584314, 1)
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("3_e0arn")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 50
 text = "START GAME"
+flat = true
 
 [node name="QuitButton" type="Button" parent="CanvasLayer"]
-offset_left = 356.0
-offset_top = 270.0
-offset_right = 792.0
-offset_bottom = 374.0
+offset_left = 435.0
+offset_top = 287.0
+offset_right = 711.0
+offset_bottom = 388.0
 theme_override_colors/font_hover_pressed_color = Color(0.886275, 0.580392, 0.678431, 1)
 theme_override_colors/font_color = Color(0.905882, 0.435294, 0.584314, 1)
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("3_e0arn")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 50
 text = "QUIT GAME"
+flat = true
 
 [node name="CredtButton" type="Button" parent="CanvasLayer"]
-offset_left = 366.0
-offset_top = 454.0
-offset_right = 802.0
-offset_bottom = 558.0
+offset_left = 435.0
+offset_top = 417.0
+offset_right = 711.0
+offset_bottom = 518.0
 theme_override_colors/font_hover_pressed_color = Color(0.886275, 0.580392, 0.678431, 1)
 theme_override_colors/font_color = Color(0.905882, 0.435294, 0.584314, 1)
 theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("3_e0arn")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 50
 text = "CREDITS"
+flat = true
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 501.0
+offset_top = 23.0
+offset_right = 627.0
+offset_bottom = 135.0
+theme_override_colors/font_color = Color(0.988235, 0.811765, 0.45098, 1)
+theme_override_fonts/font = ExtResource("3_e0arn")
+theme_override_font_sizes/font_size = 60
+text = "HOME"
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 432.0
+offset_top = 148.0
+offset_right = 718.0
+offset_bottom = 249.0
+texture = ExtResource("4_037ec")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+offset_left = 432.0
+offset_top = 277.0
+offset_right = 718.0
+offset_bottom = 378.0
+texture = ExtResource("4_037ec")
+expand_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+offset_left = 432.0
+offset_top = 412.0
+offset_right = 718.0
+offset_bottom = 513.0
+texture = ExtResource("4_037ec")
+expand_mode = 1
 
 [connection signal="button_down" from="CanvasLayer/StartButton" to="." method="_on_start_button_button_down"]
 [connection signal="button_down" from="CanvasLayer/QuitButton" to="." method="_on_quit_button_button_down"]
