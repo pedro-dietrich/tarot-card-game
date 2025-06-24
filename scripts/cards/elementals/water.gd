@@ -28,4 +28,4 @@ func get_points(played_cards: Array[ElementalCard]) -> float:
 	return id + 0.5 * played_cards.back().point
 
 func get_label_text() -> String:
-	return "Water"
+	return "Cups"

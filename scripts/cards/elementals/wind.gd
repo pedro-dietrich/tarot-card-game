@@ -37,4 +37,4 @@ func fibonacci(n: int) -> int:
 	return fibonacci(n - 1) + fibonacci(n - 2)
 	
 func get_label_text() -> String:
-	return "Wind"
+	return "Swords"
