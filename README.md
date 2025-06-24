@@ -15,3 +15,35 @@ Sara Cattaneo - 16645166
 Victor Wang - 12551262
 
 Yingtong Li - 15325751
+
+
+## How to Execute the Program
+
+1. Clone the repository with:
+
+```bash
+git clone https://github.com/pedro-dietrich/tarot-card-game.git
+```
+
+2. Install [**Godot 4.4.1**](https://godotengine.org/).
+
+3. Initialize Godot and open the `project.godot` file in the cloned repository.
+
+4. Run the project.
+
+
+## Computer Minimum Requirements
+
+- Windows 7 or newer, Linux or MacOS 10.10 or newer;
+- 4GB of RAM;
+- A GPU that supports Vulkan 1.1 or newer.
+
+
+## Tools Used for Development
+
+- Godot Engine 4.4.1, for the game development;
+- GitHub, for storing and sharing the code and keep track of development issues;
+- GIMP, for small adjustments in textures;
+- Canvas, for designing the game's artwork;
+- Miro, for organizing ideas and suggestions for the project, as well as the current progress;
+- A custom made C++ program to combine frames into a single atlas image file.
