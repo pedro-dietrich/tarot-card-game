@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://btadn8aejii02"]
+[gd_scene load_steps=13 format=3 uid="uid://btadn8aejii02"]
 
 [ext_resource type="PackedScene" uid="uid://g1ryy4vtxc6w" path="res://assets/card/card.gltf" id="1_wsdil"]
 [ext_resource type="Script" uid="uid://bk7y4pyv0li2l" path="res://scripts/cards/major_arcanas/major_arcana_card.gd" id="2_4qdjx"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://j871k2chtf35" path="res://assets/card/card.jpg" id="4_mhtga"]
 [ext_resource type="Texture2D" uid="uid://cxs66vja5lt5y" path="res://assets/card/major_arcanas/placeholder/foreground.png" id="5_00oq2"]
 [ext_resource type="Texture2D" uid="uid://ps1d74xvbal" path="res://assets/card/major_arcanas/placeholder/middleground.png" id="6_5du28"]
+[ext_resource type="Script" uid="uid://cuq1umeafxsoc" path="res://scripts/cards/card_area_3d.gd" id="8_4qdjx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sy11y"]
 render_priority = 0
@@ -22,6 +23,9 @@ shader_parameter/foreground = ExtResource("5_00oq2")
 cull_mode = 1
 shading_mode = 0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_mhtga"]
+size = Vector3(0.401245, 0.01017, 0.240997)
+
 [node name="MajorCard" instance=ExtResource("1_wsdil")]
 script = ExtResource("2_4qdjx")
 
@@ -34,7 +38,16 @@ transform = Transform3D(0.101, 0, 0, 0, 0.002, 0, 0, 0, 0.061, 1.30534e-05, 0.00
 mesh = SubResource("BoxMesh_6u4wf")
 surface_material_override/0 = SubResource("StandardMaterial3D_ktuci")
 
-[node name="CardLabel" type="Label3D" parent="." index="1"]
+[node name="CardArea3D" type="Area3D" parent="." index="1"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("8_4qdjx")
+
+[node name="CardCollisionShape" type="CollisionShape3D" parent="CardArea3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000305176, 0.00432205, -4.57764e-05)
+shape = SubResource("BoxShape3D_mhtga")
+
+[node name="CardLabel" type="Label3D" parent="." index="2"]
 transform = Transform3D(6.03983e-10, 0.008, 3.49691e-10, 0, -3.49691e-10, 0.008, 0.008, -6.03983e-10, -2.64009e-17, -0.16629, 0.0196944, 0.00501075)
 sorting_use_aabb_center = false
 pixel_size = 0.12

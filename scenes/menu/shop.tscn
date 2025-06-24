@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://017itoxakhcb"]
+[gd_scene load_steps=9 format=3 uid="uid://017itoxakhcb"]
 
 [ext_resource type="Script" uid="uid://u7qiolsr8hlj" path="res://scripts/menu/shop.gd" id="1_360xs"]
 [ext_resource type="PackedScene" uid="uid://bkar2tpe45h2h" path="res://scenes/background.tscn" id="2_6yf3s"]
 [ext_resource type="FontFile" uid="uid://dtaxr6ajd2psd" path="res://assets/fonts/wiggle-parade-font/WiggleParade-MA5Ow.otf" id="3_8bnh1"]
 [ext_resource type="FontFile" uid="uid://uhxxvcgntgb0" path="res://assets/fonts/yoon-path-font/YoonPath-xRZlO.otf" id="4_svvuu"]
-[ext_resource type="Texture2D" uid="uid://ccjdv33yxi8bc" path="res://assets/BG Shop.png" id="5_8bnh1"]
-[ext_resource type="Texture2D" uid="uid://c81046al8kq2q" path="res://assets/BG_short_words.png" id="5_svvuu"]
-[ext_resource type="Texture2D" uid="uid://biuotyb3xfo4g" path="res://assets/BG_word.png" id="6_5a14i"]
+[ext_resource type="Texture2D" uid="uid://glvdst6mq5bn" path="res://assets/BG Shop.png" id="5_8bnh1"]
+[ext_resource type="Texture2D" uid="uid://d3668a63d4gds" path="res://assets/BG_short_words.png" id="5_svvuu"]
+[ext_resource type="Texture2D" uid="uid://b68628eslg2jp" path="res://assets/BG_word.png" id="6_5a14i"]
+[ext_resource type="LabelSettings" uid="uid://drbrl8ld0s4op" path="res://assets/label_settings/scene-title.tres" id="6_oy6of"]
 
 [node name="Shop" type="Node3D"]
 script = ExtResource("1_360xs")
@@ -101,6 +102,7 @@ theme_override_colors/font_color = Color(0.988235, 0.811765, 0.45098, 1)
 theme_override_fonts/font = ExtResource("3_8bnh1")
 theme_override_font_sizes/font_size = 60
 text = "SHOP"
+label_settings = ExtResource("6_oy6of")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 offset_left = 377.0

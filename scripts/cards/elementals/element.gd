@@ -1,6 +1,7 @@
 class_name Element extends Node
 
 var id: int
+var description: String
 
 func get_image_path() -> String:
 	return "res://assets/major_arcanas/placeholder/background.png"

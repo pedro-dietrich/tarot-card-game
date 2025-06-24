@@ -13,11 +13,19 @@ func set_labels(upper_text: String = "", bottom_text: String = "") -> void:
 	$TopLabel.text = upper_text
 	$BottomLabel.text = bottom_text
 
+func set_goal_level_text(text: String = "") -> void:
+	$GameInformation/GoalAtLevel/Text.text = text
+
+func set_rules_element(text: String = "") -> void:
+	$GameInformation/RulesLevel/Text.text = text
+
 func write_points(level: Level) -> void:
 	$PointsLabel.text = str(level.points) + " / " + str(level.target_score)
 
 func write_intro_labels(level: Level):
-	set_labels(level.get_level_label() + " - Arcana: " + level.get_malus_arcana().card_name, "Goal of the Level: Achieve " + str(level.target_score) + " points \n" + level.get_malus_arcana().arcana_penalty_description)
+	$TopLabel.text = level.get_level_label() + " - " + level.get_malus_arcana().card_name
+	set_goal_level_text("Achieve " + str(level.target_score) + " points")
+	set_rules_element(level.get_malus_arcana().arcana_penalty_description)
 	write_points(level)
 
 func write_choose_labels(level: Level):

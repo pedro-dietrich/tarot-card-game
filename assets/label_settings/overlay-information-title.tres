@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c5fy6dpqxepxn"]
+
+[ext_resource type="FontFile" uid="uid://qdahtoccj7w4" path="res://assets/fonts/rukoyah-font/Rukoyah-pggav.otf" id="1_tkdka"]
+
+[resource]
+font = ExtResource("1_tkdka")
+font_size = 20
+font_color = Color(0.988235, 0.811765, 0.454902, 1)
