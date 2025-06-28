@@ -3,17 +3,13 @@ extends MajorArcana
 func _init() -> void:
 	id = 14
 	card_name = "Temperance"
-	arcana_penalty_description = "Only the wands element has an elemental bonus  (e.g. other cards only punctuate their value)."
+	arcana_penalty_description = "Only the wands element has an elemental bonus (e.g. other cards only punctuate their value)."
 	arcana_bonus_effect = "Wands cards are worth 50% more."
 
-func get_background() -> String:
-	return "res://assets/card/major_arcanas/All Animation/TEMPERANCE/1-BG.png"
-	
-func get_middleground() -> String:
-	return "res://assets/card/major_arcanas/All Animation/TEMPERANCE/2-Person/Comp 1_00000.png"
 
-func get_foreground() -> String:
-	return "res://assets/card/major_arcanas/All Animation/TEMPERANCE/3-Flowers/Comp 1_00000.png"
+func get_major_images_path() -> String:
+	return "res://assets/card/major_arcanas/temperance/"
+
 
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
 	var target_card: ElementalCard = active_cards.back()
