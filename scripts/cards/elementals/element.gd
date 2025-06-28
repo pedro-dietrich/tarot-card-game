@@ -13,3 +13,7 @@ func get_points(_previous_cards: Array[ElementalCard]) -> float:
 
 func get_label_text() -> String:
 	return ""
+	
+func play_music() -> String:
+	return ""
+	

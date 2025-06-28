@@ -38,3 +38,6 @@ func fibonacci(n: int) -> int:
 	
 func get_label_text() -> String:
 	return "Swords"
+
+func play_music() -> String:
+	return "res://assets/elements/musics/wind.mp3"
