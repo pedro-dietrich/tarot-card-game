@@ -5,8 +5,12 @@ var sequence: float = 0.0
 func _init() -> void:
 	id = 6
 	card_name = "The Lovers"
-	arcana_penalty_description = "If you play two cards of the same type in sequence, the second one lose it's type bonus."
-	arcana_bonus_effect = "If you play two cards of a different type in sequence it gains bonus points."
+	arcana_penalty_description = "If you play two cards of the same type in sequence, the second one loses it's type bonus."
+	arcana_bonus_effect = "If you play two cards of a different types in sequence, you gain bonus points."
+
+
+func get_major_images_path() -> String:
+	return "res://assets/card/major_arcanas/the_lovers/"
 
 
 func reset_effects() -> void:

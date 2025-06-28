@@ -3,8 +3,12 @@ extends MajorArcana
 func _init() -> void:
 	id = 11
 	card_name = "Strength"
-	arcana_penalty_description = "Only the cups element has an elemental bonus  (e.g. other cards only punctuate their value)."
+	arcana_penalty_description = "Only the cups element has an elemental bonus (e.g. other cards only punctuate their value)."
 	arcana_bonus_effect = "Cups cards are worth 50% more."
+
+
+func get_major_images_path() -> String:
+	return "res://assets/card/major_arcanas/strength/"
 
 
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:

@@ -7,6 +7,10 @@ func _init() -> void:
 	arcana_bonus_effect = "Cards 1-6 are worth +50%."
 
 
+func get_major_images_path() -> String:
+	return "res://assets/card/major_arcanas/death/"
+
+
 func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
 	var target_card: ElementalCard = active_cards.back()
 	var base_points: float = target_card.element.get_points(active_cards.slice(0, -1))

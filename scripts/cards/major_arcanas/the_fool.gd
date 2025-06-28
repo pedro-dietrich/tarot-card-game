@@ -7,6 +7,11 @@ func _init() -> void:
 	card_name = "The Fool"
 	arcana_penalty_description = "Play only in increasing or decreasing sequence. The first 2 cards played define the sequence you need to follow."
 
+
+func get_major_images_path() -> String:
+	return "res://assets/card/major_arcanas/the_fool/"
+
+
 func reset_effects() -> void:
 	increase_mode = true
 
@@ -17,17 +22,17 @@ func is_card_playable(target_card: ElementalCard, active_cards: Array[ElementalC
 
 	var card_num: int = target_card.element.id
 	var last_card_num: int = active_cards[-1].element.id
-	
+
 	print("current card num: " + str(card_num))
 	print("last card  num: " + str(last_card_num))
 	print("for playing in increasing order " + str(increase_mode))
-	
+
 	if (active_cards.size() == 1):
 		if(card_num >= last_card_num):
 			increase_mode = true
 		else:
 			increase_mode = false
-	
+
 	if(!increase_mode && card_num >= last_card_num):
 		return false
 	elif(increase_mode && card_num <= last_card_num):
