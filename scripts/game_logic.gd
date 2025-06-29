@@ -234,7 +234,7 @@ func play_card(played_card: ElementalCard) -> void:
 	played_card.set_position(Vector3(-0.2, 0.2, zpos))
 	played_card.scale *= 1.2
 	
-	$AudioStreamPlayer.stream = load(played_card.element.play_music())
+	$AudioStreamPlayer.stream = load(played_card.element.play_sfx())
 	$AudioStreamPlayer.play()
 	
 	#Await that all movement off the card stop before making the mesh instance transparent again

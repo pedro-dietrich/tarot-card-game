@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d17hkqirlcc2p" path="res://assets/background.png" id="1_bkp1e"]
 [ext_resource type="Script" uid="uid://chdxcboo4yhfl" path="res://scripts/texture.gd" id="1_y0upk"]
-[ext_resource type="AudioStream" uid="uid://dhw7048dwa8kb" path="res://assets/ambient-jam-tecnosine-main-version-04-25-13878.mp3" id="3_jougr"]
+[ext_resource type="AudioStream" uid="uid://dhw7048dwa8kb" path="res://assets/music/ambient-jam-tecnosine-main-version-04-25-13878.mp3" id="3_jougr"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jougr"]
 panorama = ExtResource("1_bkp1e")

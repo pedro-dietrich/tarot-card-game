@@ -9,6 +9,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# Show the amount of money the player currently have
 	$CanvasLayer/Label.text = str(g.money)
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().change_scene_to_packed(load("res://scenes/menu/menu.tscn"))
 
 # Purchase an upgrade to the value of a card in hand
 func _on_num_card_button_() -> void:

@@ -27,7 +27,6 @@ func get_points(_played_cards: Array[ElementalCard]) -> float:
 
 func get_label_text() -> String:
 	return "Wands"
-	
 
-func play_music() -> String:
-	return "res://assets/elements/musics/Fire.mp3"
+func play_sfx() -> String:
+	return "res://assets/sfx/fire_sfx.mp3"
