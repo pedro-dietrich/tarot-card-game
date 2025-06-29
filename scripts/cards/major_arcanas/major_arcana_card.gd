@@ -5,6 +5,8 @@ var major_arcana: MajorArcana
 func set_major_arcana(major_arcana_var):
 	major_arcana = major_arcana_var
 	$CardLabel.text = major_arcana_var.card_name
+	$".".rotate_z(PI/8)
+	$".".position = Vector3(-0.4, 0.7, 0)
 
 
 func set_card_images() -> void:
