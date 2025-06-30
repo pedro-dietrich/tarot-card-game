@@ -26,12 +26,6 @@ void fragment() {
 	vec4 fg_color = texture(foreground, tex_uv);
 
 	if(base_color.r < 0.1 && base_color.g > 0.75 && base_color.b < 0.1) {
-		//base_color.rgb = bg_color.rgb;
-		//if(mg_color.a > 0.8)
-			//base_color.rgb = mg_color.rgb;
-		//if(fg_color.a > 0.8)
-			//base_color.rgb = fg_color.rgb;
-
 		base_color.rgb = fg_color.a * fg_color.rgb +
 			(1.0 - fg_color.a) * (mg_color.a * mg_color.rgb + (1.0 - mg_color.a) * bg_color.rgb);
 	}
