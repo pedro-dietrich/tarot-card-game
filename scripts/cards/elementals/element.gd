@@ -15,6 +15,6 @@ func get_label_text() -> String:
 	return ""
 	
 func play_sfx() -> String:
-	push_error("There should only be children of the Element class")
+	push_error("Function should no be called by Element base class itself, only by implementations of Element Class")
 	return ""
 	
