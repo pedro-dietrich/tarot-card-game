@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkar2tpe45h2h"]
+[gd_scene load_steps=7 format=3 uid="uid://bkar2tpe45h2h"]
 
 [ext_resource type="Texture2D" uid="uid://d17hkqirlcc2p" path="res://assets/background.png" id="1_bkp1e"]
 [ext_resource type="Script" uid="uid://chdxcboo4yhfl" path="res://scripts/texture.gd" id="1_y0upk"]
+[ext_resource type="AudioStream" uid="uid://dhw7048dwa8kb" path="res://assets/music/ambient-jam-tecnosine-main-version-04-25-13878.mp3" id="3_jougr"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jougr"]
 panorama = ExtResource("1_bkp1e")
@@ -25,3 +26,9 @@ offset_bottom = 717.0
 scale = Vector2(2.1, 2.1)
 pivot_offset = Vector2(640, 358.5)
 texture = ExtResource("1_bkp1e")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jougr")
+volume_db = -0.115
+autoplay = true
+parameters/looping = true

@@ -101,12 +101,14 @@ func _process(_delta: float) -> void:
 				current_state = STATE_INTRO
 
 func handle_lose_game():
+		await get_tree().create_timer(1.5).timeout
 		get_tree().change_scene_to_packed(defeat_screen)
 
 func handle_win_round():
 	level.increment()
 	
 	if (level.is_game_won()): 
+		await get_tree().create_timer(1.5).timeout
 		get_tree().change_scene_to_packed(victory_screen)
 		return
 
@@ -231,6 +233,9 @@ func play_card(played_card: ElementalCard) -> void:
 	var zpos: float = -0.85 + (0.25 * played_cards.size())
 	played_card.set_position(Vector3(-0.2, 0.2, zpos))
 	played_card.scale *= 1.2
+	
+	$AudioStreamPlayer.stream = load(played_card.element.play_sfx())
+	$AudioStreamPlayer.play()
 	
 	#Await that all movement off the card stop before making the mesh instance transparent again
 	await get_tree().create_timer(0.1).timeout
