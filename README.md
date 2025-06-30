@@ -47,3 +47,10 @@ git clone https://github.com/pedro-dietrich/tarot-card-game.git
 - Canvas, for designing the game's artwork;
 - Miro, for organizing ideas and suggestions for the project, as well as the current progress;
 - A custom made C++ program to combine frames into a single atlas image file.
+
+## Game Controls
+
+- Clicking with mouse, for activating UI buttons;
+- Dragging with mouse, for dragging cards in the hand to the play area;
+- Keyboard confirm command (set to spacebar), for confirming and proceeding to next scene;
+- Keyboard exit command (set to esc), for quitting the game from menu.

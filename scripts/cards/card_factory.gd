@@ -43,8 +43,6 @@ func random_major_arcana_card(list_major_arcana: Array) -> MajorArcanaCard:
 		major_arcana = fool_arcana()
 
 	card.set_major_arcana(major_arcana)
-	card.rotate_z(PI/8)
-	card.position = Vector3(-0.4, 0.7, 0)
 	return card
 
 
