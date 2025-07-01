@@ -9,7 +9,6 @@ func _init() -> void:
 
 
 func get_major_images_path() -> String:
-	print("major_image_path of the fool called")
 	return "res://assets/card/major_arcanas/the_fool/"
 
 
