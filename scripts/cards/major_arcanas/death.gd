@@ -4,7 +4,7 @@ func _init() -> void:
 	id = 13
 	card_name = "Death"
 	arcana_penalty_description = "Cards 1-6 are worth -50%."
-	arcana_bonus_effect = "Cards 1-6 are worth +50%."
+	arcana_bonus_effect = "Cards 1-6 are worth +100%."
 
 
 func get_major_images_path() -> String:
@@ -24,10 +24,10 @@ func malus_effect_on_points(active_cards: Array[ElementalCard], _max_active_card
 
 func bonus_effect_on_points(active_cards: Array[ElementalCard], _max_active_cards: int) -> float:
 	var target_card: ElementalCard = active_cards.back()
-	var base_points: float = target_card.element.get_points(active_cards.slice(0, -1))
+	var base_points: float = target_card.point
 
 	var card_num: int = target_card.element.id
 
 	if(card_num < 7):
-		return 1.5 * base_points
+		return 2.0 * base_points
 	return base_points
