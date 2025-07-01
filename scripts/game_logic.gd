@@ -179,8 +179,7 @@ func _on_card_played(card_id: int) -> void:
 
 func next_malus() -> void:
 	if (level.is_last_level()): 
-		list_major_arcana = range(0, 1)
-		level.malus_arcana_card = card_factory.random_major_arcana_card(list_major_arcana)
+		level.malus_arcana_card = card_factory.fool_arcana_card()
 	else:
 		level.malus_arcana_card = card_factory.random_major_arcana_card(list_major_arcana)
 
