@@ -39,7 +39,6 @@ func _on_path_terminate(game_scene: Node3D, card_id: int) -> void:
 		i += 1
 
 	if(i >= child_count):
-		print("Path not found.")
 		return
 
 	var path3D: Path3D = game_scene.get_child(i)
