@@ -49,12 +49,10 @@ func _process(_delta: float) -> void:
 				get_tree().reload_current_scene()
 			next_malus()
 			level.update_target_score()
-			if (g.random_major):
+			if (g.random_major and not level.is_last_level()):
 				current_state = STATE_CHOOSE_MALUS
-				level.malus_arcana_card.position.z = -0.5
-				level.malus_arcana_card.position.y = 0.1
-				level.alternate_malus_arcana_card.position.z = 0.3
-				level.alternate_malus_arcana_card.position.y = 0.1
+				level.malus_arcana_card.position = Vector3(-0.5, 0.8, -0.3)
+				level.alternate_malus_arcana_card.position = Vector3(-0.5, 0.8, 0.2)
 				$CanvasLayer/Overlay.write_choose_labels(level)
 				add_child(level.alternate_malus_arcana_card)
 			else:
@@ -125,6 +123,7 @@ func handle_win_round():
 func reset_round() -> void:
 	# Remove all the instances of the card on the scene
 	for card in hand_cards:
+		_on_path_terminate(card.id)
 		remove_child(card)
 		card.queue_free()
 	for card in played_cards:
@@ -179,7 +178,8 @@ func _on_card_played(card_id: int) -> void:
 	draw_card(position_z)
 
 func next_malus() -> void:
-	if (level.is_last_level()): level.malus_arcana_card = card_factory.fool_arcana_card()
+	if (level.is_last_level()): 
+		level.malus_arcana_card = card_factory.fool_arcana_card()
 	else:
 		level.malus_arcana_card = card_factory.random_major_arcana_card(list_major_arcana)
 
