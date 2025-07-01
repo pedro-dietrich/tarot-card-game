@@ -1,2 +1,6 @@
 .godot/
+.vs/
+.vscode/
+build/
+install/
 /android/
