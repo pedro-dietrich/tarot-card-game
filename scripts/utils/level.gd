@@ -53,6 +53,7 @@ func increment() -> void:
 
 func get_card_points(played_card: ElementalCard, played_cards, bonus_arcanas):
 	# Change the value of the card depending on the major arcana rule
+	played_card.point = get_malus_arcana().malus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
 	for major_bonus in bonus_arcanas:
 		played_card.point = major_bonus.major_arcana.bonus_effect_on_points(played_cards, LVL_MAX_CARDS_PLAYED[level])
 	
